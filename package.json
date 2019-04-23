@@ -4,7 +4,9 @@
   "private": true,
   "dependencies": {
     "react": "^16.8.6",
+    "react-center": "^1.1.1",
     "react-dom": "^16.8.6",
+    "react-progressbar": "^15.4.1",
     "react-scripts": "2.1.8"
   },
   "scripts": {
