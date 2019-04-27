@@ -188,7 +188,7 @@ class QuestionViewScene extends Component {
                     </div>
                 </div>
 
-                <QuestionFooterView />
+                <QuestionFooterView forwardClick={{}} backwardClick={{}} />
             </header>
         );
     }
