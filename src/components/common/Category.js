@@ -9,7 +9,7 @@ const Category = props => {
         <Link to={props.link} style={{ textDecoration: "none" }}>
             <div style={{
                 backgroundImage: `url(${props.categoryImage})`,
-                backgroundSize: '100%',
+                backgroundSize: '110%',
                 width: '40%',
                 textDecorationLine: 'none',
                 textDecoration: 'none',
@@ -17,7 +17,7 @@ const Category = props => {
                 marginLeft: '1.5em'
             }}>
                 <p style={title}> {props.titleName} </p>
-                <div style={{display: 'flex', flexDirection: 'row'}}>
+                <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <div style={{ width: '68%', textAlign: "center", marginLeft: 8 }}>
                         <div style={{ color: '#fff', fontSize: "0.65em" }}>
                             0% abgeschlossen
@@ -47,11 +47,12 @@ const title = {
     color: "#fff",
     fontWeight: "bold",
     backgroundColor: "#fff3",
+    marginBottom: '0.85em',
     fontSize: "0.7em",
     textAlign: "left",
-    paddingLeft: "0.4em",
-    paddingTop: '0.15em',
-    paddingBottom: '0.15em'
+    paddingLeft: "0.6em",
+    paddingTop: '0.3em',
+    paddingBottom: '0.3em'
 }
 
 const progressBar = {

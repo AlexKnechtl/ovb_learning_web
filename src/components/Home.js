@@ -33,6 +33,7 @@ class Home extends Component {
 
                     <div align="right" style={{ marginRight: '11%' }}>
                         <ImageButton
+                            link="/test"
                             buttonText="Prüfungssimulation"
                             image={iconContinue} />
                         <ImageButton

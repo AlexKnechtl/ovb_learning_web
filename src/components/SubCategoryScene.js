@@ -39,6 +39,7 @@ class SubCategoryScene extends Component {
                             buttonText="Falsche Fragen üben"
                             image={iconContinue} />
                         <ImageButton
+                            link="/questionView"
                             buttonText="Fragen durchblättern"
                             image={iconContinue} />
                     </div>

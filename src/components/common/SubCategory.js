@@ -45,10 +45,11 @@ const title = {
     fontWeight: "bold",
     backgroundColor: "#fff3",
     fontSize: "0.7em",
+    marginBottom: '0.75em',
     textAlign: "left",
-    paddingLeft: "0.4em",
-    paddingTop: '0.15em',
-    paddingBottom: '0.15em'
+    paddingLeft: "0.6em",
+    paddingTop: '0.3em',
+    paddingBottom: '0.3em'
 }
 
 const progressBar = {

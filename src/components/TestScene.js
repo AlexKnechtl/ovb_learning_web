@@ -6,11 +6,11 @@ import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
 
-class QuestionScene extends Component {
+class TestScene extends Component {
     state = {
-        answer1Clicked: true,
-        answer2Clicked: true,
-        answer3Clicked: true,
+        answer1Clicked: false,
+        answer2Clicked: false,
+        answer3Clicked: false,
         check: false,
         lastAnswerRight: undefined
     }
@@ -18,9 +18,9 @@ class QuestionScene extends Component {
     answer1Click() {
         if (this.state.check) return;
         console.log(this.state.answer1Clicked);
-        this.setState({ answer1Clicked: false });
-        this.setState({ answer2Clicked: true });
-        this.setState({ answer3Clicked: true });
+        this.setState({ answer1Clicked: true });
+        this.setState({ answer2Clicked: false });
+        this.setState({ answer3Clicked: false });
         /*this.props.currentQuestion.question.answer1.choosen = true;
         this.props.currentQuestion.question.answer2.choosen = false;
         this.props.currentQuestion.question.answer3.choosen = false;
@@ -29,9 +29,9 @@ class QuestionScene extends Component {
 
     answer2Click() {
         if (this.state.check) return;
-        this.setState({ answer2Clicked: false });
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer3Clicked: true });
+        this.setState({ answer2Clicked: true });
+        this.setState({ answer1Clicked: false });
+        this.setState({ answer3Clicked: false });
         /*
         this.props.currentQuestion.question.answer1.choosen = false;
         this.props.currentQuestion.question.answer2.choosen = true;
@@ -41,9 +41,9 @@ class QuestionScene extends Component {
 
     answer3Click() {
         if (this.state.check) return;
-        this.setState({ answer3Clicked: false });
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer2Clicked: true });
+        this.setState({ answer3Clicked: true });
+        this.setState({ answer1Clicked: false });
+        this.setState({ answer2Clicked: false });
         /*
         this.props.currentQuestion.question.answer1.choosen = false;
         this.props.currentQuestion.question.answer2.choosen = false;
@@ -55,9 +55,21 @@ class QuestionScene extends Component {
 
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
 
-        const backgroundAnswer1 = answer1Clicked ? '#23B800' : '#B21515';
-        const backgroundAnswer2 = answer2Clicked ? '#23B800' : '#B21515';
-        const backgroundAnswer3 = answer3Clicked ? '#23B800' : '#B21515';
+        const backgroundColor1 = answer1Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
+        const backgroundColor2 = answer2Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
+        const backgroundColor3 = answer3Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
+
+        const textColor1 = answer1Clicked ? "#fff" : "#003A65";
+        const textColor2 = answer2Clicked ? "#fff" : "#003A65";
+        const textColor3 = answer3Clicked ? "#fff" : "#003A65";
+
+        const fontWeightStyle = answer1Clicked ? "bold" : "normal";
+        const fontWeightStyle2 = answer2Clicked ? "bold" : "normal";
+        const fontWeightStyle3 = answer3Clicked ? "bold" : "normal";
+
+        const marginAnswer1 = answer1Clicked ? 0 : '5%';
+        const marginAnswer2 = answer2Clicked ? 0 : '5%';
+        const marginAnswer3 = answer3Clicked ? 0 : '5%';
 
         return (
             <header style={appHeader}>
@@ -75,17 +87,17 @@ class QuestionScene extends Component {
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
-                            backgroundColor: backgroundAnswer1,
+                            backgroundColor: backgroundColor1,
                             borderWidth: answer1Clicked ? 0 : 2,
                             minHeight: '12%',
                             outline: 'none',
                             textAlign: 'left',
-                            width: '90%',
-                            marginLeft: '5%',
+                            fontWeight: fontWeightStyle,
+                            marginLeft: marginAnswer1,
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: answer1Clicked ? '#fff' : '#fff', margin: 12 }}>
+                        <p style={{ fontSize: 14, color: textColor1, margin: 12 }}>
                             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                             dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
                             et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
@@ -101,16 +113,16 @@ class QuestionScene extends Component {
                             border: 'solid',
                             borderColor: '#003A65',
                             minHeight: '12%',
-                            backgroundColor: backgroundAnswer2,
+                            backgroundColor: backgroundColor2,
                             borderWidth: answer2Clicked ? 0 : 2,
                             textAlign: 'left',
                             outline: 'none',
-                            width: '90%',
-                            marginLeft: '5%',
+                            fontWeight: fontWeightStyle2,
+                            marginLeft: marginAnswer2,
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer2, margin: 12 }}>
+                        <p style={{ fontSize: 14, color: textColor2, margin: 12 }}>
                             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                             dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
                         </p>
@@ -121,17 +133,17 @@ class QuestionScene extends Component {
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
-                            backgroundColor: backgroundAnswer3,
-                            borderWidth: answer1Clicked ? 0 : 2,
+                            backgroundColor: backgroundColor3,
+                            borderWidth: answer3Clicked ? 0 : 2,
                             minHeight: '12%',
                             textAlign: 'left',
-                            width: '90%',
                             outline: 'none',
-                            marginLeft: '5%',
+                            fontWeight: fontWeightStyle3,
+                            marginLeft: marginAnswer3,
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer3, margin: 12 }}>
+                        <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>
                             Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
                             dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
                             et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
@@ -145,7 +157,7 @@ class QuestionScene extends Component {
                 <div style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
                     <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
-                        Übungsmodus
+                        Prüfung
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
@@ -155,20 +167,6 @@ class QuestionScene extends Component {
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
                         Frage 30 / 32
                     </h1>
-
-                    <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
-                        <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
-                            Statistik Aktuell
-                        </p>
-                    </div>
-
-                    <p style={wrongAnswers}>
-                        4 Antworten falsch
-                    </p>
-
-                    <p style={questionBackText}>
-                        16 Antworten richtig
-                    </p>
 
                     <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
                         <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
@@ -286,4 +284,4 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default QuestionScene;
+export default TestScene;

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooter } from './common';
+import { ImageButton, QuestionFooterView } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
 
-class QuestionScene extends Component {
+class QuestionViewScene extends Component {
     state = {
         answer1Clicked: true,
         answer2Clicked: true,
@@ -188,7 +188,7 @@ class QuestionScene extends Component {
                     </div>
                 </div>
 
-                <QuestionFooter />
+                <QuestionFooterView />
             </header>
         );
     }
@@ -286,4 +286,4 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default QuestionScene;
+export default QuestionViewScene;
