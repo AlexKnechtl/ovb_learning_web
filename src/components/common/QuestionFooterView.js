@@ -1,19 +1,19 @@
 import React from 'react';
 import '../styles.css';
 
+import arrow from '../../img/arrow_right.png'
+
 const QuestionFooterView = props => {
     return (
         <div style={bottomLayout} >
             <button style={backButton}>
                 Abbrechen
             </button>
-            <button style={weiterButton}>
-                Weiter
+            <button onClick={props.backwardClick} style={weiterButton}>
+                <img src={arrow} style={{ height: '1.1em', margin: 0, transform: "rotate(180deg)" }} alt="User Icon" />
             </button>
-            <button style={weiterButton}>
-                <i className="material-icons">
-                    arrow_right_alt
-                </i>
+            <button onClick={props.forwardClick} style={weiterButton}>
+                <img src={arrow} style={{ height: '1.1em', margin: 0 }} alt="User Icon" />
             </button>
         </div>
     )
