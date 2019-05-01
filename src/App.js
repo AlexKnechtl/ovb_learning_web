@@ -1,3 +1,4 @@
+//@ts-check
 import React, { Component } from 'react';
 import { } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
@@ -9,6 +10,10 @@ import QuestionScene from './components/QuestionScene';
 import QuestionViewScene from './components/QuestionViewScene';
 import TestScene from './components/TestScene';
 import TestResultScene from './components/TestResultScene';
+import {configureStore} from './core';
+
+const store = configureStore();
+// store.dispatch(signInWithoutPasswordAction());
 
 class App extends Component {
   render() {
