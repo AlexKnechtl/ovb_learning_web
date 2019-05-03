@@ -2,13 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import Center from 'react-center'
 
-const ImageButton = props => {
+const ImageLineButton = props => {
     return (
         <Link style={{ textDecoration: "none" }} to={props.link}>
             <button
                 style={button}>
                 <Center>
-                    <img src={props.image} style={{ maxHeight: '1.3em', maxWidth: '1.3em', marginRight: 12 }} alt="User Icon" />
+                    <img src={props.image} style={{ maxHeight: '1.2em', maxWidth: '1.3em', marginRight: 12 }} alt="User Icon" />
                     {props.buttonText}
                 </Center>
             </button>
@@ -19,15 +19,17 @@ const ImageButton = props => {
 const button = {
     flex: 1,
     fontWeight: "bold",
-    backgroundColor: "#fff",
+    backgroundColor: '#fff0',
     fontSize: "0.8em",
-    height: '2em',
-    border: "none",
+    height: '2.3em',
+    border: "solid",
+    borderColor: "#fff",
+    borderWidth: 2,
     textAlign: "center",
-    color: "#003A65",
+    color: "#fff",
     paddingLeft: '0.7em',
     paddingRight: '0.7em',
     marginBottom: 14,
 }
 
-export { ImageButton };
+export { ImageLineButton };

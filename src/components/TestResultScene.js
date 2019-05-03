@@ -6,7 +6,7 @@ import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
 
-class TestScene extends Component {
+class TestResultScene extends Component {
     state = {
         answer1Clicked: true,
         answer2Clicked: true,
@@ -152,7 +152,7 @@ class TestScene extends Component {
                         3.5 Private Unfallversicherung
                     </h1>
 
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%' }}>
                         Frage 30 / 32
                     </h1>
 
@@ -272,4 +272,4 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default TestScene;
+export default TestResultScene;
