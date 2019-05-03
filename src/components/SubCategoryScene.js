@@ -5,6 +5,8 @@ import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
+import iconBook from '../img/ic_look_through.png'
+import iconWrongQuestions from '../img/ic_wrong_questions.png'
 import imageCategory from '../img/bg_category.png'
 
 class SubCategoryScene extends Component {
@@ -37,11 +39,11 @@ class SubCategoryScene extends Component {
                             image={iconContinue} />
                         <ImageButton
                             buttonText="Falsche Fragen üben"
-                            image={iconContinue} />
+                            image={iconWrongQuestions} />
                         <ImageButton
                             link="/questionView"
                             buttonText="Fragen durchblättern"
-                            image={iconContinue} />
+                            image={iconBook} />
                     </div>
 
                     <p style={statisticsText}>
