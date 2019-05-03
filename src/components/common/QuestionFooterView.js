@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles.css';
 
-import arrow from '../../img/arrow_right.png'
+import arrow from '../../img/arrow.png'
 
 const QuestionFooterView = props => {
     return (
@@ -10,10 +10,10 @@ const QuestionFooterView = props => {
                 Abbrechen
             </button>
             <button onClick={props.backwardClick} style={weiterButton}>
-                <img src={arrow} style={{ height: '1.1em', margin: 0, transform: "rotate(180deg)" }} alt="User Icon" />
+                <img src={arrow} style={{ width: '1.7em', margin: 0, transform: "rotate(180deg)" }} alt="User Icon" />
             </button>
             <button onClick={props.forwardClick} style={weiterButton}>
-                <img src={arrow} style={{ height: '1.1em', margin: 0 }} alt="User Icon" />
+                <img src={arrow} style={{ width: '1.7em', margin: 0}} alt="User Icon" />
             </button>
         </div>
     )

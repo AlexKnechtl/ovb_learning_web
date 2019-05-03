@@ -78,6 +78,7 @@ class TestScene extends Component {
                     <p style={questionText}>
                         Welche der nachstehenden angeführten Krankheiten sind so geil das Gott sich gedacht hat sheeborghini a a a a  a a aa a a  lamborghini motherfucker nigga rigga sheesh skrrrrrrrrrrr
                     </p>
+
                     <div style={questionLine} />
 
                     <h1 style={titleAnswer}>Antworten</h1>
@@ -164,7 +165,7 @@ class TestScene extends Component {
                         3.5 Private Unfallversicherung
                     </h1>
 
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%' }}>
                         Frage 30 / 32
                     </h1>
 
@@ -185,7 +186,6 @@ class TestScene extends Component {
                         </div>
                     </div>
                 </div>
-
                 <QuestionFooter />
             </header>
         );

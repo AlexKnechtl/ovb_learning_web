@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooterView } from './common';
+import { ImageButton, QuestionFooterView, ImageLineButton } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
-import iconContinue from '../img/ic_continue.png'
+import iconWrong from '../img/x_icon.png'
+import iconPdfRed from '../img/pdf_red.png'
 
 class QuestionViewScene extends Component {
     state = {
@@ -179,15 +180,14 @@ class QuestionViewScene extends Component {
                             <ImageButton
                                 link="/kategorien"
                                 buttonText="PDF öffnen"
-                                image={iconContinue} />
+                                image={iconPdfRed} />
 
-                            <ImageButton
+                            <ImageLineButton
                                 buttonText="Falsche Fragen üben"
-                                image={iconContinue} />
+                                image={iconWrong} />
                         </div>
                     </div>
                 </div>
-
                 <QuestionFooterView forwardClick={{}} backwardClick={{}} />
             </header>
         );
