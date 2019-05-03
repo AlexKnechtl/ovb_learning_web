@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { Button, TextInput } from './common';
@@ -8,11 +10,18 @@ import userIcon from '../img/ic_user.png'
 import seekInnoIcon from '../img/seek_innovation_logo.png'
 import passwordIcon from '../img/ic_password.png'
 import background from '../img/bg_web_ovb.jpg'
+import { signInAction } from '../coreFork';
+import {connect} from "react-redux";
 
 class Login extends Component {
+
+    state = {
+        hovered: false,
+        email: "",
+        password: ""
+    }
     constructor(props) {
         super(props);
-        this.state = { hovered: false };
     }
 
     //setHover = () => this.setState({ hovered: true });
@@ -35,17 +44,22 @@ class Login extends Component {
                     <p style={{ marginTop: '3vh', fontSize: '48px' }}>Learning Suite</p>
 
                     <TextInput
+                        type="email"
+                        onChange={(event)=> this.setState({email: event.target.value})}
                         hint="E-Mail"
                         icon={userIcon}
                         name="email" />
 
                     <TextInput
+                        type="password"
+                        onChange={(event)=> this.setState({password: event.target.value})}
                         hint="Passwort"
                         icon={passwordIcon}
                         name="password" />
 
                     <Button
                         link="/home"
+                        onPress={()=> this.props.loginUser(this.state)}
                         buttonText="Anmelden">
                         Anmelden
                     </Button>
@@ -110,4 +124,13 @@ const appHeader = {
     color: 'white'
 }
 
-export default Login;
+const mapStateToProps = state => ({
+    error: state.auth.error,
+    loading: state.auth.loading
+});
+
+const mapDispatchToProps = {
+    loginUser: signInAction,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login); 
