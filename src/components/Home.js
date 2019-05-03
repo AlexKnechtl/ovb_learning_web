@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { Category, ImageButton, Options, CategoryButton, ProgressSection } from './common';
@@ -6,18 +8,95 @@ import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
 import imageCategory from '../img/bg_category.png'
+import { signOutAction, SetCurrentModuleAction, initExamAction, GotModulesAction } from '../coreFork';
+import { connect } from 'react-redux';
 
 class Home extends Component {
+
+    initialized = false;
+    constructor(props) {
+        super(props);
+        this.state = {
+            testMode: false,
+            // icon: icOptions,
+            categories: []
+        };
+        console.log(this.state);
+    }
+    testButtonPress() {
+        this.initialized = true;
+        if (this.state.testMode == false) {
+            this.setState({
+                testMode: !this.state.testMode,
+                // icon: icBack TODO: implement
+            });
+        } else if (this.state.testMode == true) {
+            // this.props.navigation.navigate('test');
+            var mids = []
+            Object.keys(this.state.categories).forEach(key => { if (this.state.categories[key].isPressed) mids.push(key); });
+            console.log(mids);
+            if (mids.length == 0)
+                return;
+            this.props.dispatchStartExam(mids);
+        }
+    }
+
+    // optionsPress() {
+    //     this.initialized = true;
+    //     if (this.state.testMode == false) {
+    //         //No Test Mode
+    //         this.refs.popupCenter.showAddModal();
+    //     } else if (this.state.testMode == true) {
+    //         //Test Mode activated
+    //         var cats = this.state.categories;
+    //         Object.keys(cats).forEach(key => cats[key].isPressed = false);
+    //         this.setState({
+    //             categories: {
+    //                 ...cats
+    //             }
+    //         });
+    //         this.setState({
+    //             testMode: !this.state.testMode,
+    //             icon: icOptions
+    //         });
+    //     }
+    // }
+
+    categoryPress(sectionID) {
+        this.initialized = true;
+        if (this.state.testMode == false) {
+            this.props.dispatchSelectCategory(sectionID);
+        } else {
+            var cat = this.state.categories[sectionID] || {};
+            cat.isPressed = !cat || !cat.isPressed;
+            this.setState({
+                categories: {
+                    ...this.state.categories, [sectionID]: cat
+                }
+            });
+        }
+    }
 
     render() {
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
                     <h1 style={titleStyle}>Übungsbereiche</h1>
-                    <Category
-                        link="/kategorien"
-                        categoryImage={imageCategory}
-                        titleName="1 Allgemeine Rechtskunde" />
+                    {Object.keys(this.props.modules).map((sectionID) =>
+                            <Category
+                                key={sectionID}
+                                // ref={(thisItem) => this[sectionID] = thisItem}
+                                onPress={this.categoryPress.bind(this, sectionID)}
+                                isPressed={(this.state.categories[sectionID] || {}).isPressed}
+                                testMode={this.state.testMode}
+                                imageUri={this.props.modules[sectionID].image||"" }
+                                titleText={this.props.modules[sectionID].name||""}
+                                questionsRight={this.props.modules[sectionID].seenQuestions||0}
+                                questionsFalse={this.props.modules[sectionID].falseQuestions||0}
+                                learningState={(this.props.modules[sectionID].seenQuestions||0) / (this.props.modules[sectionID].questionCount||1)}
+                                successRate={this.props.modules[sectionID].successRate || 0}
+                            />
+                        )}
                 </div>
                 <div style={{ width: '0.5%', backgroundColor: "#94C231" }} />
 
@@ -112,4 +191,17 @@ const questionBackText = {
     marginRight: '10%'
 }
 
-export default Home;
+const mapDispatchToProps = {
+    dispatchLogOut: signOutAction,
+    dispatchSelectCategory: SetCurrentModuleAction,
+    dispatchStartExam: initExamAction,
+    dispatchUpdateModules: GotModulesAction
+};
+
+const mapStateToProps = state => ({
+    modules: state.modules.modules,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
+
+// export default Home;

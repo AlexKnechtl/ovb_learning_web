@@ -58,7 +58,6 @@ class Login extends Component {
                         name="password" />
 
                     <Button
-                        link="/home"
                         onPress={()=> this.props.loginUser(this.state)}
                         buttonText="Anmelden">
                         Anmelden

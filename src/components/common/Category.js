@@ -1,14 +1,16 @@
+//@ts-check
+
 import React from 'react';
 import { Link } from 'react-router-dom'
 import Progress from 'react-progressbar';
 import Center from 'react-center';
 import '../styles.css';
 
-const Category = props => {
+const Category = ({link, imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode}) => {
     return (
-        <Link to={props.link} style={{ textDecoration: "none" }}>
-            <div style={{
-                backgroundImage: `url(${props.categoryImage})`,
+        <Link to={link} style={{ textDecoration: "none" }}>
+            <div onClick={onPress} style={{
+                backgroundImage: `url(${imageUri})`,
                 backgroundSize: '110%',
                 width: '40%',
                 textDecorationLine: 'none',
@@ -16,21 +18,21 @@ const Category = props => {
                 textDecorationColor: '#fff0',
                 marginLeft: '1.5em'
             }}>
-                <p style={title}> {props.titleName} </p>
+                <p style={title}> {titleText} </p>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <div style={{ width: '68%', textAlign: "center", marginLeft: 8 }}>
                         <div style={{ color: '#fff', fontSize: "0.65em" }}>
-                            0% abgeschlossen
+                            Lernfortschritt
                         </div>
-                        <Progress style={progressBar} color="#94C231" height={18} completed={75} />
+                        <Progress style={progressBar} color="#94C231" height={18} completed={learningState*100} />
                         <p style={{ color: "#fff8", marginTop: 2, fontSize: 16 }}>
-                            3 Fragen falsch beantwortet
+                        {questionsRight} Fragen richtig / {questionsFalse} falsch
                         </p>
                     </div>
                     <div align="center" style={{ width: '30%' }}>
                         <Center style={erfolgBackground}>
                             <p style={percentageText}>
-                                30%
+                                {(successRate * 100).toFixed(0)} %
                             </p>
                         </Center>
                         <p style={erfolgschance}>

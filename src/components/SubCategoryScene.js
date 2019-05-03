@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection } from './common';
@@ -6,24 +8,47 @@ import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
 import imageCategory from '../img/bg_category.png'
+import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService } from '../coreFork';
+import { connect } from 'react-redux';
 
 class SubCategoryScene extends Component {
 
+    mapModules() {
+        var currMID = this.props.modules.currentModuleID;
+        if (!currMID) return undefined;
+        var currMods = this.props.modules.modules[currMID].modules;
+        var la = new LearningAlgorithm(new QuestionService(), LearningService);
+        return Object.keys(currMods).map(key => {
+            var stats = la.calcCurrentLearningStatsForModule(key);
+            return (<SubCategory key={key}
+                onPress={() => this.props.dispatchSelectSubmodule(key, currMods[key].name)}
+                titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
+                learningState={stats.seenQuestions / stats.questionCount}
+                successRate={stats.successRate}
+            />);
+        });
+    }
+
     render() {
+        if(!this.props.modules.modules) return undefined;
+        var currMID = this.props.modules.currentModuleID;
+        const { falseQuestions, image, modules, name, questionCount, seenQuestions: rightQuestions, successRate }= this.props.modules.modules[currMID];
+
+
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>1 Allgemeine Rechtskunde</h1>
-                    <SubCategory
-                        categoryImage={imageCategory}
-                        titleName="2 Allgemeine Rechtskunde" />
+                    <h1 style={titleStyle}>{this.props.modules.modules[this.props.modules.currentModuleID].name}</h1>
+                    <div style={{scrollBehavior: "smooth"}}>
+                        {this.mapModules()}
+                    </div>
                 </div>
                 <div style={{ width: '0.5%', backgroundColor: "#58ACD9" }} />
 
                 <div style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
                     <h1 style={{ fontSize: '1em', fontWeight: 'bold', marginTop: '3%' }}>
-                        1 Allgemeine Rechtskunde
+                        {this.props.modules.modules[this.props.modules.currentModuleID].name}
                     </h1>
 
                     <CategoryButton
@@ -50,17 +75,19 @@ class SubCategoryScene extends Component {
 
                     <ProgressSection
                         progressColor="#58D980"
-                        progressText="Fortschritt" />
+                        progressText="Fortschritt"
+                        progress={rightQuestions/questionCount} />
 
                     <ProgressSection
                         progressColor="#58ACD9"
-                        progressText="Erfolgschance" />
+                        progressText="Erfolgschance"
+                        progress={successRate} />
 
                     <p style={questionBackText}>
-                        6 / 36 Fragen richtig
+                        {rightQuestions} / {questionCount} Fragen richtig
                     </p>
 
-                    <p style={{ fontSize: 18 }}>14 Fragen falsch beantwortet</p>
+                    <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
                 </div>
                 <Options />
             </header>
@@ -111,4 +138,15 @@ const questionBackText = {
     marginRight: '10%'
 }
 
-export default SubCategoryScene;
+// export default SubCategoryScene;
+const mapDispatchToProps = {
+    dispatchSelectSubmodule: SelectSubmoduleAction,
+    dispatchSelectLearningMode: setLearningModeAction,
+    dispatchContinueSectionLearning: continueSectionLearningAction
+};
+
+const mapStateToProps = state => ({
+    modules: state.modules,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SubCategoryScene);
