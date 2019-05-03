@@ -1,17 +1,19 @@
+//@ts-check
+
 import React from 'react';
 import Progress from 'react-progressbar';
 import '../styles.css';
 
-const ProgressSection = props => {
+const ProgressSection = ({progressText, progressColor, progress}) => {
     return (
         <div>
             <p style={fortschrittText}>
-                {props.progressText}
+                {progressText}
             </p>
             <div style={row}>
-                <Progress style={progressBar} color={props.progressColor} height={22} completed={75} />
+                <Progress style={progressBar} color={progressColor} height={22} completed={progress*100} />
                 <p style={percentageText}>
-                    35%
+                    {(progress*100).toFixed(0)}%
                 </p>
             </div>
         </div>

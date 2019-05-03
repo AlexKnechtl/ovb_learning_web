@@ -1,0 +1,9 @@
+{
+    "extends": "react-app",
+    "rules": {
+        "no-undef": 0,
+        "no-restricted-globals": 0,
+        "import/first":0,
+        "no-unused-expressions": 0
+    }
+}
