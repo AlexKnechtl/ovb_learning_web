@@ -1,4 +1,6 @@
 //@ts-check
+// import { hot } from 'react-hot-loader/root';
+
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 
@@ -15,6 +17,7 @@ import NavigationService from './NavigationService';
 import { createBrowserHistory } from 'history';
 import { connectRouter, ConnectedRouter, push, routerMiddleware } from 'connected-react-router';
 import { navigationSagas } from './NavigationSagas';
+import PrivateRoute from './PrivateRoute';
 
 
 export const history = createBrowserHistory();
@@ -23,20 +26,20 @@ export const store = configureStore({router: connectRouter(history)}, navigation
 store.dispatch(signInWithoutPasswordAction());
 
 
-export class App extends Component {
+class App extends Component {
   render() {
     return (
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div>
             <Switch>
-              <Route path="/" component={Login} exact />
-              <Route path="/home" component={Home} />
-              <Route path="/kategorien" component={SubCategoryScene} />
-              <Route path="/question" component={QuestionScene} />
-              <Route path="/questionView" component={QuestionViewScene} />
-              <Route path="/test" component={TestScene} />
-              <Route path="/testResult" component={TestResultScene} />
+              <Route path="/login" component={Login} exact />
+              <PrivateRoute path="/category/:catId" component={SubCategoryScene} />
+              <PrivateRoute path="/question" component={QuestionScene} />
+              <PrivateRoute path="/questionView" component={QuestionViewScene} />
+              <PrivateRoute path="/test" component={TestScene} />
+              <PrivateRoute path="/testResult" component={TestResultScene} />
+              <PrivateRoute path="/" component={Home} />
             </Switch>
           </div>
         </ConnectedRouter>
@@ -45,4 +48,4 @@ export class App extends Component {
   }
 }
 
-export default App;
+export default App;//hot(App);

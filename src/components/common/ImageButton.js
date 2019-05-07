@@ -1,15 +1,17 @@
+//@ts-check
+
 import React from 'react';
 import { Link } from 'react-router-dom'
 import Center from 'react-center'
 
-const ImageButton = props => {
+const ImageButton = ({image, onPress, buttonText, link}) => {
     return (
-        <Link style={{ textDecoration: "none" }} to={props.link}>
-            <button
+        <Link style={{ textDecoration: "none" }} to={link}>
+            <button onClick={onPress}
                 style={button}>
                 <Center>
-                    <img src={props.image} style={{ maxHeight: '1.3em', maxWidth: '1.3em', marginRight: 12 }} alt="User Icon" />
-                    {props.buttonText}
+                    <img src={image} style={{ maxHeight: '1.3em', maxWidth: '1.3em', marginRight: 12 }} alt="User Icon" />
+                    {buttonText}
                 </Center>
             </button>
         </Link >

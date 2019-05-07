@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, QuestionFooter, ImageLineButton } from './common';
@@ -6,6 +8,8 @@ import './styles.css';
 
 import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
+import { updateCurrentQuestion, getNextQuestionAction, MultipleChoiceQuestionInteractor, LearningAlgorithm, QuestionService, LearningService, learnFalseQuestionsFromModuleAction } from '../coreFork';
+import { connect } from 'react-redux';
 
 class QuestionScene extends Component {
     state = {
@@ -15,17 +19,21 @@ class QuestionScene extends Component {
         check: false,
         lastAnswerRight: undefined
     }
-
+    la = new LearningAlgorithm(new QuestionService(), LearningService);
+    constructor(props) {
+        super(props);
+        props.dispatchGetNextQuestion();
+    }
     answer1Click() {
         if (this.state.check) return;
         console.log(this.state.answer1Clicked);
         this.setState({ answer1Clicked: false });
         this.setState({ answer2Clicked: true });
         this.setState({ answer3Clicked: true });
-        /*this.props.currentQuestion.question.answer1.choosen = true;
+        this.props.currentQuestion.question.answer1.choosen = true;
         this.props.currentQuestion.question.answer2.choosen = false;
         this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
+        this.checkAnswers(); 
     }
 
     answer2Click() {
@@ -33,11 +41,11 @@ class QuestionScene extends Component {
         this.setState({ answer2Clicked: false });
         this.setState({ answer1Clicked: true });
         this.setState({ answer3Clicked: true });
-        /*
+        
         this.props.currentQuestion.question.answer1.choosen = false;
         this.props.currentQuestion.question.answer2.choosen = true;
         this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
+        this.checkAnswers(); 
     }
 
     answer3Click() {
@@ -45,33 +53,61 @@ class QuestionScene extends Component {
         this.setState({ answer3Clicked: false });
         this.setState({ answer1Clicked: true });
         this.setState({ answer2Clicked: true });
-        /*
+        
         this.props.currentQuestion.question.answer1.choosen = false;
         this.props.currentQuestion.question.answer2.choosen = false;
         this.props.currentQuestion.question.answer3.choosen = true;
-        this.checkAnswers(); */
+        this.checkAnswers();
+    }
+
+    checkAnswers() {
+        this.setState({ check: !this.state.check });
+        if (!this.state.check) {
+            var q = this.props.currentQuestion.question;
+            var isright = new MultipleChoiceQuestionInteractor().checkIsQuestionRight(this.props.currentQuestion.question);
+            this.setState({ lastAnswerRight: isright });
+            console.log(isright);
+            // var answeredRight = this.state.answer1Clicked == q.answer1.isRight && this.state.answer2Clicked == q.answer2.isRight && this.state.answer3Clicked == q.answer3.isRight;
+            this.props.dispatchUpdateQuestion({ questionid: this.props.currentQuestion.questionId, answeredRight: isright });
+        } else {
+            this.props.dispatchGetNextQuestion();
+            this.setState({ answer3Clicked: true });
+            this.setState({ answer1Clicked: true });
+            this.setState({ answer2Clicked: true });
+        }
     }
 
     render() {
-
+        if (!this.props.currentQuestion) {
+            this.props.dispatchGetNextQuestion();
+            return null;
+        }
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
-
         const backgroundAnswer1 = answer1Clicked ? '#23B800' : '#B21515';
         const backgroundAnswer2 = answer2Clicked ? '#23B800' : '#B21515';
         const backgroundAnswer3 = answer3Clicked ? '#23B800' : '#B21515';
-
+        const questionText = this.props.currentQuestion ? this.props.currentQuestion.question.question : ''; // +  this.props.currentQuestion  ? `\nAntwort Nummer ${this.props.currentQuestion.question.answer1.isRight ? '1' : this.props.currentQuestion.question.answer2.isRight ? '2' : '3'} ist korrekt` : '';
+        const questionHeaderText = this.props.currentQuestion ? `${this.props.currentQuestion.moduleId.replace("_", "\.")} Frage ${parseInt(this.props.currentQuestion.questionId.substr(4))}` : '';
+        const answer1Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer1.answer : '';
+        const answer2Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer2.answer : '';
+        const answer3Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer3.answer : '';
+        const  { falseQuestions, 
+            questionCount, 
+            seenQuestions: rightQuestions,
+             successRate } = this.la.calcCurrentLearningStatsForModule(this.props.currentQuestion.moduleId);
+        const { name: subModuleName } = this.props.modules.modules[this.props.currentQuestion.sectionId].modules[this.props.currentQuestion.moduleId];
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>1.2 Frage 9</h1>
-                    <p style={questionText}>
-                        Welche der nachstehenden angeführten Krankheiten sind so geil das Gott sich gedacht hat sheeborghini a a a a  a a aa a a  lamborghini motherfucker nigga rigga sheesh skrrrrrrrrrrr
+                    <h1 style={titleStyle}>{questionHeaderText}</h1>
+                    <p style={questionTextStyle}>
+                        {questionText}
                     </p>
                     <div style={questionLine} />
 
                     <h1 style={titleAnswer}>Antworten</h1>
 
-                    <button
+                    <button disabled={this.state.check}
                         onClick={this.answer1Click.bind(this)}
                         style={{
                             border: 'solid',
@@ -87,16 +123,11 @@ class QuestionScene extends Component {
                             marginBottom: 16
                         }}>
                         <p style={{ fontSize: 14, color: answer1Clicked ? '#fff' : '#fff', margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                            sea takimata sanctus est Lorem ipsum dolor sit amet.
+                            {answer1Text}
                         </p>
                     </button>
 
-                    <button
+                    <button disabled={this.state.check}
                         onClick={this.answer2Click.bind(this)}
                         style={{
                             border: 'solid',
@@ -111,13 +142,12 @@ class QuestionScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer2, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                        </p>
+                        <p style={{ fontSize: 14, color: "#fff", margin: 12 }}>
+                            {answer2Text}
+                       </p>
                     </button>
 
-                    <button
+                    <button disabled={this.state.check}
                         onClick={this.answer3Click.bind(this)}
                         style={{
                             border: 'solid',
@@ -132,11 +162,8 @@ class QuestionScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer3, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
+                        <p style={{ fontSize: 14, color: "#fff", margin: 12 }}>
+                           {answer3Text}
                         </p>
                     </button>
                 </div>
@@ -150,11 +177,11 @@ class QuestionScene extends Component {
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
-                        3.5 Private Unfallversicherung
+                        {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
-                        Frage 30 / 32
+                        Frage {parseInt(this.props.currentQuestion.questionId.substr(4))} / {questionCount}
                     </h1>
 
                     <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
@@ -164,11 +191,11 @@ class QuestionScene extends Component {
                     </div>
 
                     <p style={wrongAnswers}>
-                        4 Antworten falsch
+                        {falseQuestions} Antworten falsch
                     </p>
 
                     <p style={questionBackText}>
-                        16 Antworten richtig
+                        {rightQuestions} Antworten richtig
                     </p>
 
                     <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
@@ -184,12 +211,19 @@ class QuestionScene extends Component {
 
                             <ImageLineButton
                                 buttonText="Falsche Fragen üben"
-                                image={iconWrong} />
+                                image={iconWrong} onPress={() => {
+                            if (falseQuestions == 0)
+                                console.log("doNothing"); //TODO: implement modal or sth like that
+                            else
+                                this.props.dispatchLearnFalseQuestions(this.props.currentQuestion.moduleId);
+                        }}/>
                         </div>
                     </div>
                 </div>
 
-                <QuestionFooter />
+                <QuestionFooter onPressContinue={() => this.state.check ? this.checkAnswers() : {}} 
+                onPressBack={()=>{}} 
+                backDisabled={!this.state.check} />
             </header>
         );
     }
@@ -235,7 +269,7 @@ const titleAnswer = {
     marginBottom: 18
 }
 
-const questionText = {
+const questionTextStyle = {
     fontSize: 18,
     color: '#003A65',
     textAlign: "left",
@@ -287,4 +321,17 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default QuestionScene;
+// export default QuestionScene;
+const mapDispatchToProps = {
+    dispatchUpdateQuestion: updateCurrentQuestion,
+    dispatchGetNextQuestion: getNextQuestionAction,
+    dispatchLearnFalseQuestions: learnFalseQuestionsFromModuleAction
+};
+
+const mapStateToProps = state => ({
+    currentQuestion: state.learning.currentQuestion,
+    noMoreQuestions: state.learning.noMoreQuestions,
+    modules: state.modules
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionScene);

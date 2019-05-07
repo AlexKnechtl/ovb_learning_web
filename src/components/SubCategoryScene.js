@@ -8,20 +8,23 @@ import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
 import imageCategory from '../img/bg_category.png'
-import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService } from '../coreFork';
+import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
 
 class SubCategoryScene extends Component {
 
+    state = {
+        currentSubmodule: null
+    }
+    la = new LearningAlgorithm(new QuestionService(), LearningService);
     mapModules() {
-        var currMID = this.props.modules.currentModuleID;
+        var currMID = this.props.match.params.catId;
         if (!currMID) return undefined;
         var currMods = this.props.modules.modules[currMID].modules;
-        var la = new LearningAlgorithm(new QuestionService(), LearningService);
         return Object.keys(currMods).map(key => {
-            var stats = la.calcCurrentLearningStatsForModule(key);
-            return (<SubCategory key={key}
-                onPress={() => this.props.dispatchSelectSubmodule(key, currMods[key].name)}
+            var stats = this.la.calcCurrentLearningStatsForModule(key);
+            return (<SubCategory key={key} onMouseEnter={()=>this.setState({currentSubmodule: key})}
+                onPress={() => this.setState({currentSubmodule: key})}
                 titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
                 learningState={stats.seenQuestions / stats.questionCount}
                 successRate={stats.successRate}
@@ -29,16 +32,23 @@ class SubCategoryScene extends Component {
         });
     }
 
+    startLearning = () => {
+        this.state.currentSubmodule ? 
+        this.props.dispatchContinueModuleLearning(this.state.currentSubmodule) : 
+        this.props.dispatchContinueSectionLearning(this.props.match.params.catId);
+    }
+
     render() {
+        // console.log(this.props.match.params.catId);
+        
         if(!this.props.modules.modules) return undefined;
-        var currMID = this.props.modules.currentModuleID;
-        const { falseQuestions, image, modules, name, questionCount, seenQuestions: rightQuestions, successRate }= this.props.modules.modules[currMID];
-
-
+        var currMID = this.props.match.params.catId;
+        const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
+        const  { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>{this.props.modules.modules[this.props.modules.currentModuleID].name}</h1>
+                    <h1 style={titleStyle}>{this.props.modules.modules[currMID].name}</h1>
                     <div style={{scrollBehavior: "smooth"}}>
                         {this.mapModules()}
                     </div>
@@ -48,7 +58,7 @@ class SubCategoryScene extends Component {
                 <div style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
                     <h1 style={{ fontSize: '1em', fontWeight: 'bold', marginTop: '3%' }}>
-                        {this.props.modules.modules[this.props.modules.currentModuleID].name}
+                        {this.props.modules.modules[currMID].name}
                     </h1>
 
                     <CategoryButton
@@ -57,10 +67,12 @@ class SubCategoryScene extends Component {
 
                     <div align="right" style={{ marginRight: '11%' }}>
                         <ImageButton
-                            link="/question"
+                            onPress={this.startLearning}
                             buttonText="Übungsmodus"
                             image={iconContinue} />
                         <ImageButton
+                        onPress={() => { if (falseQuestions == 0) console.log("doNothing"); //TODO: implement modal or sth like that
+                            else this.props.dispatchLearnFalseQuestions(this.state.currentSubmodule); }}
                             buttonText="Falsche Fragen üben"
                             image={iconContinue} />
                         <ImageButton
@@ -142,7 +154,9 @@ const questionBackText = {
 const mapDispatchToProps = {
     dispatchSelectSubmodule: SelectSubmoduleAction,
     dispatchSelectLearningMode: setLearningModeAction,
-    dispatchContinueSectionLearning: continueSectionLearningAction
+    dispatchContinueSectionLearning: continueSectionLearningAction,
+    dispatchContinueModuleLearning: continueModuleLearningAction,
+    dispatchLearnFalseQuestions: learnFalseQuestionsFromModuleAction
 };
 
 const mapStateToProps = state => ({

@@ -5,7 +5,7 @@ import Center from 'react-center'
 const ImageLineButton = props => {
     return (
         <Link style={{ textDecoration: "none" }} to={props.link}>
-            <button
+            <button onClick={props.onPress}
                 style={button}>
                 <Center>
                     <img src={props.image} style={{ maxHeight: '1.2em', maxWidth: '1.3em', marginRight: 12 }} alt="User Icon" />

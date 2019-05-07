@@ -10,6 +10,7 @@ import iconContinue from '../img/ic_continue.png'
 import imageCategory from '../img/bg_category.png'
 import { signOutAction, SetCurrentModuleAction, initExamAction, GotModulesAction } from '../coreFork';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
 class Home extends Component {
 
@@ -190,10 +191,11 @@ const questionBackText = {
     marginLeft: '10%',
     marginRight: '10%'
 }
+const setCurrentModuleAction = (catId) => push(`/category/${catId}`);
 
 const mapDispatchToProps = {
     dispatchLogOut: signOutAction,
-    dispatchSelectCategory: SetCurrentModuleAction,
+    dispatchSelectCategory: setCurrentModuleAction,
     dispatchStartExam: initExamAction,
     dispatchUpdateModules: GotModulesAction
 };

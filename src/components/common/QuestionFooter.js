@@ -1,13 +1,13 @@
 import React from 'react';
 import '../styles.css';
 
-const QuestionFooter = props => {
+const QuestionFooter = ({onPressBack, backDisabled = false, continueDisabled = false, onPressContinue}) => {
     return (
         <div style={bottomLayout} >
-            <button style={backButton}>
+            <button style={backButton} onClick={onPressBack} disabled={backDisabled}>
                 Abbrechen
             </button>
-            <button style={weiterButton}>
+            <button style={weiterButton} onClick={onPressContinue} disabled={continueDisabled}>
                 Weiter
             </button>
         </div>

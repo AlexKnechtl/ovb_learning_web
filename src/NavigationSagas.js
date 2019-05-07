@@ -6,7 +6,6 @@ import { LOGIN_FAILED, SIGNED_OUT, START_SIGN_IN, START_SIGN_IN_WITHOUT_CREDENTI
 import { push } from 'connected-react-router';
 
 export function* navigateOnAction({type}){
-    console.log("adjalkdsfjalkdsfjlkdsajflkdajflkadjf");
     switch (type) {
         case LOGIN_SUCCESS: yield put(push('/'));
             break;
@@ -16,7 +15,7 @@ export function* navigateOnAction({type}){
         case START_SIGN_IN:
         case START_SIGN_IN_WITHOUT_CREDENTIAL: //yield put(push('AuthLoading'));
             break;
-        case SET_CURRENT_MODULE: yield put(push('/kategorien'));
+        case SET_CURRENT_MODULE: yield put(push('/category'));
             break;
         case SELECT_CURRENT_SUBMODULE: yield put(push('info'));
             break;
