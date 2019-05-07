@@ -71,7 +71,7 @@ class SubCategoryScene extends Component {
                             buttonText="Übungsmodus"
                             image={iconContinue} />
                         <ImageButton
-                        onPress={() => { if (falseQuestions == 0) console.log("doNothing"); //TODO: implement modal or sth like that
+                        onPress={() => { if (this.state.currentSubmodule && falseQuestions == 0) console.log("doNothing"); //TODO: implement modal or sth like that
                             else this.props.dispatchLearnFalseQuestions(this.state.currentSubmodule); }}
                             buttonText="Falsche Fragen üben"
                             image={iconContinue} />
