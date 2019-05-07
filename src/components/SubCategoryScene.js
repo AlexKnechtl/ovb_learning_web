@@ -7,6 +7,8 @@ import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
+import iconBook from '../img/ic_look_through.png'
+import iconWrongQuestions from '../img/ic_wrong_questions.png'
 import imageCategory from '../img/bg_category.png'
 import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
@@ -74,11 +76,11 @@ class SubCategoryScene extends Component {
                         onPress={() => { if (this.state.currentSubmodule && falseQuestions == 0) console.log("doNothing"); //TODO: implement modal or sth like that
                             else this.props.dispatchLearnFalseQuestions(this.state.currentSubmodule); }}
                             buttonText="Falsche Fragen üben"
-                            image={iconContinue} />
+                            image={iconWrongQuestions} />
                         <ImageButton
                             link="/questionView"
                             buttonText="Fragen durchblättern"
-                            image={iconContinue} />
+                            image={iconBook} />
                     </div>
 
                     <p style={statisticsText}>

@@ -7,6 +7,8 @@ import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
+import iconBook from '../img/ic_look_through.png'
+import iconPdf from '../img/ic_pdf.png'
 import imageCategory from '../img/bg_category.png'
 import { signOutAction, SetCurrentModuleAction, initExamAction, GotModulesAction } from '../coreFork';
 import { connect } from 'react-redux';
@@ -118,10 +120,10 @@ class Home extends Component {
                             image={iconContinue} />
                         <ImageButton
                             buttonText="Lernunterlagen"
-                            image={iconContinue} />
+                            image={iconPdf} />
                         <ImageButton
                             buttonText="Übungsmodus"
-                            image={iconContinue} />
+                            image={iconBook} />
                     </div>
 
                     <p style={statisticsText}>
