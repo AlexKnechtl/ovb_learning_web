@@ -6,7 +6,7 @@ import Progress from 'react-progressbar';
 import Center from 'react-center';
 import '../styles.css';
 
-const Category = ({link, imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode}) => {
+const Category = ({link, imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode, ...props}) => {
     return (
         <Link to={link} style={{ textDecoration: "none" }}>
             <div onClick={onPress} style={{
@@ -17,7 +17,7 @@ const Category = ({link, imageUri, titleText, onPress, learningState, isPressed,
                 textDecoration: 'none',
                 textDecorationColor: '#fff0',
                 marginLeft: '1.5em'
-            }}>
+            }} {...props}>
                 <p style={title}> {titleText} </p>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <div style={{ width: '68%', textAlign: "center", marginLeft: 8 }}>

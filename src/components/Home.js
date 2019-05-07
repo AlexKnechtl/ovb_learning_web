@@ -15,15 +15,15 @@ import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 
 class Home extends Component {
-
+    state = {
+        currentModule: null,
+        testMode: false,
+        // icon: icOptions,
+        categories: []
+    };
     initialized = false;
     constructor(props) {
         super(props);
-        this.state = {
-            testMode: false,
-            // icon: icOptions,
-            categories: []
-        };
         console.log(this.state);
     }
     testButtonPress() {
@@ -81,6 +81,9 @@ class Home extends Component {
     }
 
     render() {
+        if(Object.keys(this.props.modules).length == 0) return null;
+        var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
+        const  { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate, name } = this.props.modules[currMid]
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
@@ -88,6 +91,7 @@ class Home extends Component {
                     {Object.keys(this.props.modules).map((sectionID) =>
                             <Category
                                 key={sectionID}
+                                onMouseEnter={()=>this.setState({currentModule: sectionID})}
                                 // ref={(thisItem) => this[sectionID] = thisItem}
                                 onPress={this.categoryPress.bind(this, sectionID)}
                                 isPressed={(this.state.categories[sectionID] || {}).isPressed}
@@ -106,7 +110,7 @@ class Home extends Component {
                 <div style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
                     <h1 style={{ fontSize: '1em', fontWeight: 'bold', marginTop: '3%' }}>
-                        1 Allgemeine Rechtskunde
+                        {name}
                     </h1>
 
                     <CategoryButton
@@ -132,17 +136,19 @@ class Home extends Component {
 
                     <ProgressSection
                         progressColor="#58D980"
-                        progressText="Fortschritt" />
+                        progressText="Fortschritt"
+                        progress={rightQuestions/questionCount} />
 
                     <ProgressSection
                         progressColor="#58ACD9"
-                        progressText="Erfolgschance" />
+                        progressText="Erfolgschance"
+                        progress={successRate} />
 
                     <p style={questionBackText}>
-                        6 / 36 Fragen richtig
+                        {rightQuestions} / {questionCount} Fragen richtig
                     </p>
 
-                    <p style={{ fontSize: 18 }}>14 Fragen falsch beantwortet</p>
+                    <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
                 </div>
                 <Options />
             </header>
