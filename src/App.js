@@ -18,6 +18,7 @@ import { createBrowserHistory } from 'history';
 import { connectRouter, ConnectedRouter, push, routerMiddleware } from 'connected-react-router';
 import { navigationSagas } from './NavigationSagas';
 import PrivateRoute from './PrivateRoute';
+import TestStatistics from './components/TestStatistics';
 
 
 export const history = createBrowserHistory();
@@ -39,6 +40,7 @@ class App extends Component {
               <PrivateRoute path="/questionView" component={QuestionViewScene} />
               <PrivateRoute path="/test" component={TestScene} />
               <PrivateRoute path="/testResult" component={TestResultScene} />
+              <PrivateRoute path="/testStatistics" component={TestStatistics}/>
               <PrivateRoute path="/" component={Home} />
             </Switch>
           </div>

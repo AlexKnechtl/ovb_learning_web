@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, QuestionFooter } from './common';
@@ -5,77 +7,90 @@ import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
+import { getNextExamResultQuestionAction, getPrevExamResultQuestionAction } from '../coreFork';
+import { connect } from 'react-redux';
 
 class TestResultScene extends Component {
     state = {
-        answer1Clicked: true,
-        answer2Clicked: true,
-        answer3Clicked: true,
+        answer1Clicked: false,
+        answer2Clicked: false,
+        answer3Clicked: false,
         check: false,
-        lastAnswerRight: undefined
-    }
-
-    answer1Click() {
-        if (this.state.check) return;
-        console.log(this.state.answer1Clicked);
-        this.setState({ answer1Clicked: false });
-        this.setState({ answer2Clicked: true });
-        this.setState({ answer3Clicked: true });
-        /*this.props.currentQuestion.question.answer1.choosen = true;
-        this.props.currentQuestion.question.answer2.choosen = false;
-        this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
-    }
-
-    answer2Click() {
-        if (this.state.check) return;
-        this.setState({ answer2Clicked: false });
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer3Clicked: true });
-        /*
-        this.props.currentQuestion.question.answer1.choosen = false;
-        this.props.currentQuestion.question.answer2.choosen = true;
-        this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
-    }
-
-    answer3Click() {
-        if (this.state.check) return;
-        this.setState({ answer3Clicked: false });
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer2Clicked: true });
-        /*
-        this.props.currentQuestion.question.answer1.choosen = false;
-        this.props.currentQuestion.question.answer2.choosen = false;
-        this.props.currentQuestion.question.answer3.choosen = true;
-        this.checkAnswers(); */
+        lastAnswerRight: undefined,
+        currentQuestion: undefined,
+        currQuestionIndex: 0
     }
 
     render() {
 
-        const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
+        var currentQuestion = this.props.examResult.currentQuestion;
+        if (!currentQuestion) {
+            return;
+        }
 
-        const backgroundAnswer1 = answer1Clicked ? '#23B800' : '#B21515';
-        const backgroundAnswer2 = answer2Clicked ? '#23B800' : '#B21515';
-        const backgroundAnswer3 = answer3Clicked ? '#23B800' : '#B21515';
+        const answer1Clicked = !currentQuestion.question.answer1.choosen;
+        const answer2Clicked = !currentQuestion.question.answer2.choosen;
+        const answer3Clicked = !currentQuestion.question.answer3.choosen;
+
+        //Antwort die ausgewählt wurde
+        const marginAnswer1 = answer1Clicked ? 20 : -1;
+        const marginAnswer2 = answer2Clicked ? 20 : -1;
+        const marginAnswer3 = answer3Clicked ? 20 : -1;
+
+        const fontWeightStyle = answer1Clicked ? "normal" : "bold";
+        const fontWeightStyle2 = answer2Clicked ? "normal" : "bold";
+        const fontWeightStyle3 = answer3Clicked ? "normal" : "bold";
+
+        //Hier muss nur noch die richtige Farbe der Antworten angezeigt werden
+        //Richtig --> Grün Falsch --> Rot
+        const backgroundColor1 = currentQuestion.question.answer1.isRight ? '#23B800' : '#B21515';
+        const backgroundColor2 = currentQuestion.question.answer2.isRight ? '#23B800' : '#B21515';
+        const backgroundColor3 = currentQuestion.question.answer3.isRight ? '#23B800' : '#B21515';
+
+        let lineColor1;
+
+        if (backgroundColor1 == '#23B800' && !answer1Clicked || backgroundColor2 == '#23B800' && !answer2Clicked || backgroundColor3 == '#23B800' && !answer3Clicked)
+            lineColor1 = '#23B800';
+        else if (answer1Clicked && answer2Clicked && answer3Clicked)
+            lineColor1 = '#00B7E5'
+        else
+            lineColor1 = '#B21515'
+
+        var question = currentQuestion.question.question;
+
+        var a1 = currentQuestion.question.answer1.answer;
+        var a2 = currentQuestion.question.answer2.answer;
+        var a3 = currentQuestion.question.answer3.answer;
+        const pdfSrc = ((currentQuestion||{}).pdfInfo||{}).url;
+        const pdfPage = ((currentQuestion||{}).pdfInfo||{}).pageNumber;
+
+        var canGetNextQuestion = this.props.examResult.canGetNextQuestion;
+        var cangetPrevQuestion = this.props.examResult.currentIndex > 0;
+
+        
+        const questionHeaderText = `${currentQuestion.moduleId.replace("_", "\.")} Frage ${currentQuestion.questionId.substr(4)}`;
+        // const questionText = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.question : '';
+        // const answer1Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer1.answer : '';
+        // const answer2Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer2.answer : '';
+        // const answer3Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer3.answer : '';
+        const subModuleId = `${currentQuestion.moduleId.replace("_", "\.")}`;
+        const questionNumberText = `Frage ${this.props.examResult.currentIndex + 1} / ${this.props.examResult.questions.length}`;
+        const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
 
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>1.2 Frage 9</h1>
-                    <p style={questionText}>
-                        Welche der nachstehenden angeführten Krankheiten sind so geil das Gott sich gedacht hat sheeborghini a a a a  a a aa a a  lamborghini motherfucker nigga rigga sheesh skrrrrrrrrrrr
-                    </p>
+                    <h1 style={titleStyle}>{questionHeaderText}</h1>
+                    <p style={questionText}>{question}</p>
                     <div style={questionLine} />
 
                     <h1 style={titleAnswer}>Antworten</h1>
 
-                    <button
-                        onClick={this.answer1Click.bind(this)}
+                    <div
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
-                            backgroundColor: backgroundAnswer1,
+                            backgroundColor: backgroundColor1,
                             borderWidth: answer1Clicked ? 0 : 2,
                             minHeight: '12%',
                             outline: 'none',
@@ -85,23 +100,15 @@ class TestResultScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: answer1Clicked ? '#fff' : '#fff', margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                            sea takimata sanctus est Lorem ipsum dolor sit amet.
-                        </p>
-                    </button>
+                        <p style={{ fontSize: 14, color: '#fff', margin: 12 }}>{a1}</p>
+                    </div>
 
-                    <button
-                        onClick={this.answer2Click.bind(this)}
+                    <div
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
                             minHeight: '12%',
-                            backgroundColor: backgroundAnswer2,
+                            backgroundColor: backgroundColor2,
                             borderWidth: answer2Clicked ? 0 : 2,
                             textAlign: 'left',
                             outline: 'none',
@@ -110,18 +117,14 @@ class TestResultScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer2, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                        </p>
-                    </button>
+                        <p style={{ fontSize: 14, color: '#fff', margin: 12 }}>{a2}</p>
+                    </div>
 
-                    <button
-                        onClick={this.answer3Click.bind(this)}
+                    <div
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
-                            backgroundColor: backgroundAnswer3,
+                            backgroundColor: backgroundColor3,
                             borderWidth: answer1Clicked ? 0 : 2,
                             minHeight: '12%',
                             textAlign: 'left',
@@ -131,13 +134,8 @@ class TestResultScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer3, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                        </p>
-                    </button>
+                        <p style={{ fontSize: 14, color: '#fff', margin: 12 }}>{a3}</p>
+                    </div>
                 </div>
 
                 <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
@@ -149,11 +147,11 @@ class TestResultScene extends Component {
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
-                        3.5 Private Unfallversicherung
+                        {subModuleId + " " + subModuleName}
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%' }}>
-                        Frage 30 / 32
+                        {questionNumberText}
                     </h1>
 
                     <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
@@ -174,10 +172,49 @@ class TestResultScene extends Component {
                     </div>
                 </div>
 
-                <QuestionFooter />
+                <div style={bottomLayout} >
+                    <button style={backButton} onClick={() => this.props.dispatchGetPrevQuestion()} disabled={!cangetPrevQuestion}>
+                        Vor
+                    </button>
+                    <button style={weiterButton} onClick={() => this.props.dispatchGetNextQuestion()} disabled={!canGetNextQuestion}>
+                        Weiter
+                    </button>
+                </div>
             </header>
         );
     }
+}
+const bottomLayout = {
+    position: 'absolute',
+    bottom: '1em',
+    left: '3.5%',
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    height: '2em',
+    width: '64.3%',
+}
+
+const backButton = {
+    backgroundColor: '#fff',
+    border: 'solid',
+    fontSize: 20,
+    borderWidth: 2,
+    color: '#003A65',
+    marginRight: 12,
+    borderColor: '#003A65',
+    width: '50%',
+    height: 40
+}
+
+const weiterButton = {
+    backgroundColor: '#003A65',
+    color: '#fff',
+    borderStyle: 'none',
+    fontSize: 20,
+    marginRight: 12,
+    width: '50%',
+    height: 40
 }
 
 const appHeader = {
@@ -272,4 +309,15 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default TestResultScene;
+const mapDispatchToProps = {
+    dispatchGetNextQuestion: getNextExamResultQuestionAction,
+    dispatchGetPrevQuestion: getPrevExamResultQuestionAction
+};
+
+const mapStateToProps = state => ({
+    exam: state.exam,
+    examResult: state.exam.moduleResults,
+    modules: state.modules
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestResultScene);

@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, QuestionFooter, ImageLineButton } from './common';
@@ -7,79 +9,88 @@ import './styles.css';
 import iconContinue from '../img/ic_continue.png'
 import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
+import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, MultipleChoiceQuestionInteractor, QuestionService } from '../coreFork';
+import { connect } from 'react-redux';
 
 class TestScene extends Component {
     state = {
-        answer1Clicked: false,
-        answer2Clicked: false,
-        answer3Clicked: false,
+        answer1Clicked: true,
+        answer2Clicked: true,
+        answer3Clicked: true,
         check: false,
         lastAnswerRight: undefined
     }
 
+    checkAnswers() {
+        var q = this.props.exam.currentQuestion.question;
+        var isright = new MultipleChoiceQuestionInteractor().checkIsQuestionRight(this.props.exam.currentQuestion.question);
+        this.setState({ lastAnswerRight: isright });
+        console.log(isright);
+        this.props.dispatchAnswerQuestion(this.props.exam.currentIndex, isright);
+        this.props.dispatchGetNextQuestion();
+        this.setState({ answer1Clicked: true, answer2Clicked: true, answer3Clicked: true, check: false });
+    }
+    
     answer1Click() {
-        if (this.state.check) return;
-        console.log(this.state.answer1Clicked);
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer2Clicked: false });
-        this.setState({ answer3Clicked: false });
-        /*this.props.currentQuestion.question.answer1.choosen = true;
-        this.props.currentQuestion.question.answer2.choosen = false;
-        this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
+        this.setState({ check: true, answer1Clicked: false, answer2Clicked: true, answer3Clicked: true });
+        this.props.exam.currentQuestion.question.answer1.choosen = true;
+        this.props.exam.currentQuestion.question.answer2.choosen = false;
+        this.props.exam.currentQuestion.question.answer3.choosen = false;
+        // this.checkAnswers();
     }
 
     answer2Click() {
-        if (this.state.check) return;
-        this.setState({ answer2Clicked: true });
-        this.setState({ answer1Clicked: false });
-        this.setState({ answer3Clicked: false });
-        /*
-        this.props.currentQuestion.question.answer1.choosen = false;
-        this.props.currentQuestion.question.answer2.choosen = true;
-        this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
+        this.setState({ check: true, answer1Clicked: true, answer2Clicked: false, answer3Clicked: true });
+        this.props.exam.currentQuestion.question.answer1.choosen = false;
+        this.props.exam.currentQuestion.question.answer2.choosen = true;
+        this.props.exam.currentQuestion.question.answer3.choosen = false;
+        // this.checkAnswers();
     }
 
     answer3Click() {
-        if (this.state.check) return;
-        this.setState({ answer3Clicked: true });
-        this.setState({ answer1Clicked: false });
-        this.setState({ answer2Clicked: false });
-        /*
-        this.props.currentQuestion.question.answer1.choosen = false;
-        this.props.currentQuestion.question.answer2.choosen = false;
-        this.props.currentQuestion.question.answer3.choosen = true;
-        this.checkAnswers(); */
+        this.setState({ check: true, answer1Clicked: true, answer2Clicked: true, answer3Clicked: false });
+        this.props.exam.currentQuestion.question.answer1.choosen = false;
+        this.props.exam.currentQuestion.question.answer2.choosen = false;
+        this.props.exam.currentQuestion.question.answer3.choosen = true;
+        // this.checkAnswers();
     }
 
     render() {
-
+        const currentQuestion = this.props.exam.currentQuestion;
+        if (this.props.exam.questions && this.props.exam.currentIndex >= this.props.exam.questions.length)
+        this.props.dispatchFinishExam();
+        if(!currentQuestion) return null;
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
 
-        const backgroundColor1 = answer1Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
-        const backgroundColor2 = answer2Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
-        const backgroundColor3 = answer3Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
+        const backgroundColor1 = !answer1Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
+        const backgroundColor2 = !answer2Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
+        const backgroundColor3 = !answer3Clicked ? 'rgba(0, 183, 229, 1)' : '#fff';
 
-        const textColor1 = answer1Clicked ? "#fff" : "#003A65";
-        const textColor2 = answer2Clicked ? "#fff" : "#003A65";
-        const textColor3 = answer3Clicked ? "#fff" : "#003A65";
+        const textColor1 = !answer1Clicked ? "#fff" : "#003A65";
+        const textColor2 = !answer2Clicked ? "#fff" : "#003A65";
+        const textColor3 = !answer3Clicked ? "#fff" : "#003A65";
 
-        const fontWeightStyle = answer1Clicked ? "bold" : "normal";
-        const fontWeightStyle2 = answer2Clicked ? "bold" : "normal";
-        const fontWeightStyle3 = answer3Clicked ? "bold" : "normal";
+        const fontWeightStyle  =  !answer1Clicked ? "bold" : "normal";
+        const fontWeightStyle2  = !answer2Clicked ? "bold" : "normal";
+        const fontWeightStyle3  = !answer3Clicked ? "bold" : "normal";
 
-        const marginAnswer1 = answer1Clicked ? 0 : '5%';
-        const marginAnswer2 = answer2Clicked ? 0 : '5%';
-        const marginAnswer3 = answer3Clicked ? 0 : '5%';
+        const marginAnswer1 = !answer1Clicked ? 0 : '5%';
+        const marginAnswer2 = !answer2Clicked ? 0 : '5%';
+        const marginAnswer3 = !answer3Clicked ? 0 : '5%';
 
+        const questionHeaderText = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", "\.")} Frage ${this.props.exam.currentQuestion.questionId.substr(4)}` : '';
+        const questionText = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.question : '';
+        const answer1Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer1.answer : '';
+        const answer2Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer2.answer : '';
+        const answer3Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer3.answer : '';
+        const subModuleId = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", "\.")} ${this.props.modules.selectedSubmoduleName}` : '';
+        const questionNumberText = this.props.exam.currentQuestion ? `Frage ${this.props.exam.currentIndex + 1} / ${this.props.exam.questions.length}` : '';
+        const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>1.2 Frage 9</h1>
-                    <p style={questionText}>
-                        Welche der nachstehenden angeführten Krankheiten sind so geil das Gott sich gedacht hat sheeborghini a a a a  a a aa a a  lamborghini motherfucker nigga rigga sheesh skrrrrrrrrrrr
-                    </p>
+                    <h1 style={titleStyle}>{questionHeaderText}</h1>
+                    <p style={questionTextStyle}>{questionText}</p>
 
                     <div style={questionLine} />
 
@@ -100,14 +111,7 @@ class TestScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: textColor1, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                            sea takimata sanctus est Lorem ipsum dolor sit amet.
-                        </p>
+                        <p style={{ fontSize: 14, color: textColor1, margin: 12 }}>{answer1Text}</p>
                     </button>
 
                     <button
@@ -125,10 +129,7 @@ class TestScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: textColor2, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                        </p>
+                        <p style={{ fontSize: 14, color: textColor2, margin: 12 }}>{answer2Text}</p>
                     </button>
 
                     <button
@@ -146,12 +147,7 @@ class TestScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                        </p>
+                        <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>{answer3Text}</p>
                     </button>
                 </div>
 
@@ -164,31 +160,14 @@ class TestScene extends Component {
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
-                        3.5 Private Unfallversicherung
+                        {subModuleId + " " + subModuleName}
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%' }}>
-                        Frage 30 / 32
+                        {questionNumberText}
                     </h1>
-
-                    <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
-                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
-                            Aktionen
-                        </p>
-
-                        <div align="right" style={{ marginRight: '11%' }}>
-                            <ImageButton
-                                link="/kategorien"
-                                buttonText="PDF öffnen"
-                                image={iconPdfRed} />
-
-                            <ImageLineButton
-                                buttonText="Falsche Fragen üben"
-                                image={iconWrong} />
-                        </div>
-                    </div>
                 </div>
-                <QuestionFooter />
+                <QuestionFooter onPressContinue={() => this.state.check ? this.checkAnswers() : {}} continueDisabled={!this.state.check} />
             </header>
         );
     }
@@ -234,7 +213,7 @@ const titleAnswer = {
     marginBottom: 18
 }
 
-const questionText = {
+const questionTextStyle = {
     fontSize: 18,
     color: '#003A65',
     textAlign: "left",
@@ -286,4 +265,16 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default TestScene;
+// export default TestScene;
+const mapDispatchToProps = {
+    dispatchGetNextQuestion: getNextExamQuestionAction,
+    dispatchAnswerQuestion: answerExamQuestionAction,
+    dispatchFinishExam: finishExamAction
+};
+
+const mapStateToProps = state => ({
+    exam: state.exam,
+    modules: state.modules
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TestScene);

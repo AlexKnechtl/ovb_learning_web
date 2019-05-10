@@ -13,7 +13,7 @@ export function* navigateOnAction({type}){
         case SIGNED_OUT: yield put(push('/login'));
             break;
         case START_SIGN_IN:
-        case START_SIGN_IN_WITHOUT_CREDENTIAL: //yield put(push('AuthLoading'));
+        case START_SIGN_IN_WITHOUT_CREDENTIAL: //yield put(push('/loading'));
             break;
         case SET_CURRENT_MODULE: yield put(push('/category'));
             break;

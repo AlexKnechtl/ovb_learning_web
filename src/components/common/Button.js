@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 
-const Button = props => {
+const Button = ({onPress, buttonText, link = null}) => {
   return (
-    <Link to={props.link}>
-      <button onClick={props.onPress}
+    <Link to={link}>
+      <button onClick={onPress}
         style={button}>
-        {props.buttonText}
+        {buttonText}
       </button>
     </Link>
   )

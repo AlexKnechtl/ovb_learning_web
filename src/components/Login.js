@@ -12,6 +12,7 @@ import passwordIcon from '../img/ic_password.png'
 import background from '../img/bg_web_ovb.jpg'
 import { signInAction } from '../coreFork';
 import {connect} from "react-redux";
+import Loading from './Loading';
 
 class Login extends Component {
 
@@ -28,7 +29,7 @@ class Login extends Component {
     //cancelHover = () => this.setState({ hovered: false });
 
     render() {
-        return (
+        return this.props.loading ? <Loading/> : (
             <header style={appHeader}>
                 <div style={imageSection}>
                     <div style={headWhiteBackground}>

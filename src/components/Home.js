@@ -26,7 +26,7 @@ class Home extends Component {
         super(props);
         console.log(this.state);
     }
-    testButtonPress() {
+    testButtonPress = ()=> {
         this.initialized = true;
         if (this.state.testMode == false) {
             this.setState({
@@ -119,8 +119,9 @@ class Home extends Component {
 
                     <div align="right" style={{ marginRight: '11%' }}>
                         <ImageButton
-                            link="/test"
-                            buttonText="Prüfungssimulation"
+                            //link="/test"
+                            buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
+                            onPress={this.testButtonPress}
                             image={iconContinue} />
                         <ImageButton
                             buttonText="Lernunterlagen"
