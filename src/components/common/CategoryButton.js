@@ -10,19 +10,19 @@ const CategoryButton = props => {
                     flex: 1,
                     fontWeight: "bold",
                     backgroundColor: "#003A65",
-                    fontSize: "0.9em",
+                    fontSize: "1em",
                     height: '2em',
-                    width: '78%',
+                    minWidth: '10em',
                     borderWidth: 2,
                     borderColor: '#fff4',
                     textAlign: "center",
                     color: "#fff",
-                    paddingLeft: '0.8em',
-                    paddingRight: '0.8em',
+                    paddingLeft: '1em',
+                    paddingRight: '1em',
                     marginBottom: 14,
                 }}>
-                <Center style={{}}>
-                    <img src={props.image} style={{ height: '1.3em', marginRight: 12 }} alt="User Icon" />
+                <Center>
+                    <img src={props.image} style={{ height: '1.6em', marginRight: 24 }} alt="User Icon" />
                     {props.buttonText}
                 </Center>
             </button>

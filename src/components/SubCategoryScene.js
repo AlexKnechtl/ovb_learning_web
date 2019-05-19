@@ -1,4 +1,4 @@
-//@ts-check
+
 
 import React, { Component } from 'react';
 import { } from 'react'
@@ -9,24 +9,30 @@ import './styles.css';
 import iconContinue from '../img/ic_continue.png'
 import iconBook from '../img/ic_look_through.png'
 import iconWrongQuestions from '../img/ic_wrong_questions.png'
-import imageCategory from '../img/bg_category.png'
+import iconBereiche from '../img/icon_bereiche.png'
 import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
+import { FinishedPopup } from './common/FinishedPopup';
 
 class SubCategoryScene extends Component {
 
     state = {
-        currentSubmodule: null
+        currentSubmodule: null,
+        mouseOver1: false,
+        mouseOver2: false,
+        mouseOver3: false
     }
+
     la = new LearningAlgorithm(new QuestionService(), LearningService);
+
     mapModules() {
         var currMID = this.props.match.params.catId;
         if (!currMID) return undefined;
         var currMods = this.props.modules.modules[currMID].modules;
         return Object.keys(currMods).map(key => {
             var stats = this.la.calcCurrentLearningStatsForModule(key);
-            return (<SubCategory key={key} onMouseEnter={()=>this.setState({currentSubmodule: key})}
-                onPress={() => this.setState({currentSubmodule: key})}
+            return (<SubCategory key={key} onMouseEnter={() => this.setState({ currentSubmodule: key })}
+                onPress={() => this.setState({ currentSubmodule: key })}
                 titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
                 learningState={stats.seenQuestions / stats.questionCount}
                 successRate={stats.successRate}
@@ -34,28 +40,29 @@ class SubCategoryScene extends Component {
         });
     }
 
+    toogleModal() {
+        this.refs.popupInfo.openModal();
+    }
+
+    closeModal() {
+        this.refs.popupInfo.closeModal();
+    }
+
     startLearning = () => {
-        this.state.currentSubmodule ? 
-        this.props.dispatchContinueModuleLearning(this.state.currentSubmodule) : 
-        this.props.dispatchContinueSectionLearning(this.props.match.params.catId);
+        this.state.currentSubmodule ?
+            this.props.dispatchContinueModuleLearning(this.state.currentSubmodule) :
+            this.props.dispatchContinueSectionLearning(this.props.match.params.catId);
     }
 
     render() {
         // console.log(this.props.match.params.catId);
-        
-        if(!this.props.modules.modules) return undefined;
+
+        if (!this.props.modules.modules) return undefined;
         var currMID = this.props.match.params.catId;
         const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
-        const  { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
+        const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
             <header style={appHeader}>
-                <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>{this.props.modules.modules[currMID].name}</h1>
-                    <div style={{scrollBehavior: "smooth"}}>
-                        {this.mapModules()}
-                    </div>
-                </div>
-                <div style={{ width: '0.5%', backgroundColor: "#58ACD9" }} />
 
                 <div style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
@@ -64,20 +71,33 @@ class SubCategoryScene extends Component {
                     </h1>
 
                     <CategoryButton
-                        buttonText="Kategorieansicht"
-                        image={iconContinue} />
+                        buttonText="Bereichsansicht"
+                        image={iconBereiche} />
 
                     <div align="right" style={{ marginRight: '11%' }}>
                         <ImageButton
+                            mouseOver={() => { this.setState({ mouseOver1: true }) }}
+                            mouseLeave={() => { this.setState({ mouseOver1: false }) }}
+                            mouseOverBtn={this.state.mouseOver1}
                             onPress={this.startLearning}
                             buttonText="Übungsmodus"
                             image={iconContinue} />
                         <ImageButton
-                        onPress={() => { if (this.state.currentSubmodule && falseQuestions == 0) console.log("doNothing"); //TODO: implement modal or sth like that
-                            else this.props.dispatchLearnFalseQuestions(this.state.currentSubmodule); }}
+                            mouseOver={() => { this.setState({ mouseOver2: true }) }}
+                            mouseLeave={() => { this.setState({ mouseOver2: false }) }}
+                            mouseOverBtn={this.state.mouseOver2}
+                            onPress={() => {
+                                if (this.state.currentSubmodule && falseQuestions == 0)
+                                    this.toogleModal();
+                                else
+                                    this.props.dispatchLearnFalseQuestions(this.state.currentSubmodule);
+                            }}
                             buttonText="Falsche Fragen üben"
                             image={iconWrongQuestions} />
                         <ImageButton
+                            mouseOver={() => { this.setState({ mouseOver3: true }) }}
+                            mouseLeave={() => { this.setState({ mouseOver3: false }) }}
+                            mouseOverBtn={this.state.mouseOver3}
                             link="/questionView"
                             buttonText="Fragen durchblättern"
                             image={iconBook} />
@@ -90,7 +110,7 @@ class SubCategoryScene extends Component {
                     <ProgressSection
                         progressColor="#58D980"
                         progressText="Fortschritt"
-                        progress={rightQuestions/questionCount} />
+                        progress={rightQuestions / questionCount} />
 
                     <ProgressSection
                         progressColor="#58ACD9"
@@ -103,7 +123,17 @@ class SubCategoryScene extends Component {
 
                     <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
                 </div>
+
+                <div style={{ width: '0.25em', backgroundColor: "#58ACD9" }} />
+
+                <div style={displaySection}>
+                    <h1 style={titleStyle}>{this.props.modules.modules[currMID].name}</h1>
+                    <div style={{ scrollBehavior: "smooth" }}>
+                        {this.mapModules()}
+                    </div>
+                </div>
                 <Options />
+                <FinishedPopup ref={'popupInfo'} />
             </header>
         );
     }
@@ -112,7 +142,8 @@ class SubCategoryScene extends Component {
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
+    fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
 }
@@ -128,10 +159,16 @@ const titleStyle = {
 
 const interactSection = {
     backgroundColor: "#003A65",
-    width: '30%',
+    width: '20em',
+    maxWidth: '30%',
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center"
+}
+
+const displaySection = {
+    width: '100%',
+    height: '100vh'
 }
 
 const statisticsText = {

@@ -13,6 +13,7 @@ const SubCategory = ({titleText, link, onPress,successRate, learningState, ...pr
                 backgroundColor: '#003A65',
                 backgroundSize: '100%',
                 width: '40%',
+                maxWidth: '18em',
                 textDecorationLine: 'none',
                 textDecoration: 'none',
                 textDecorationColor: '#fff0',

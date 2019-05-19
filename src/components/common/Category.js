@@ -1,4 +1,3 @@
-//@ts-check
 
 import React from 'react';
 import { Link } from 'react-router-dom'
@@ -13,6 +12,7 @@ const Category = ({link, imageUri, titleText, onPress, learningState, isPressed,
                 backgroundImage: `url(${imageUri})`,
                 backgroundSize: '110%',
                 width: '40%',
+                maxWidth: '18em',
                 textDecorationLine: 'none',
                 textDecoration: 'none',
                 textDecorationColor: '#fff0',
