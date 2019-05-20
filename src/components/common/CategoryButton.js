@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import Center from 'react-center'
 
-const CategoryButton = props => {
+const CategoryButton = ({onPress, buttonText, image}) => {
     return (
-        <Link style={{ textDecoration: "none" }} to={props.link}>
-            <button
+            <button onClick={onPress}
                 style={{
                     flex: 1,
                     fontWeight: "bold",
@@ -22,11 +21,10 @@ const CategoryButton = props => {
                     marginBottom: 14,
                 }}>
                 <Center>
-                    <img src={props.image} style={{ height: '1.6em', marginRight: 24 }} alt="User Icon" />
-                    {props.buttonText}
+                    <img src={image} style={{ height: '1.6em', marginRight: 24 }} alt="User Icon" />
+                    {buttonText}
                 </Center>
             </button>
-        </Link >
     )
 }
 

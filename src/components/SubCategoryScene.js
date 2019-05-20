@@ -33,7 +33,8 @@ class SubCategoryScene extends Component {
         var currMods = this.props.modules.modules[currMID].modules;
         return Object.keys(currMods).map(key => {
             var stats = this.la.calcCurrentLearningStatsForModule(key);
-            return (<SubCategory key={key} onMouseEnter={() => this.setState({ currentSubmodule: key })}
+            return (<SubCategory key={key} 
+                // onMouseEnter={() => this.setState({ currentSubmodule: key })}
                 onPress={() => this.setState({ currentSubmodule: key })}
                 titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
                 learningState={stats.seenQuestions / stats.questionCount}

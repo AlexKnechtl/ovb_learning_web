@@ -163,7 +163,7 @@ class QuestionViewScene extends Component {
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
-                        Frage 30 / 32
+                        Frage {parseInt(currQuestion.questionId.substr(4))} / {questionCount}
                     </h1>
 
                     <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>

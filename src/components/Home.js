@@ -71,7 +71,7 @@ class Home extends Component {
     categoryPress(sectionID) {
         this.initialized = true;
         if (this.state.testMode == false) {
-            this.props.dispatchSelectCategory(sectionID);
+            this.setState({ currentModule: sectionID })
         } else {
             var cat = this.state.categories[sectionID] || {};
             cat.isPressed = !cat || !cat.isPressed;
@@ -98,6 +98,7 @@ class Home extends Component {
 
                     <CategoryButton
                         buttonText="Kategorieansicht"
+                        onPress={()=>this.props.dispatchSelectCategory(this.state.currentModule)}
                         image={iconBereiche} />
 
                     <div align="right" style={{ marginRight: '11%' }}>
@@ -150,7 +151,7 @@ class Home extends Component {
                     {Object.keys(this.props.modules).map((sectionID) =>
                         <Category
                             key={sectionID}
-                            onMouseEnter={() => this.setState({ currentModule: sectionID })}
+                            // onMouseEnter={() => this.setState({ currentModule: sectionID })}
                             // ref={(thisItem) => this[sectionID] = thisItem}
                             onPress={this.categoryPress.bind(this, sectionID)}
                             isPressed={(this.state.categories[sectionID] || {}).isPressed}
