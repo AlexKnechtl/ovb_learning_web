@@ -141,7 +141,7 @@ class QuestionScene extends Component {
 
                         <div align="right" style={{ marginRight: '11%' }}>
                             <ImageButton
-                                link="/kategorien"
+                                // link="/kategorien"
                                 buttonText="PDF öffnen"
                                 image={iconPdfRed} />
 

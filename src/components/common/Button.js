@@ -3,12 +3,12 @@ import { Link } from 'react-router-dom'
 
 const Button = ({onPress, buttonText, link = null}) => {
   return (
-    <Link to={link}>
+    // <Link to={link}>
       <button onClick={onPress}
         style={button}>
         {buttonText}
       </button>
-    </Link>
+    // </Link>
   )
 }
 

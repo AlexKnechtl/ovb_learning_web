@@ -15,6 +15,7 @@ import { connect } from 'react-redux';
 import { FinishedPopup } from './common/FinishedPopup';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
+import { Link } from "react-router-dom";
 
 class SubCategoryScene extends Component {
 
@@ -101,13 +102,14 @@ class SubCategoryScene extends Component {
                             }}
                             buttonText="Falsche Fragen üben"
                             image={iconWrongQuestions} />
-                        <ImageButton
-                            link={`/questionView/${this.state.currentSubmodule}`}
-                            mouseOver={() => { this.setState({ mouseOver3: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver3: false }) }}
-                            mouseOverBtn={this.state.mouseOver3}
-                            buttonText="Fragen durchblättern"
-                            image={iconBook} />
+                        <Link style={{ textDecoration: "none" }} to={`/questionView/${this.state.currentSubmodule}`}>
+                            <ImageButton
+                                mouseOver={() => { this.setState({ mouseOver3: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOver3: false }) }}
+                                mouseOverBtn={this.state.mouseOver3}
+                                buttonText="Fragen durchblättern"
+                                image={iconBook} />
+                            </Link>
                     </div>
 
                     <p style={statisticsText}>

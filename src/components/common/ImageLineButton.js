@@ -4,7 +4,7 @@ import Center from 'react-center'
 
 const ImageLineButton = props => {
     return (
-        <Link style={{ textDecoration: "none" }} to={props.link}>
+        // <Link style={{ textDecoration: "none" }} to={props.link}>
             <button onClick={props.onPress}
                 style={button}>
                 <Center>
@@ -12,7 +12,7 @@ const ImageLineButton = props => {
                     {props.buttonText}
                 </Center>
             </button>
-        </Link >
+        // </Link >
     )
 }
 
