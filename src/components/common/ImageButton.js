@@ -12,7 +12,7 @@ const ImageButton = ({ image, onPress, buttonText, mouseOver, mouseLeave, mouseO
                 style={{
                     flex: 1,
                     fontWeight: "bold",
-                    backgroundColor: mouseOverBtn ? "#fff8" : "#fff",
+                    backgroundColor: mouseOverBtn ? "#fff9" : "#fff",
                     fontSize: "0.8em",
                     height: '2em',
                     border: "none",

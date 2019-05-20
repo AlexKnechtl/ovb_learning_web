@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection } from './common';
+import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection, FinishedPopup } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -12,7 +12,6 @@ import iconWrongQuestions from '../img/ic_wrong_questions.png'
 import iconBereiche from '../img/icon_bereiche.png'
 import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
-import { FinishedPopup } from './common/FinishedPopup';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
@@ -23,7 +22,8 @@ class SubCategoryScene extends Component {
         currentSubmodule: null,
         mouseOver1: false,
         mouseOver2: false,
-        mouseOver3: false
+        mouseOver3: false,
+        mouseOverCategory: false
     }
 
     la = new LearningAlgorithm(new QuestionService(), LearningService);
@@ -79,6 +79,9 @@ class SubCategoryScene extends Component {
                     </h1>
 
                     <CategoryButton
+                        mouseOver={() => { this.setState({ mouseOverCategory: true }) }}
+                        mouseLeave={() => { this.setState({ mouseOverCategory: false }) }}
+                        mouseOverState={this.state.mouseOverCategory}
                         buttonText="Bereichsansicht"
                         image={iconBereiche} />
 

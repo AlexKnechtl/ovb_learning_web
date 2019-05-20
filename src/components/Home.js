@@ -20,6 +20,7 @@ class Home extends Component {
         mouseOver1: false,
         mouseOver2: false,
         mouseOver3: false,
+        mouseOverCategory: false,
         categories: []
     };
     initialized = false;
@@ -97,6 +98,9 @@ class Home extends Component {
                     </h1>
 
                     <CategoryButton
+                        mouseOver={() => { this.setState({ mouseOverCategory: true }) }}
+                        mouseLeave={() => { this.setState({ mouseOverCategory: false }) }}
+                        mouseOverState={this.state.mouseOverCategory}
                         buttonText="Kategorieansicht"
                         onPress={()=>this.props.dispatchSelectCategory(this.state.currentModule)}
                         image={iconBereiche} />
@@ -110,14 +114,14 @@ class Home extends Component {
                             onPress={this.testButtonPress}
                             image={iconContinue} />
                         <ImageButton
-                            mouseOver={() => {this.setState({ mouseOver2: true })}}
-                            mouseLeave={() => {this.setState({mouseOver2: false})}}
+                            mouseOver={() => { this.setState({ mouseOver2: true }) }}
+                            mouseLeave={() => { this.setState({ mouseOver2: false }) }}
                             mouseOverBtn={this.state.mouseOver2}
                             buttonText="Lernunterlagen"
                             image={iconPdf} />
                         <ImageButton
-                            mouseOver={() => {this.setState({mouseOver3: true})}}
-                            mouseLeave={() => {this.setState({mouseOver3: false})}}
+                            mouseOver={() => { this.setState({ mouseOver3: true }) }}
+                            mouseLeave={() => { this.setState({ mouseOver3: false }) }}
                             mouseOverBtn={this.state.mouseOver3}
                             buttonText="Übungsmodus"
                             image={iconBook} />

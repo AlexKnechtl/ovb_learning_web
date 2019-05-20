@@ -54,7 +54,9 @@ class FinishedPopup extends Component {
 
                 <div style={lineColor} />
 
-                <button style={buttonStyle}>
+                <button
+                    onClick={() => { this.closeModal() }}
+                    style={buttonStyle}>
                     <Center style={buttonText}>
                         Weiter
                     <img

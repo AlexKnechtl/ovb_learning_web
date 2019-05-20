@@ -9,3 +9,4 @@ export * from './SubCategory.js';
 export * from './QuestionFooter.js';
 export * from './QuestionFooterView.js';
 export * from './ImageLineButton';
+export * from './FinishedPopup';
