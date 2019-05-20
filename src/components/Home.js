@@ -1,12 +1,14 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
-import { Category, ImageButton, Options, CategoryButton, ProgressSection, InteractSection, DisplaySection } from './common';
+import { ImageButton, Options, Modules, InteractSection, DisplaySection } from './common';
 import './styles.css';
-
 import iconContinue from '../img/ic_continue.png'
 import iconBook from '../img/ic_look_through.png'
 import iconPdf from '../img/ic_pdf.png'
 import iconBereiche from '../img/icon_bereiche.png'
+
 import { signOutAction, SetCurrentModuleAction, initExamAction, GotModulesAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
@@ -46,7 +48,7 @@ class Home extends Component {
         }
     }
 
-    categoryPress(sectionID) {
+    categoryPress = (sectionID) => {
         this.initialized = true;
         if (this.state.testMode == false) {
             this.setState({ currentModule: sectionID })
@@ -63,94 +65,35 @@ class Home extends Component {
 
     render() {
         if (Object.keys(this.props.modules).length == 0) return null;
-        var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
-        const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate, name } = this.props.modules[currMid]
+        var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0]; 
         return (
             <header style={appHeader}>
 
-                <InteractSection title={name}>
-                    <CategoryButton
-                        mouseOver={() => { this.setState({ mouseOverCategory: true }) }}
-                        mouseLeave={() => { this.setState({ mouseOverCategory: false }) }}
-                        mouseOverState={this.state.mouseOverCategory}
-                        buttonText="Kategorieansicht"
-                        onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
-                        image={iconBereiche} />
-
-                    <div align="right" style={{ marginRight: '11%' }}>
-                        <ImageButton
-                            mouseOver={() => { this.setState({ mouseOver1: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver1: false }) }}
-                            mouseOverBtn={this.state.mouseOver1}
+                <InteractSection title={name}
+                    openCategory={() => this.props.dispatchSelectCategory(this.state.currentModule)}
+                    currentModuleInfo={this.props.modules[currMid]}
+                    >
+                    <ImageButton
                             buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
                             onPress={this.testButtonPress}
                             image={iconContinue} />
                         <ImageButton
-                            mouseOver={() => { this.setState({ mouseOver2: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver2: false }) }}
-                            mouseOverBtn={this.state.mouseOver2}
                             buttonText="Lernunterlagen"
                             image={iconPdf} />
                         <ImageButton
-                            mouseOver={() => { this.setState({ mouseOver3: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver3: false }) }}
-                            mouseOverBtn={this.state.mouseOver3}
                             buttonText="Übungsmodus"
                             image={iconBook} />
-                    </div>
-
-                    <p style={statisticsText}>
-                        Statistik Gesamt
-                    </p>
-
-                    <ProgressSection
-                        progressColor="#58D980"
-                        progressText="Fortschritt"
-                        progress={rightQuestions / questionCount} />
-
-                    <ProgressSection
-                        progressColor="#58ACD9"
-                        progressText="Erfolgschance"
-                        progress={successRate} />
-
-                    <p style={questionBackText}>
-                        {rightQuestions} / {questionCount} Fragen richtig
-                    </p>
-
-                    <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
+                    
                 </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#94C231" }} />
 
-                <DisplaySection title="Übungsbereiche">
-                <div style={{
-                        display: "flex",
-                        flexFlow: "wrap",
-                        marginRight: "1.5em"}}>
-                    {Object.keys(this.props.modules).map((sectionID) =>
-
-                        <Category
-                            key={sectionID}
-                            // onMouseEnter={() => this.setState({ currentModule: sectionID })}
-                            // ref={(thisItem) => this[sectionID] = thisItem}
-                            onPress={this.categoryPress.bind(this, sectionID)}
-                            isPressed={(this.state.categories[sectionID] || {}).isPressed}
-                            testMode={this.state.testMode}
-                            imageUri={this.props.modules[sectionID].image || ""}
-                            titleText={this.props.modules[sectionID].name || ""}
-                            questionsRight={this.props.modules[sectionID].seenQuestions || 0}
-                            questionsFalse={this.props.modules[sectionID].falseQuestions || 0}
-                            learningState={(this.props.modules[sectionID].seenQuestions || 0) / (this.props.modules[sectionID].questionCount || 1)}
-                            successRate={this.props.modules[sectionID].successRate || 0}
-                            style={{marginLeft: '1.5em',
-                                    marginBottom: '1.5em',
-                                    flex: "1",
-                                    flexBasis: "13em"}}
-                        />
-                    )}
-                    {Object.keys(this.props.modules).map((sectionID) => <div style={{marginLeft: '1.5em', marginBottom: '1.5em', flex: "1", flexBasis: "13em"}}/>)}
-                    </div>
-                </DisplaySection>
+                <DisplaySection title="Übungsbereiche" >
+                        <Modules modules={this.props.modules} 
+                                categoryPress={this.categoryPress} 
+                                chosenCategories={this.state.categories} 
+                                testMode={this.state.testMode}/>
+                    </DisplaySection>
                 <Options />
             </header>
         );
@@ -166,23 +109,7 @@ const appHeader = {
     color: 'white'
 }
 
-const statisticsText = {
-    fontSize: 32,
-    textAlign: "right",
-    marginRight: '11%',
-    marginBottom: 0
-}
 
-const questionBackText = {
-    backgroundColor: '#fff',
-    padding: 12,
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: '#003A65',
-    width: '75%',
-    marginLeft: '10%',
-    marginRight: '10%'
-}
 const setCurrentModuleAction = (catId) => push(`/category/${catId}`);
 
 const mapDispatchToProps = {

@@ -1,21 +1,22 @@
+//@ts-check
+
 import React from 'react';
 
-const DisplaySection = props => {
+const DisplaySection = ({children, title}) => {
     return (
         <div style={displaySection}>
             <h1 style={titleStyle}>
-                {props.title}
+                {title}
             </h1>
 
-            {props.children}
+            {children}
         </div>
     )
 }
 
 const displaySection = {
     width: '100%',
-    height: '100vh',
-    margin: '1.5em'
+    height: '100%'
 }
 
 const titleStyle = {
@@ -24,7 +25,7 @@ const titleStyle = {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: '1.2em',
-    margin: 0
+    margin: '1.5em'
 }
 
 export { DisplaySection };

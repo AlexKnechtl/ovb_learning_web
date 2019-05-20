@@ -13,3 +13,5 @@ export * from './FinishedPopup';
 export * from './InteractSection';
 export * from './DisplaySection';
 export * from './Answer';
+export * from './Modules';
+export * from './SubModules';

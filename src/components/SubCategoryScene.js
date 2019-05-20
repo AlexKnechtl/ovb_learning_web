@@ -14,34 +14,31 @@ import { connect } from 'react-redux';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
+import SubModules from './common/SubModules';
 
 class SubCategoryScene extends Component {
 
     state = {
-        currentSubmodule: null,
-        mouseOver1: false,
-        mouseOver2: false,
-        mouseOver3: false,
-        mouseOverCategory: false
+        currentSubmodule: null
     }
 
     la = new LearningAlgorithm(new QuestionService(), LearningService);
 
-    mapModules() {
-        var currMID = this.props.match.params.catId;
-        if (!currMID) return undefined;
-        var currMods = this.props.modules.modules[currMID].modules;
-        return Object.keys(currMods).map(key => {
-            var stats = this.la.calcCurrentLearningStatsForModule(key);
-            return (<SubCategory key={key}
-                // onMouseEnter={() => this.setState({ currentSubmodule: key })}
-                onPress={() => this.setState({ currentSubmodule: key })}
-                titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
-                learningState={stats.seenQuestions / stats.questionCount}
-                successRate={stats.successRate}
-            />);
-        });
-    }
+    // mapModules() {
+    //     var currMID = this.props.match.params.catId;
+    //     if (!currMID) return undefined;
+    //     var currMods = this.props.modules.modules[currMID].modules;
+    //     return Object.keys(currMods).map(key => {
+    //         var stats = this.la.calcCurrentLearningStatsForModule(key);
+    //         return (<SubCategory key={key}
+    //             // onMouseEnter={() => this.setState({ currentSubmodule: key })}
+    //             onPress={() => this.setState({ currentSubmodule: key })}
+    //             titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
+    //             learningState={stats.seenQuestions / stats.questionCount}
+    //             successRate={stats.successRate}
+    //         />);
+    //     });
+    // }
 
     toogleModal() {
         this.refs.popupInfo.openModal();
@@ -67,30 +64,18 @@ class SubCategoryScene extends Component {
 
         if (!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists />
         const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
-        const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
+        const { falseQuestions, questionCount, seenQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
             <header style={appHeader}>
 
-                <InteractSection title={this.props.modules.modules[currMID].name}>
-                    <CategoryButton
-                        mouseOver={() => { this.setState({ mouseOverCategory: true }) }}
-                        mouseLeave={() => { this.setState({ mouseOverCategory: false }) }}
-                        mouseOverState={this.state.mouseOverCategory}
-                        buttonText="Bereichsansicht"
-                        image={iconBereiche} />
-
-                    <div align="right" style={{ marginRight: '11%' }}>
+                <InteractSection title={this.props.modules.modules[currMID].name}
+                    openCategory={() => this.props.dispatchSelectCategory(this.state.currentModule)}
+                    currentModuleInfo={{seenQuestions, questionCount,successRate,falseQuestions}}>
                         <ImageButton
-                            mouseOver={() => { this.setState({ mouseOver1: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver1: false }) }}
-                            mouseOverBtn={this.state.mouseOver1}
                             onPress={this.startLearning}
                             buttonText="Übungsmodus"
                             image={iconContinue} />
                         <ImageButton
-                            mouseOver={() => { this.setState({ mouseOver2: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver2: false }) }}
-                            mouseOverBtn={this.state.mouseOver2}
                             onPress={() => {
                                 if (this.state.currentSubmodule && falseQuestions == 0)
                                     this.toogleModal();
@@ -101,41 +86,19 @@ class SubCategoryScene extends Component {
                             image={iconWrongQuestions} />
                         <Link style={{ textDecoration: "none" }} to={`/questionView/${this.state.currentSubmodule}`}>
                             <ImageButton
-                                mouseOver={() => { this.setState({ mouseOver3: true }) }}
-                                mouseLeave={() => { this.setState({ mouseOver3: false }) }}
-                                mouseOverBtn={this.state.mouseOver3}
                                 buttonText="Fragen durchblättern"
                                 image={iconBook} />
                         </Link>
-                    </div>
-
-                    <p style={statisticsText}>
-                        Statistik Gesamt
-                    </p>
-
-                    <ProgressSection
-                        progressColor="#58D980"
-                        progressText="Fortschritt"
-                        progress={rightQuestions / questionCount} />
-
-                    <ProgressSection
-                        progressColor="#58ACD9"
-                        progressText="Erfolgschance"
-                        progress={successRate} />
-
-                    <p style={questionBackText}>
-                        {rightQuestions} / {questionCount} Fragen richtig
-                    </p>
-
-                    <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
                 </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#58ACD9" }} />
 
                 <DisplaySection title={this.props.modules.modules[currMID].name}>
-                    <div style={{ scrollBehavior: "smooth" }}>
-                        {this.mapModules()}
-                    </div>
+                    <SubModules onCatPress={(k) => this.setState({ currentSubmodule: k })}
+                        currMID={this.props.match.params.catId}
+                        la={this.la}
+                        modules={this.props.modules.modules[currMID].modules}
+                    />
                 </DisplaySection>
 
                 <Options />
