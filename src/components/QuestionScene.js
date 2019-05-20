@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooter, ImageLineButton } from './common';
+import { ImageButton, QuestionFooter, ImageLineButton, FinishedPopup } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -17,13 +17,20 @@ class QuestionScene extends Component {
         answer2Clicked: true,
         answer3Clicked: true,
         check: false,
-        lastAnswerRight: undefined
+        lastAnswerRight: undefined,
+        mouseOverPdf: false,
+        mouseOverWrong: false,
+        mouseOverWeiter: false,
+        mouseOverCancel: false
     }
+
     la = new LearningAlgorithm(new QuestionService(), LearningService);
+
     constructor(props) {
         super(props);
         props.dispatchGetNextQuestion();
     }
+
     answer1Click() {
         if (this.state.check) return;
         console.log(this.state.answer1Clicked);
@@ -77,6 +84,15 @@ class QuestionScene extends Component {
         }
     }
 
+
+    toogleModal() {
+        this.refs.popupInfo.openModal();
+    }
+
+    closeModal() {
+        this.refs.popupInfo.closeModal();
+    }
+
     render() {
         if (!this.props.currentQuestion) {
             this.props.dispatchGetNextQuestion();
@@ -90,9 +106,9 @@ class QuestionScene extends Component {
 
         const colorAnswers = answer1Clicked && answer2Clicked && answer3Clicked ? '#003A65' : '#fff';
 
-        const marginAnswer1 = answer1Clicked ? '5%' : '0%'
-        const marginAnswer2 = answer2Clicked ? '5%' : '0%'
-        const marginAnswer3 = answer3Clicked ? '5%' : '0%'
+        const marginAnswer1 = answer1Clicked ? '0%' : '-5%'
+        const marginAnswer2 = answer2Clicked ? '0%' : '-5%'
+        const marginAnswer3 = answer3Clicked ? '0%' : '-5%'
 
         const answer1Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer1.answer : '';
         const answer2Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer2.answer : '';
@@ -141,15 +157,21 @@ class QuestionScene extends Component {
 
                         <div align="right" style={{ marginRight: '11%' }}>
                             <ImageButton
+                                mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
+                                mouseOverBtn={this.state.mouseOverPdf}
                                 link="/kategorien"
                                 buttonText="PDF öffnen"
                                 image={iconPdfRed} />
 
                             <ImageLineButton
+                                mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOverWrong: false }) }}
+                                mouseOverState={this.state.mouseOverWrong}
                                 buttonText="Falsche Fragen üben"
                                 image={iconWrong} onPress={() => {
                                     if (falseQuestions == 0)
-                                        console.log("doNothing"); //TODO: implement modal or sth like that
+                                        this.toogleModal();
                                     else
                                         this.props.dispatchLearnFalseQuestions(this.props.currentQuestion.moduleId);
                                 }} />
@@ -164,6 +186,7 @@ class QuestionScene extends Component {
                     <p style={questionTextStyle}>
                         {questionText}
                     </p>
+
                     <div style={questionLine} />
 
                     <h1 style={titleAnswer}>Antworten</h1>
@@ -179,11 +202,11 @@ class QuestionScene extends Component {
                             outline: 'none',
                             textAlign: 'left',
                             width: answer1Clicked ? '90%' : '95%',
+                            maxWidth: '120em',
                             marginLeft: marginAnswer1,
-                            marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 16, color: colorAnswers, margin: 12 }}>
+                        <p style={{ fontSize: 16, color: colorAnswers, margin: 12, fontWeight: "bold" }}>
                             {answer1Text}
                         </p>
                     </button>
@@ -197,13 +220,13 @@ class QuestionScene extends Component {
                             backgroundColor: background2,
                             borderWidth: answer2Clicked ? 3 : 0,
                             textAlign: 'left',
+                            maxWidth: '120em',
                             outline: 'none',
                             width: answer2Clicked ? '90%' : '95%',
                             marginLeft: marginAnswer2,
-                            marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 16, color: colorAnswers, margin: 12 }}>
+                        <p style={{ fontSize: 16, color: colorAnswers, margin: 12, fontWeight: "bold" }}>
                             {answer2Text}
                         </p>
                     </button>
@@ -216,22 +239,29 @@ class QuestionScene extends Component {
                             backgroundColor: background3,
                             borderWidth: answer1Clicked ? 3 : 0,
                             minHeight: '12%',
+                            maxWidth: '120em',
                             textAlign: 'left',
                             outline: 'none',
                             width: answer3Clicked ? '90%' : '95%',
                             marginLeft: marginAnswer3,
-                            marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 16, color: colorAnswers, margin: 12 }}>
+                        <p style={{ fontSize: 15, color: colorAnswers, margin: 12, fontWeight: "bold" }}>
                             {answer3Text}
                         </p>
                     </button>
+                    <QuestionFooter
+                        onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
+                        onPressBack={() => { }}
+                        mouseOverBack={() => { this.setState({ mouseOverCancel: true }) }}
+                        mouseLeaveBack={() => { this.setState({ mouseOverCancel: false }) }}
+                        mouseOverWeiter={() => { this.setState({ mouseOverWeiter: true }) }}
+                        mouseLeaveWeiter={() => { this.setState({ mouseOverWeiter: false }) }}
+                        mouseBackState={this.state.mouseOverCancel}
+                        mouseWeiterState={this.state.mouseOverWeiter}
+                    />
                 </div>
-
-                <QuestionFooter onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
-                    onPressBack={() => { }}
-                    backDisabled={!this.state.check} />
+                <FinishedPopup ref={'popupInfo'} />
             </header>
         );
     }
@@ -247,21 +277,19 @@ const appHeader = {
 }
 
 const questionLine = {
+    maxWidth: '120em',
     width: '90%',
     height: 3,
     backgroundColor: "#58ACD9",
-    marginLeft: '5%',
-    marginRight: '5%'
 }
 
 const titleStyle = {
     color: '#003A65',
     width: '100%',
+    maxWidth: '120em',
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: '1.2em',
-    marginLeft: '5%',
-    marginRight: '5%',
     marginTop: '1.5em',
     marginBottom: 4
 }
@@ -272,8 +300,6 @@ const titleAnswer = {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: '1.2em',
-    marginLeft: '5%',
-    marginRight: '5%',
     marginBottom: 18
 }
 
@@ -282,8 +308,6 @@ const questionTextStyle = {
     color: '#003A65',
     textAlign: "left",
     height: '15%',
-    marginLeft: '5%',
-    marginRight: '5%',
 }
 
 const interactSection = {
@@ -297,7 +321,9 @@ const interactSection = {
 
 const displaySection = {
     width: '100%',
-    height: '100vh'
+    height: '100vh',
+    marginLeft: '5%',
+    marginRight: '5%'
 }
 
 const questionBackText = {
