@@ -1,8 +1,6 @@
-
 import React, { Component } from 'react';
 import { } from 'react'
-import { Category, ImageButton, Options, CategoryButton, ProgressSection } from './common';
-import icon from '../img/logo_ovb_white.png'
+import { Category, ImageButton, Options, CategoryButton, ProgressSection, InteractSection, DisplaySection } from './common';
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
@@ -48,27 +46,6 @@ class Home extends Component {
         }
     }
 
-    // optionsPress() {
-    //     this.initialized = true;
-    //     if (this.state.testMode == false) {
-    //         //No Test Mode
-    //         this.refs.popupCenter.showAddModal();
-    //     } else if (this.state.testMode == true) {
-    //         //Test Mode activated
-    //         var cats = this.state.categories;
-    //         Object.keys(cats).forEach(key => cats[key].isPressed = false);
-    //         this.setState({
-    //             categories: {
-    //                 ...cats
-    //             }
-    //         });
-    //         this.setState({
-    //             testMode: !this.state.testMode,
-    //             icon: icOptions
-    //         });
-    //     }
-    // }
-
     categoryPress(sectionID) {
         this.initialized = true;
         if (this.state.testMode == false) {
@@ -91,18 +68,13 @@ class Home extends Component {
         return (
             <header style={appHeader}>
 
-                <div style={interactSection} >
-                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
-                    <h1 style={{ fontSize: '1em', fontWeight: 'bold', marginTop: '3%' }}>
-                        {name}
-                    </h1>
-
+                <InteractSection title={name}>
                     <CategoryButton
                         mouseOver={() => { this.setState({ mouseOverCategory: true }) }}
                         mouseLeave={() => { this.setState({ mouseOverCategory: false }) }}
                         mouseOverState={this.state.mouseOverCategory}
                         buttonText="Kategorieansicht"
-                        onPress={()=>this.props.dispatchSelectCategory(this.state.currentModule)}
+                        onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
                         image={iconBereiche} />
 
                     <div align="right" style={{ marginRight: '11%' }}>
@@ -146,13 +118,12 @@ class Home extends Component {
                     </p>
 
                     <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
-                </div>
+                </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#94C231" }} />
 
-                <div style={displaySection}>
-                    <h1 style={titleStyle}>Übungsbereiche</h1>
-                    <div style={{
+                <DisplaySection title="Übungsbereiche">
+                <div style={{
                         display: "flex",
                         flexFlow: "wrap",
                         marginRight: "1.5em"}}>
@@ -179,7 +150,7 @@ class Home extends Component {
                     )}
                     {Object.keys(this.props.modules).map((sectionID) => <div style={{marginLeft: '1.5em', marginBottom: '1.5em', flex: "1", flexBasis: "13em"}}/>)}
                     </div>
-                </div>
+                </DisplaySection>
                 <Options />
             </header>
         );
@@ -193,29 +164,6 @@ const appHeader = {
     fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
-}
-
-const titleStyle = {
-    color: '#003A65',
-    width: '100%',
-    textAlign: 'left',
-    fontWeight: 'bold',
-    fontSize: '1.2em',
-    margin: '1.5em'
-}
-
-const interactSection = {
-    backgroundColor: "#003A65",
-    width: '20em',
-    maxWidth: '30%',
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
-}
-
-const displaySection = {
-    width: '100%',
-    height: '100vh'
 }
 
 const statisticsText = {

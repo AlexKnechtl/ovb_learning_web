@@ -1,8 +1,7 @@
-//@ts-check
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection, FinishedPopup } from './common';
+import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection, FinishedPopup, InteractSection, DisplaySection } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -34,7 +33,7 @@ class SubCategoryScene extends Component {
         var currMods = this.props.modules.modules[currMID].modules;
         return Object.keys(currMods).map(key => {
             var stats = this.la.calcCurrentLearningStatsForModule(key);
-            return (<SubCategory key={key} 
+            return (<SubCategory key={key}
                 // onMouseEnter={() => this.setState({ currentSubmodule: key })}
                 onPress={() => this.setState({ currentSubmodule: key })}
                 titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
@@ -60,24 +59,19 @@ class SubCategoryScene extends Component {
 
     render() {
         // console.log(this.props.match.params.catId);
-        
+
         if (!this.props.modules.modules) return;
-        if (this.props.modules.modules.length ===0) return <Loading/>;
+        if (this.props.modules.modules.length === 0) return <Loading />;
         console.log(this.props.modules.modules);
         var currMID = this.props.match.params.catId;
-        
-        if(!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists/>
+
+        if (!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists />
         const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
         const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
             <header style={appHeader}>
 
-                <div style={interactSection} >
-                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
-                    <h1 style={{ fontSize: '1em', fontWeight: 'bold', marginTop: '3%' }}>
-                        {this.props.modules.modules[currMID].name}
-                    </h1>
-
+                <InteractSection title={this.props.modules.modules[currMID].name}>
                     <CategoryButton
                         mouseOver={() => { this.setState({ mouseOverCategory: true }) }}
                         mouseLeave={() => { this.setState({ mouseOverCategory: false }) }}
@@ -112,7 +106,7 @@ class SubCategoryScene extends Component {
                                 mouseOverBtn={this.state.mouseOver3}
                                 buttonText="Fragen durchblättern"
                                 image={iconBook} />
-                            </Link>
+                        </Link>
                     </div>
 
                     <p style={statisticsText}>
@@ -134,16 +128,16 @@ class SubCategoryScene extends Component {
                     </p>
 
                     <p style={{ fontSize: 18 }}>{falseQuestions} Fragen falsch beantwortet</p>
-                </div>
+                </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#58ACD9" }} />
 
-                <div style={displaySection}>
-                    <h1 style={titleStyle}>{this.props.modules.modules[currMID].name}</h1>
+                <DisplaySection title={this.props.modules.modules[currMID].name}>
                     <div style={{ scrollBehavior: "smooth" }}>
                         {this.mapModules()}
                     </div>
-                </div>
+                </DisplaySection>
+
                 <Options />
                 <FinishedPopup ref={'popupInfo'} />
             </header>
@@ -171,7 +165,7 @@ const titleStyle = {
 
 const interactSection = {
     backgroundColor: "#003A65",
-    width: '20em',
+    width: '21em',
     maxWidth: '30%',
     justifyContent: "center",
     alignItems: "center",

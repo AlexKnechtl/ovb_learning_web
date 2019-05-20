@@ -1,4 +1,4 @@
-//@ts-check
+
 
 import React, { Component } from 'react';
 import { } from 'react'
@@ -21,15 +21,17 @@ class QuestionViewScene extends Component {
         currentQuestion: undefined,
         questions: [],
         currentIndex: 0,
+        mouseOverPdf: false,
+        mouseOverWrong: false,
         currMID: undefined
     }
     la = new LearningAlgorithm(new QuestionService(), LearningService);
     pageNotExists = false;
-    constructor(props){
+    constructor(props) {
         super(props);
         var currMID = props.match.params.subCatId;
-        this.setState({currMID})
-        if(!new QuestionService().questionStore.questionPool.moduleIds.hasOwnProperty(currMID)){
+        this.setState({ currMID })
+        if (!new QuestionService().questionStore.questionPool.moduleIds.hasOwnProperty(currMID)) {
             this.pageNotExists = true;
             return;
         }
@@ -48,11 +50,13 @@ class QuestionViewScene extends Component {
 
 
     render() {
-        if(!(this.props.modules||{}).modules) return;
-        if (this.props.modules.modules.length ===0) return <Loading/>;
+        if (!(this.props.modules || {}).modules) return;
+        if (this.props.modules.modules.length === 0) return <Loading />;
         console.log(this.props.modules.modules);
-        if(this.pageNotExists) return <PageNotExists/>
+        if (this.pageNotExists) return <PageNotExists />
+
         const currQuestion = this.state.currentQuestion;
+        
         const answer1Clicked = !currQuestion.question.answer1.isRight;
         const answer2Clicked = !currQuestion.question.answer2.isRight;
         const answer3Clicked = !currQuestion.question.answer3.isRight;
@@ -81,18 +85,81 @@ class QuestionViewScene extends Component {
 
         var canGetNextQuestion = this.state.questions.length > this.state.currentIndex + 1;
         var cangetPrevQuestion = this.state.currentIndex > 0;
-        const pdfSrc = ((currQuestion||{}).pdfInfo||{}).url;
-        const pdfPage = ((currQuestion||{}).pdfInfo||{}).pageNumber;
+        const pdfSrc = ((currQuestion || {}).pdfInfo || {}).url;
+        const pdfPage = ((currQuestion || {}).pdfInfo || {}).pageNumber;
         const questionHeaderText = `${currQuestion.moduleId.replace("_", "\.")} Frage ${parseInt(currQuestion.questionId.substr(4))}`;
-        const  { falseQuestions, 
-            questionCount, 
+        const { falseQuestions,
+            questionCount,
             seenQuestions: rightQuestions,
-             successRate } = this.la.calcCurrentLearningStatsForModule(currQuestion.moduleId);
+            successRate } = this.la.calcCurrentLearningStatsForModule(currQuestion.moduleId);
         const { name: subModuleName } = this.props.modules.modules[currQuestion.sectionId].modules[currQuestion.moduleId];
         return (
             <header style={appHeader}>
-                <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>{questionHeaderText}</h1>
+
+                <div style={interactSection} >
+                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
+                    <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
+                        Übungsmodus
+                    </h1>
+
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
+                        {currQuestion.moduleId.replace('_', '.')} {subModuleName}
+                    </h1>
+
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
+                        Frage {parseInt(currQuestion.questionId.substr(4))} / {questionCount}
+                    </h1>
+
+                    <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
+                        <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
+                            Statistik Aktuell
+                        </p>
+                    </div>
+
+                    <p style={wrongAnswers}>
+                        {falseQuestions} Antworten falsch
+                    </p>
+
+                    <p style={questionBackText}>
+                        {rightQuestions} Antworten richtig
+                    </p>
+
+                    <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
+                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
+                            Aktionen
+                        </p>
+
+                        <div align="right" style={{ marginRight: '11%' }}>
+                            <ImageButton
+                                mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
+                                mouseOverBtn={this.state.mouseOverPdf}
+                                buttonText="PDF öffnen"
+                                image={iconPdfRed} />
+
+                            <ImageLineButton
+                                mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOverWrong: false }) }}
+                                mouseOverState={this.state.mouseOverWrong}
+                                buttonText="Falsche Fragen üben"
+                                image={iconWrong}
+                                onPress={() => {
+                                    if (falseQuestions == 0)
+                                        this.toogleModal();
+                                    else
+                                        this.props.dispatchLearnFalseQuestions(this.props.currentQuestion.moduleId);
+                                }}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
+
+                <div style={displaySection}>
+                    <h1 style={titleStyle}>
+                        {questionHeaderText}
+                    </h1>
                     <p style={questionText}>{question}</p>
                     <div style={questionLine} />
 
@@ -150,54 +217,7 @@ class QuestionViewScene extends Component {
                     </div>
                 </div>
 
-                <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
-
-                <div style={interactSection} >
-                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
-                    <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
-                        Übungsmodus
-                    </h1>
-
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
-                    {currQuestion.moduleId.replace('_', '.')} {subModuleName}
-                    </h1>
-
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
-                        Frage {parseInt(currQuestion.questionId.substr(4))} / {questionCount}
-                    </h1>
-
-                    <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
-                        <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
-                            Statistik Aktuell
-                        </p>
-                    </div>
-
-                    <p style={wrongAnswers}>
-                    {falseQuestions} Antworten falsch
-                    </p>
-
-                    <p style={questionBackText}>
-                    {rightQuestions} Antworten richtig
-                    </p>
-
-                    <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
-                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
-                            Aktionen
-                        </p>
-
-                        <div align="right" style={{ marginRight: '11%' }}>
-                            <ImageButton
-                                // link="/kategorien"
-                                buttonText="PDF öffnen"
-                                image={iconPdfRed} />
-
-                            <ImageLineButton
-                                buttonText="Falsche Fragen üben"
-                                image={iconWrong} />
-                        </div>
-                    </div>
-                </div>
-                <QuestionFooterView forwardClick={()=> this.GetNextQuestion()} backwardClick={()=>this.GetPrevQuestion()} backButtonDisabled={!cangetPrevQuestion} forwardButtonDisabled={!canGetNextQuestion}/>
+                <QuestionFooterView forwardClick={() => this.GetNextQuestion()} backwardClick={() => this.GetPrevQuestion()} backButtonDisabled={!cangetPrevQuestion} forwardButtonDisabled={!canGetNextQuestion} />
             </header>
         );
     }
@@ -206,7 +226,7 @@ class QuestionViewScene extends Component {
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'row-reverse',
     fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
@@ -260,11 +280,11 @@ const interactSection = {
     textAlign: "center"
 }
 
-const statisticsText = {
-    fontSize: 32,
-    textAlign: "right",
-    marginRight: '11%',
-    marginBottom: 0
+const displaySection = {
+    width: '100%',
+    height: '100vh',
+    marginLeft: '5%',
+    marginRight: '5%'
 }
 
 const questionBackText = {
