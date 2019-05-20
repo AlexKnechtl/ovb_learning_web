@@ -160,7 +160,7 @@ class QuestionScene extends Component {
                                 mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
                                 mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
                                 mouseOverBtn={this.state.mouseOverPdf}
-                                link="/kategorien"
+                                // link="/kategorien"
                                 buttonText="PDF öffnen"
                                 image={iconPdfRed} />
 

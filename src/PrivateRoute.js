@@ -7,26 +7,21 @@ import {
   } from "react-router-dom";
 import { connect } from 'react-redux';
 
-class PrivateRoute extends Component{
-  render(){
-    var { component: Component, ...rest } = this.props;
-    return (
+const PrivateRoute = ({ component: Component, canBeCalledDirectly, auth, ...rest } ) => (
       <Route
         {...rest}
-        render={props =>
-          (this.props.auth||{}).user ? (
-            <Component {...props} />
+        render={compProps =>
+          (auth||{}).user ? (
+            <Component {...compProps} />
           ) : (
             <Redirect
               to={{
                 pathname: "/login",
-                state: { from: props.location }
+                state: { from: compProps.location, canBeCalledDirectly: canBeCalledDirectly }
               }}
             />
           )
         }
       />
     );
-  }
-}
 export default connect(state=>({auth: state.auth}), null)(PrivateRoute);

@@ -4,8 +4,7 @@ import Center from 'react-center'
 
 const ImageLineButton = props => {
     return (
-        <Link style={{ textDecoration: "none" }} to={props.link}>
-            <button
+            <button onClick={props.onPress}
                 onMouseOver={props.mouseOver}
                 onMouseLeave={props.mouseLeave}
                 onClick={props.onPress}
@@ -29,7 +28,7 @@ const ImageLineButton = props => {
                     {props.buttonText}
                 </Center>
             </button>
-        </Link >
+        // </Link >
     )
 }
 

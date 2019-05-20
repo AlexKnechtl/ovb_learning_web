@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, QuestionFooterView, ImageLineButton } from './common';
@@ -6,78 +8,102 @@ import './styles.css';
 
 import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
+import { QuestionService, LearningAlgorithm, LearningService } from '../coreFork';
+import { connect } from 'react-redux';
+import Loading from './Loading';
+import PageNotExists from './PageNotExists';
 
 class QuestionViewScene extends Component {
     state = {
         answer1Clicked: true,
         answer2Clicked: true,
         answer3Clicked: true,
-        check: false,
-        lastAnswerRight: undefined
+        currentQuestion: undefined,
+        questions: [],
+        currentIndex: 0,
+        currMID: undefined
+    }
+    la = new LearningAlgorithm(new QuestionService(), LearningService);
+    pageNotExists = false;
+    constructor(props){
+        super(props);
+        var currMID = props.match.params.subCatId;
+        this.setState({currMID})
+        if(!new QuestionService().questionStore.questionPool.moduleIds.hasOwnProperty(currMID)){
+            this.pageNotExists = true;
+            return;
+        }
+        this.state.questions = new QuestionService().questionStore.getQuestionInfosByModuleId(currMID);
+        this.state.currentIndex = 0;
+        this.state.currentQuestion = this.state.questions[0];
     }
 
-    answer1Click() {
-        if (this.state.check) return;
-        console.log(this.state.answer1Clicked);
-        this.setState({ answer1Clicked: false });
-        this.setState({ answer2Clicked: true });
-        this.setState({ answer3Clicked: true });
-        /*this.props.currentQuestion.question.answer1.choosen = true;
-        this.props.currentQuestion.question.answer2.choosen = false;
-        this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
+    GetPrevQuestion() {
+        this.setState({ currentQuestion: this.state.questions[this.state.currentIndex - 1], currentIndex: this.state.currentIndex - 1 });
     }
 
-    answer2Click() {
-        if (this.state.check) return;
-        this.setState({ answer2Clicked: false });
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer3Clicked: true });
-        /*
-        this.props.currentQuestion.question.answer1.choosen = false;
-        this.props.currentQuestion.question.answer2.choosen = true;
-        this.props.currentQuestion.question.answer3.choosen = false;
-        this.checkAnswers(); */
+    GetNextQuestion() {
+        this.setState({ currentQuestion: this.state.questions[this.state.currentIndex + 1], currentIndex: this.state.currentIndex + 1 });
     }
 
-    answer3Click() {
-        if (this.state.check) return;
-        this.setState({ answer3Clicked: false });
-        this.setState({ answer1Clicked: true });
-        this.setState({ answer2Clicked: true });
-        /*
-        this.props.currentQuestion.question.answer1.choosen = false;
-        this.props.currentQuestion.question.answer2.choosen = false;
-        this.props.currentQuestion.question.answer3.choosen = true;
-        this.checkAnswers(); */
-    }
 
     render() {
+        if(!(this.props.modules||{}).modules) return;
+        if (this.props.modules.modules.length ===0) return <Loading/>;
+        console.log(this.props.modules.modules);
+        if(this.pageNotExists) return <PageNotExists/>
+        const currQuestion = this.state.currentQuestion;
+        const answer1Clicked = !currQuestion.question.answer1.isRight;
+        const answer2Clicked = !currQuestion.question.answer2.isRight;
+        const answer3Clicked = !currQuestion.question.answer3.isRight;
 
-        const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
+        const backgroundColor1 = answer1Clicked ? "#fff" : 'rgba(0, 183, 229, 1)';
+        const backgroundColor2 = answer2Clicked ? "#fff" : 'rgba(0, 183, 229, 1)';
+        const backgroundColor3 = answer3Clicked ? "#fff" : 'rgba(0, 183, 229, 1)';
 
-        const backgroundAnswer1 = answer1Clicked ? '#23B800' : '#B21515';
-        const backgroundAnswer2 = answer2Clicked ? '#23B800' : '#B21515';
-        const backgroundAnswer3 = answer3Clicked ? '#23B800' : '#B21515';
+        const textColor1 = answer1Clicked ? "#003A65" : "#fff";
+        const textColor2 = answer2Clicked ? "#003A65" : "#fff";
+        const textColor3 = answer3Clicked ? "#003A65" : "#fff";
 
+        const fontWeightStyle = answer1Clicked ? "normal" : "bold";
+        const fontWeightStyle2 = answer2Clicked ? "normal" : "bold";
+        const fontWeightStyle3 = answer3Clicked ? "normal" : "bold";
+
+        const marginAnswer1 = answer1Clicked ? 20 : 0;
+        const marginAnswer2 = answer2Clicked ? 20 : 0;
+        const marginAnswer3 = answer3Clicked ? 20 : 0;
+
+        var question = currQuestion.question.question;
+
+        var a1 = currQuestion.question.answer1.answer;
+        var a2 = currQuestion.question.answer2.answer;
+        var a3 = currQuestion.question.answer3.answer;
+
+        var canGetNextQuestion = this.state.questions.length > this.state.currentIndex + 1;
+        var cangetPrevQuestion = this.state.currentIndex > 0;
+        const pdfSrc = ((currQuestion||{}).pdfInfo||{}).url;
+        const pdfPage = ((currQuestion||{}).pdfInfo||{}).pageNumber;
+        const questionHeaderText = `${currQuestion.moduleId.replace("_", "\.")} Frage ${parseInt(currQuestion.questionId.substr(4))}`;
+        const  { falseQuestions, 
+            questionCount, 
+            seenQuestions: rightQuestions,
+             successRate } = this.la.calcCurrentLearningStatsForModule(currQuestion.moduleId);
+        const { name: subModuleName } = this.props.modules.modules[currQuestion.sectionId].modules[currQuestion.moduleId];
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>1.2 Frage 9</h1>
-                    <p style={questionText}>
-                        Welche der nachstehenden angeführten Krankheiten sind so geil das Gott sich gedacht hat sheeborghini a a a a  a a aa a a  lamborghini motherfucker nigga rigga sheesh skrrrrrrrrrrr
-                    </p>
+                    <h1 style={titleStyle}>{questionHeaderText}</h1>
+                    <p style={questionText}>{question}</p>
                     <div style={questionLine} />
 
                     <h1 style={titleAnswer}>Antworten</h1>
 
-                    <button
-                        onClick={this.answer1Click.bind(this)}
+                    <div
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
-                            backgroundColor: backgroundAnswer1,
-                            borderWidth: answer1Clicked ? 0 : 2,
+                            backgroundColor: backgroundColor1,
+                            borderWidth: 2,
                             minHeight: '12%',
                             outline: 'none',
                             textAlign: 'left',
@@ -86,24 +112,16 @@ class QuestionViewScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: answer1Clicked ? '#fff' : '#fff', margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                            sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no
-                            sea takimata sanctus est Lorem ipsum dolor sit amet.
-                        </p>
-                    </button>
+                        <p style={{ fontSize: 14, color: textColor1, margin: 12 }}>{a1}</p>
+                    </div>
 
-                    <button
-                        onClick={this.answer2Click.bind(this)}
+                    <div
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
                             minHeight: '12%',
-                            backgroundColor: backgroundAnswer2,
-                            borderWidth: answer2Clicked ? 0 : 2,
+                            backgroundColor: backgroundColor2,
+                            borderWidth: 2,
                             textAlign: 'left',
                             outline: 'none',
                             width: '90%',
@@ -111,19 +129,15 @@ class QuestionViewScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer2, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                        </p>
-                    </button>
+                        <p style={{ fontSize: 14, color: textColor2, margin: 12 }}>{a2}</p>
+                    </div>
 
-                    <button
-                        onClick={this.answer3Click.bind(this)}
+                    <div
                         style={{
                             border: 'solid',
                             borderColor: '#003A65',
-                            backgroundColor: backgroundAnswer3,
-                            borderWidth: answer1Clicked ? 0 : 2,
+                            backgroundColor: backgroundColor3,
+                            borderWidth: 2,
                             minHeight: '12%',
                             textAlign: 'left',
                             width: '90%',
@@ -132,13 +146,8 @@ class QuestionViewScene extends Component {
                             marginRight: '5%',
                             marginBottom: 16
                         }}>
-                        <p style={{ fontSize: 14, color: backgroundAnswer3, margin: 12 }}>
-                            Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et
-                            dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. St
-                            et clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet,
-                            consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,
-                        </p>
-                    </button>
+                        <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>{a3}</p>
+                    </div>
                 </div>
 
                 <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
@@ -150,11 +159,11 @@ class QuestionViewScene extends Component {
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
-                        3.5 Private Unfallversicherung
+                    {currQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
-                        Frage 30 / 32
+                        Frage {parseInt(currQuestion.questionId.substr(4))} / {questionCount}
                     </h1>
 
                     <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
@@ -164,11 +173,11 @@ class QuestionViewScene extends Component {
                     </div>
 
                     <p style={wrongAnswers}>
-                        4 Antworten falsch
+                    {falseQuestions} Antworten falsch
                     </p>
 
                     <p style={questionBackText}>
-                        16 Antworten richtig
+                    {rightQuestions} Antworten richtig
                     </p>
 
                     <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
@@ -178,7 +187,7 @@ class QuestionViewScene extends Component {
 
                         <div align="right" style={{ marginRight: '11%' }}>
                             <ImageButton
-                                link="/kategorien"
+                                // link="/kategorien"
                                 buttonText="PDF öffnen"
                                 image={iconPdfRed} />
 
@@ -188,7 +197,7 @@ class QuestionViewScene extends Component {
                         </div>
                     </div>
                 </div>
-                <QuestionFooterView forwardClick={{}} backwardClick={{}} />
+                <QuestionFooterView forwardClick={()=> this.GetNextQuestion()} backwardClick={()=>this.GetPrevQuestion()} backButtonDisabled={!cangetPrevQuestion} forwardButtonDisabled={!canGetNextQuestion}/>
             </header>
         );
     }
@@ -286,4 +295,11 @@ const wrongAnswers = {
     marginBottom: 12
 }
 
-export default QuestionViewScene;
+const mapDispatchToProps = {
+};
+
+const mapStateToProps = state => ({
+    modules: state.modules
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(QuestionViewScene);

@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom' 
 import Center from 'react-center'
 
-const ImageButton = ({ image, onPress, buttonText, mouseOver, mouseLeave, mouseOverBtn, link }) => {
+const ImageButton = ({ image, onPress, buttonText, mouseOver, mouseLeave, mouseOverBtn }) => {
 
     return (
-        <Link style={{ textDecoration: "none" }} to={link}>
             <button
                 onMouseOver={mouseOver}
                 onMouseLeave={mouseLeave}
@@ -31,7 +30,6 @@ const ImageButton = ({ image, onPress, buttonText, mouseOver, mouseLeave, mouseO
                     {buttonText}
                 </Center>
             </button>
-        </Link >
     )
 }
 

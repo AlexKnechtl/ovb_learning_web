@@ -8,7 +8,6 @@ import '../styles.css';
 
 const SubCategory = ({titleText, link, onPress,successRate, learningState, ...props}) => {
     return (
-        <Link to={link} style={{ textDecoration: "none" }}>
             <div onClick={onPress} style={{
                 backgroundColor: '#003A65',
                 backgroundSize: '100%',
@@ -39,7 +38,6 @@ const SubCategory = ({titleText, link, onPress,successRate, learningState, ...pr
                     </div>
                 </div>
             </div>
-        </Link >
     )
 }
 

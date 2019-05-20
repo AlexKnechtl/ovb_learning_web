@@ -7,7 +7,7 @@ import '../styles.css';
 
 const Category = ({link, imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode, ...props}) => {
     return (
-        <Link to={link} style={{ textDecoration: "none" }}>
+        // <Link to={link} style={{ textDecoration: "none" }}>
             <div onClick={onPress} style={{
                 backgroundImage: `url(${imageUri})`,
                 backgroundSize: '110%',
@@ -41,7 +41,7 @@ const Category = ({link, imageUri, titleText, onPress, learningState, isPressed,
                     </div>
                 </div>
             </div>
-        </Link >
+        // </Link >
     )
 }
 

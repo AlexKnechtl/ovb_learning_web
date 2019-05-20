@@ -1,4 +1,4 @@
-
+//@ts-check
 
 import React, { Component } from 'react';
 import { } from 'react'
@@ -12,6 +12,9 @@ import iconWrongQuestions from '../img/ic_wrong_questions.png'
 import iconBereiche from '../img/icon_bereiche.png'
 import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
+import Loading from './Loading';
+import PageNotExists from './PageNotExists';
+import { Link } from "react-router-dom";
 
 class SubCategoryScene extends Component {
 
@@ -31,7 +34,8 @@ class SubCategoryScene extends Component {
         var currMods = this.props.modules.modules[currMID].modules;
         return Object.keys(currMods).map(key => {
             var stats = this.la.calcCurrentLearningStatsForModule(key);
-            return (<SubCategory key={key} onMouseEnter={() => this.setState({ currentSubmodule: key })}
+            return (<SubCategory key={key} 
+                // onMouseEnter={() => this.setState({ currentSubmodule: key })}
                 onPress={() => this.setState({ currentSubmodule: key })}
                 titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
                 learningState={stats.seenQuestions / stats.questionCount}
@@ -56,9 +60,13 @@ class SubCategoryScene extends Component {
 
     render() {
         // console.log(this.props.match.params.catId);
-
-        if (!this.props.modules.modules) return undefined;
+        
+        if (!this.props.modules.modules) return;
+        if (this.props.modules.modules.length ===0) return <Loading/>;
+        console.log(this.props.modules.modules);
         var currMID = this.props.match.params.catId;
+        
+        if(!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists/>
         const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
         const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
@@ -97,13 +105,14 @@ class SubCategoryScene extends Component {
                             }}
                             buttonText="Falsche Fragen üben"
                             image={iconWrongQuestions} />
-                        <ImageButton
-                            mouseOver={() => { this.setState({ mouseOver3: true }) }}
-                            mouseLeave={() => { this.setState({ mouseOver3: false }) }}
-                            mouseOverBtn={this.state.mouseOver3}
-                            link="/questionView"
-                            buttonText="Fragen durchblättern"
-                            image={iconBook} />
+                        <Link style={{ textDecoration: "none" }} to={`/questionView/${this.state.currentSubmodule}`}>
+                            <ImageButton
+                                mouseOver={() => { this.setState({ mouseOver3: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOver3: false }) }}
+                                mouseOverBtn={this.state.mouseOver3}
+                                buttonText="Fragen durchblättern"
+                                image={iconBook} />
+                            </Link>
                     </div>
 
                     <p style={statisticsText}>

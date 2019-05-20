@@ -2,10 +2,9 @@ import React from 'react';
 import { Link } from 'react-router-dom'
 import Center from 'react-center'
 
-const CategoryButton = props => {
+const CategoryButton = ({onPress, buttonText, image}) => {
     return (
-        <Link style={{ textDecoration: "none" }} to={props.link}>
-            <button
+            <button onClick={onPress}
                 onMouseOver={props.mouseOver}
                 onMouseLeave={props.mouseLeave}
                 style={{
@@ -29,7 +28,6 @@ const CategoryButton = props => {
                     {props.buttonText}
                 </Center>
             </button>
-        </Link >
     )
 }
 
