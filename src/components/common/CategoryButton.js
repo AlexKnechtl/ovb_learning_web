@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import Center from 'react-center'
 
-const CategoryButton = ({onPress, buttonText, image}) => {
+const CategoryButton = props => {
     return (
-            <button onClick={onPress}
+            <button onClick={props.onPress}
                 onMouseOver={props.mouseOver}
                 onMouseLeave={props.mouseLeave}
                 style={{

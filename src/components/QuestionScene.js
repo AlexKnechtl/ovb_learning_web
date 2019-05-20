@@ -1,15 +1,14 @@
-
-
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooter, ImageLineButton, FinishedPopup } from './common';
-import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
-import iconWrong from '../img/x_icon.png'
-import iconPdfRed from '../img/pdf_red.png'
+import { ImageButton, QuestionFooter, ImageLineButton, FinishedPopup } from './common';
 import { updateCurrentQuestion, getNextQuestionAction, MultipleChoiceQuestionInteractor, LearningAlgorithm, QuestionService, LearningService, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
+
+import icon from '../img/logo_ovb_white.png'
+import iconWrong from '../img/x_icon.png'
+import iconPdfRed from '../img/pdf_red.png'
 
 class QuestionScene extends Component {
     state = {
@@ -33,10 +32,11 @@ class QuestionScene extends Component {
 
     answer1Click() {
         if (this.state.check) return;
-        console.log(this.state.answer1Clicked);
+
         this.setState({ answer1Clicked: false });
         this.setState({ answer2Clicked: true });
         this.setState({ answer3Clicked: true });
+
         this.props.currentQuestion.question.answer1.choosen = true;
         this.props.currentQuestion.question.answer2.choosen = false;
         this.props.currentQuestion.question.answer3.choosen = false;
@@ -45,6 +45,7 @@ class QuestionScene extends Component {
 
     answer2Click() {
         if (this.state.check) return;
+
         this.setState({ answer2Clicked: false });
         this.setState({ answer1Clicked: true });
         this.setState({ answer3Clicked: true });
@@ -57,6 +58,7 @@ class QuestionScene extends Component {
 
     answer3Click() {
         if (this.state.check) return;
+
         this.setState({ answer3Clicked: false });
         this.setState({ answer1Clicked: true });
         this.setState({ answer2Clicked: true });
