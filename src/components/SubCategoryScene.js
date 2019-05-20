@@ -95,10 +95,10 @@ class SubCategoryScene extends Component {
                             buttonText="Falsche Fragen üben"
                             image={iconWrongQuestions} />
                         <ImageButton
+                            link={`/questionView/${this.state.currentSubmodule}`}
                             mouseOver={() => { this.setState({ mouseOver3: true }) }}
                             mouseLeave={() => { this.setState({ mouseOver3: false }) }}
                             mouseOverBtn={this.state.mouseOver3}
-                            link="/questionView"
                             buttonText="Fragen durchblättern"
                             image={iconBook} />
                     </div>

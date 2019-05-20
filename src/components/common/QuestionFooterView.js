@@ -1,18 +1,21 @@
+//@ts-check
+
+
 import React from 'react';
 import '../styles.css';
 
 import arrow from '../../img/arrow.png'
 
-const QuestionFooterView = props => {
+const QuestionFooterView = ({backButtonDisabled = false, forwardButtonDisabled = false, forwardClick, backwardClick}) => {
     return (
         <div style={bottomLayout} >
             <button style={backButton}>
                 Abbrechen
             </button>
-            <button onClick={props.backwardClick} style={weiterButton}>
+            <button onClick={backwardClick} disabled={backButtonDisabled} style={weiterButton}>
                 <img src={arrow} style={{ width: '1.7em', margin: 0, transform: "rotate(180deg)" }} alt="User Icon" />
             </button>
-            <button onClick={props.forwardClick} style={weiterButton}>
+            <button onClick={forwardClick} disabled={forwardButtonDisabled} style={weiterButton}>
                 <img src={arrow} style={{ width: '1.7em', margin: 0}} alt="User Icon" />
             </button>
         </div>

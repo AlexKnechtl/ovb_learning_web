@@ -37,7 +37,7 @@ class App extends Component {
               <Route path="/login" component={Login} exact />
               <PrivateRoute path="/category/:catId" component={SubCategoryScene} />
               <PrivateRoute path="/question" component={QuestionScene} />
-              <PrivateRoute path="/questionView" component={QuestionViewScene} />
+              <PrivateRoute path="/questionView/:subCatId" component={QuestionViewScene} />
               <PrivateRoute path="/test" component={TestScene} />
               <PrivateRoute path="/testResult" component={TestResultScene} />
               <PrivateRoute path="/testStatistics" component={TestStatistics}/>
