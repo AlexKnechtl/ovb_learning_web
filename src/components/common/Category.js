@@ -5,18 +5,18 @@ import Progress from 'react-progressbar';
 import Center from 'react-center';
 import '../styles.css';
 
-const Category = ({link, imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode, ...props}) => {
+const Category = ({link, imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode, style, ...props}) => {
     return (
         // <Link to={link} style={{ textDecoration: "none" }}>
             <div onClick={onPress} style={{
                 backgroundImage: `url(${imageUri})`,
                 backgroundSize: '110%',
-                width: '40%',
-                maxWidth: '18em',
+                // minWidth: '12em',
+                // maxWidth: '15em',
                 textDecorationLine: 'none',
                 textDecoration: 'none',
                 textDecorationColor: '#fff0',
-                marginLeft: '1.5em'
+                ...style
             }} {...props}>
                 <p style={title}> {titleText} </p>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>

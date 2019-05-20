@@ -152,7 +152,12 @@ class Home extends Component {
 
                 <div style={displaySection}>
                     <h1 style={titleStyle}>Übungsbereiche</h1>
+                    <div style={{
+                        display: "flex",
+                        flexFlow: "wrap",
+                        marginRight: "1.5em"}}>
                     {Object.keys(this.props.modules).map((sectionID) =>
+
                         <Category
                             key={sectionID}
                             // onMouseEnter={() => this.setState({ currentModule: sectionID })}
@@ -166,8 +171,14 @@ class Home extends Component {
                             questionsFalse={this.props.modules[sectionID].falseQuestions || 0}
                             learningState={(this.props.modules[sectionID].seenQuestions || 0) / (this.props.modules[sectionID].questionCount || 1)}
                             successRate={this.props.modules[sectionID].successRate || 0}
+                            style={{marginLeft: '1.5em',
+                                    marginBottom: '1.5em',
+                                    flex: "1",
+                                    flexBasis: "13em"}}
                         />
                     )}
+                    {Object.keys(this.props.modules).map((sectionID) => <div style={{marginLeft: '1.5em', marginBottom: '1.5em', flex: "1", flexBasis: "13em"}}/>)}
+                    </div>
                 </div>
                 <Options />
             </header>
