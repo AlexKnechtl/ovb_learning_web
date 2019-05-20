@@ -10,3 +10,6 @@ export * from './QuestionFooter.js';
 export * from './QuestionFooterView.js';
 export * from './ImageLineButton';
 export * from './FinishedPopup';
+export * from './InteractSection';
+export * from './DisplaySection';
+export * from './Answer';

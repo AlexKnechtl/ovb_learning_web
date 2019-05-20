@@ -48,7 +48,7 @@ const QuestionFooter = props => {
 const bottomLayout = {
     position: 'absolute',
     bottom: '1em',
-    left: '5%',
+    left: '1.5em',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',

@@ -16,7 +16,7 @@ const Category = ({link, imageUri, titleText, onPress, learningState, isPressed,
                 textDecorationLine: 'none',
                 textDecoration: 'none',
                 textDecorationColor: '#fff0',
-                marginLeft: '1.5em'
+                margin: 0
             }} {...props}>
                 <p style={title}> {titleText} </p>
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
