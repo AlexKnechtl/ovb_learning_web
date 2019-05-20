@@ -7,8 +7,8 @@ import { push } from 'connected-react-router';
 
 export function* navigateOnAction({type}){
     switch (type) {
-        case LOGIN_SUCCESS: yield put(push('/'));
-            break;
+        // case LOGIN_SUCCESS: yield put(push('/'));
+        //     break;
         case LOGIN_FAILED:
         case SIGNED_OUT: yield put(push('/login'));
             break;

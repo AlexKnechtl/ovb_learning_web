@@ -1,4 +1,4 @@
-
+//@ts-check
 
 import React, { Component } from 'react';
 import { } from 'react'
@@ -13,6 +13,8 @@ import iconBereiche from '../img/icon_bereiche.png'
 import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { FinishedPopup } from './common/FinishedPopup';
+import Loading from './Loading';
+import PageNotExists from './PageNotExists';
 
 class SubCategoryScene extends Component {
 
@@ -56,9 +58,13 @@ class SubCategoryScene extends Component {
 
     render() {
         // console.log(this.props.match.params.catId);
-
-        if (!this.props.modules.modules) return undefined;
+        
+        if (!this.props.modules.modules) return;
+        if (this.props.modules.modules.length ===0) return <Loading/>;
+        console.log(this.props.modules.modules);
         var currMID = this.props.match.params.catId;
+        
+        if(!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists/>
         const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
         const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (

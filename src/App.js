@@ -35,9 +35,9 @@ class App extends Component {
           <div>
             <Switch>
               <Route path="/login" component={Login} exact />
-              <PrivateRoute path="/category/:catId" component={SubCategoryScene} />
+              <PrivateRoute path="/category/:catId" component={SubCategoryScene} canBeCalledDirectly/>
               <PrivateRoute path="/question" component={QuestionScene} />
-              <PrivateRoute path="/questionView/:subCatId" component={QuestionViewScene} />
+              <PrivateRoute path="/questionView/:subCatId" component={QuestionViewScene} canBeCalledDirectly/>
               <PrivateRoute path="/test" component={TestScene} />
               <PrivateRoute path="/testResult" component={TestResultScene} />
               <PrivateRoute path="/testStatistics" component={TestStatistics}/>

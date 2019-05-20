@@ -13,6 +13,7 @@ import background from '../img/bg_web_ovb.jpg'
 import { signInAction } from '../coreFork';
 import {connect} from "react-redux";
 import Loading from './Loading';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -23,13 +24,18 @@ class Login extends Component {
     }
     constructor(props) {
         super(props);
+        console.log(props.location.state);
     }
 
     //setHover = () => this.setState({ hovered: true });
     //cancelHover = () => this.setState({ hovered: false });
 
     render() {
-        return this.props.loading ? <Loading/> : (
+        const from = this.props.location.state.from.pathname;
+        const redirect = !!this.props.location.state.canBeCalledDirectly;
+        const showLogin = !this.props.loading && !this.props.auth.user;
+        const showOther = this.props.auth.user ? <Redirect to={{pathname: redirect?from:"/"}} /> : <Loading/>;
+        return !showLogin ? showOther : (
             <header style={appHeader}>
                 <div style={imageSection}>
                     <div style={headWhiteBackground}>
@@ -126,7 +132,8 @@ const appHeader = {
 
 const mapStateToProps = state => ({
     error: state.auth.error,
-    loading: state.auth.loading
+    loading: state.auth.loading,
+    auth: state.auth
 });
 
 const mapDispatchToProps = {

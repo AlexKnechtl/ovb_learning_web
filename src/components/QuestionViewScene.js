@@ -10,6 +10,8 @@ import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
 import { QuestionService, LearningAlgorithm, LearningService } from '../coreFork';
 import { connect } from 'react-redux';
+import Loading from './Loading';
+import PageNotExists from './PageNotExists';
 
 class QuestionViewScene extends Component {
     state = {
@@ -22,10 +24,15 @@ class QuestionViewScene extends Component {
         currMID: undefined
     }
     la = new LearningAlgorithm(new QuestionService(), LearningService);
+    pageNotExists = false;
     constructor(props){
         super(props);
         var currMID = props.match.params.subCatId;
         this.setState({currMID})
+        if(!new QuestionService().questionStore.questionPool.moduleIds.hasOwnProperty(currMID)){
+            this.pageNotExists = true;
+            return;
+        }
         this.state.questions = new QuestionService().questionStore.getQuestionInfosByModuleId(currMID);
         this.state.currentIndex = 0;
         this.state.currentQuestion = this.state.questions[0];
@@ -41,7 +48,10 @@ class QuestionViewScene extends Component {
 
 
     render() {
-        if(!this.props.modules.modules) return;
+        if(!(this.props.modules||{}).modules) return;
+        if (this.props.modules.modules.length ===0) return <Loading/>;
+        console.log(this.props.modules.modules);
+        if(this.pageNotExists) return <PageNotExists/>
         const currQuestion = this.state.currentQuestion;
         const answer1Clicked = !currQuestion.question.answer1.isRight;
         const answer2Clicked = !currQuestion.question.answer2.isRight;
