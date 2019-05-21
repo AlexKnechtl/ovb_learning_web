@@ -98,7 +98,7 @@ class TestScene extends Component {
                     <h1 
 // @ts-ignore
                     style={titleAnswer}>Antworten</h1>
-
+                    <div style={{display: "flex", flexDirection: "column"}}>
                     <button
                         onClick={this.answer1Click.bind(this)}
                         style={{
@@ -152,6 +152,7 @@ class TestScene extends Component {
                         }}>
                         <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>{answer3Text}</p>
                     </button>
+                    </div>
                 </div>
 
                 <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
