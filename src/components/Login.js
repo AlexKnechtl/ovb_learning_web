@@ -31,8 +31,8 @@ class Login extends Component {
     //cancelHover = () => this.setState({ hovered: false });
 
     render() {
-        const from = this.props.location.state.from.pathname;
-        const redirect = !!this.props.location.state.canBeCalledDirectly;
+        const from = ((this.props.location.state||{}).from||{}).pathname;
+        const redirect = !!((this.props.location.state||{}).canBeCalledDirectly);
         const showLogin = !this.props.loading && !this.props.auth.user;
         const showOther = this.props.auth.user ? <Redirect to={{pathname: redirect?from:"/"}} /> : <Loading/>;
         return !showLogin ? showOther : (
