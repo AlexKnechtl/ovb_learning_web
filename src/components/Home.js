@@ -103,7 +103,9 @@ class Home extends Component {
                         chosenCategories={this.state.categories}
                         testMode={this.state.testMode} />
                 </DisplaySection>
-                <Options />
+                <Options 
+                    onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
+                    onPressImpressum={() => window.open("https://www.seekinnovation.at")}/>
             </header>
         );
     }

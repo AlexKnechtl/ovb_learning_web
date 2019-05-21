@@ -42,13 +42,13 @@ class FinishedPopup extends Component {
                 <div style={{ backgroundColor: "#fff", height: 4, width: '100%' }} />
 
                 <div style={floatingActionButton}>
-                    <img style={{ height: 52, width: 68 }} src={require('../../img/ic_check.png')} alt="Error" />
+                    <img style={{ height: '1.8em', width: '2.5em' }} src={require('../../img/ic_check.png')} alt="Error" />
                 </div>
 
-                <p style={{ fontSize: 22, textAlign: "center", fontWeight: 'bold', color: "#003A65", margin: 8 }}>
+                <p style={{ fontSize: '0.8em', textAlign: "center", fontWeight: 'bold', color: "#003A65", margin: 8 }}>
                     Alle Fragen
                 </p>
-                <p style={{ fontSize: 28, textAlign: "center", fontWeight: 'bold', color: "#003A65", marginTop: 8, marginBottom: 8, marginRight: 32, marginLeft: 32 }}>
+                <p style={{ fontSize: '0.9em', textAlign: "center", fontWeight: 'bold', color: "#003A65", marginTop: 8, marginBottom: 8, marginRight: 32, marginLeft: 32 }}>
                     Richtig beantwortet
                 </p>
 
@@ -91,10 +91,10 @@ const floatingActionButton = {
     display: 'flex',
     alignSelf: 'center',
     margin: "0 auto",
-    width: 108,
-    height: 108,
-    marginTop: 20,
-    marginBottom: 12,
+    width: '3.6em',
+    height: '3.6em',
+    marginTop: '1em',
+    marginBottom: '0.7em',
     borderRadius: 60,
     justifyContent: "center",
     alignItems: "center",

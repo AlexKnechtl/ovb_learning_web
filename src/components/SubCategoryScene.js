@@ -1,8 +1,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { SubCategory, ImageButton, Options, CategoryButton, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
-import icon from '../img/logo_ovb_white.png'
+import { ImageButton, Options, CategoryButton, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
@@ -91,7 +90,9 @@ class SubCategoryScene extends Component {
                     />
                 </DisplaySection>
 
-                <Options />
+                <Options 
+                    onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
+                    onPressImpressum={() => window.open("https://www.seekinnovation.at")}/>
                 <FinishedPopup ref={'popupInfo'} />
             </header>
         );
@@ -105,47 +106,6 @@ const appHeader = {
     fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
-}
-
-const titleStyle = {
-    color: '#003A65',
-    width: '100%',
-    textAlign: 'left',
-    fontWeight: 'bold',
-    fontSize: '1.2em',
-    margin: '1.5em'
-}
-
-const interactSection = {
-    backgroundColor: "#003A65",
-    width: '21em',
-    maxWidth: '30%',
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
-}
-
-const displaySection = {
-    width: '100%',
-    height: '100vh'
-}
-
-const statisticsText = {
-    fontSize: 32,
-    textAlign: "right",
-    marginRight: '11%',
-    marginBottom: 0
-}
-
-const questionBackText = {
-    backgroundColor: '#fff',
-    padding: 12,
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: '#003A65',
-    width: '75%',
-    marginLeft: '10%',
-    marginRight: '10%'
 }
 
 // export default SubCategoryScene;

@@ -145,8 +145,8 @@ class QuestionScene extends Component {
                         {rightQuestions} Antworten richtig
                     </p>
 
-                    <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
-                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
+                    <div style={{ backgroundColor: '#663399', height: '28%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, position: "absolute" }}>
+                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: '0.5em' }}>
                             Aktionen
                         </p>
 
@@ -177,7 +177,7 @@ class QuestionScene extends Component {
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <DisplaySection title={questionHeaderText}>
-                    <div style={{ marginLeft: "1.5em" }}>
+                    <div style={{ marginLeft: '1.5em', marginRight: '1.5em', height: '100%' }}>
 
                         <div style={questionTextStyle}>
                             <p >
@@ -244,8 +244,7 @@ const appHeader = {
 }
 
 const questionLine = {
-    width: '45em',
-    maxWidth: '90%',
+    width: '100%',
     height: '0.1em',
     backgroundColor: "#58ACD9",
 }
@@ -261,8 +260,9 @@ const titleAnswer = {
 
 const questionTextStyle = {
     fontSize: '0.6em',
-    width: '45em',
+    width: '100%',
     color: '#003A65',
+    fontWeight: 'bold',
     textAlign: "left",
     height: '8em',
 }

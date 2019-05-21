@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooterView, ImageLineButton } from './common';
+import { ImageButton, QuestionFooterView, ImageLineButton, DisplaySection, InteractSection } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -56,7 +56,7 @@ class QuestionViewScene extends Component {
         if (this.pageNotExists) return <PageNotExists />
 
         const currQuestion = this.state.currentQuestion;
-        
+
         const answer1Clicked = !currQuestion.question.answer1.isRight;
         const answer2Clicked = !currQuestion.question.answer2.isRight;
         const answer3Clicked = !currQuestion.question.answer3.isRight;
@@ -96,12 +96,7 @@ class QuestionViewScene extends Component {
         return (
             <header style={appHeader}>
 
-                <div style={interactSection} >
-                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
-                    <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
-                        Übungsmodus
-                    </h1>
-
+                <InteractSection title="Übungsmodus">
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
                         {currQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
@@ -152,11 +147,11 @@ class QuestionViewScene extends Component {
                             />
                         </div>
                     </div>
-                </div>
+                </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
-                <div style={displaySection}>
+                <DisplaySection title={questionHeaderText}>
                     <h1 style={titleStyle}>
                         {questionHeaderText}
                     </h1>
@@ -215,7 +210,7 @@ class QuestionViewScene extends Component {
                         }}>
                         <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>{a3}</p>
                     </div>
-                </div>
+                </DisplaySection>
 
                 <QuestionFooterView forwardClick={() => this.GetNextQuestion()} backwardClick={() => this.GetPrevQuestion()} backButtonDisabled={!cangetPrevQuestion} forwardButtonDisabled={!canGetNextQuestion} />
             </header>

@@ -21,8 +21,8 @@ class TestStatistics extends Component {
             <div >
                 <div>
                     <div >
-                            <p >
-                                {percentageRight.toFixed(0)}%
+                        <p >
+                            {percentageRight.toFixed(0)}%
                         </p>
                         <div>
                             <p >
@@ -37,23 +37,23 @@ class TestStatistics extends Component {
                         <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
                     </div>
                 </div>
-                <div/>
-                <div style={{"borderColor": "black", "border": "solid", "borderWidth": "2px" }}>
-                        {Object.keys(this.props.exam.finishedStats).map(key => {
-                            var currModResult = this.props.exam.finishedStats[key];
-                            var moduleName = this.props.modules.modules[key].name;
-                            var imageUri = this.props.modules.modules[key].image;
-                            return <div style={{borderWidth: "1px", margin: "3%", border: 'solid' }}>
-                                <p>key={key} </p>
-                                <p>titlep={moduleName} </p>
-                                <p>questionsFalse={currModResult.falseQuestions}</p>
-                                <p>questionsRight={currModResult.rightQuestions}</p>
-                                <p>success={currModResult.percentageRight >= 0.6}</p>
-                                <p>learningState={currModResult.percentageRight}</p>
-                                <p>imageUri={imageUri}</p>
-                                <Button onPress={() => this.props.dispatchInitStatsForModule(key)} buttonText="open viewDetails"/>
-                            </div>;
-                        })}
+                <div />
+                <div style={{ "borderColor": "black", "border": "solid", "borderWidth": "2px" }}>
+                    {Object.keys(this.props.exam.finishedStats).map(key => {
+                        var currModResult = this.props.exam.finishedStats[key];
+                        var moduleName = this.props.modules.modules[key].name;
+                        var imageUri = this.props.modules.modules[key].image;
+                        return <div style={{ borderWidth: "1px", margin: "3%", border: 'solid' }}>
+                            <p>key={key} </p>
+                            <p>titlep={moduleName} </p>
+                            <p>questionsFalse={currModResult.falseQuestions}</p>
+                            <p>questionsRight={currModResult.rightQuestions}</p>
+                            <p>success={currModResult.percentageRight >= 0.6}</p>
+                            <p>learningState={currModResult.percentageRight}</p>
+                            <p>imageUri={imageUri}</p>
+                            <Button onPress={() => this.props.dispatchInitStatsForModule(key)} buttonText="open viewDetails" />
+                        </div>;
+                    })}
                 </div>
             </div>
         );

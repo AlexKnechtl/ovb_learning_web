@@ -3,8 +3,7 @@ import React from 'react';
 const Answer = props => {
     return (
         <div style={{
-            width: props.answerClicked ? '45em' : '46.5em',
-            maxWidth: '90%',
+            width: '100%',
             height: '4em',
             marginBottom: '1em',
             marginLeft: props.answerClicked ? 0 : '-1.5em'

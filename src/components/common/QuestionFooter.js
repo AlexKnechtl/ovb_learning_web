@@ -8,15 +8,15 @@ const QuestionFooter = props => {
                 style={{
                     backgroundColor: '#fff',
                     border: 'solid',
-                    fontSize: 20,
+                    fontSize: '0.7em',
                     fontWeight: "bold",
                     borderWidth: 2,
                     color: '#003A65',
-                    marginRight: 12,
+                    marginRight: '0.5em',
                     borderColor: '#003A65',
                     opacity: props.mouseBackState ? 0.7 : 1,
-                    width: '28%',
-                    height: 42
+                    width: '30%',
+                    height: '2em'
                 }}
                 onMouseOver={props.mouseOverBack}
                 onMouseLeave={props.mouseLeaveBack}
@@ -30,10 +30,9 @@ const QuestionFooter = props => {
                     color: props.mouseWeiterState ? '#fff9' : '#fff',
                     fontWeight: "bold",
                     borderStyle: 'none',
-                    fontSize: 20,
-                    marginRight: 12,
-                    width: '68%',
-                    height: 42
+                    fontSize: '0.7em',
+                    width: '69%',
+                    height: '2em'
                 }}
                 onMouseOver={props.mouseOverWeiter}
                 onMouseLeave={props.mouseLeaveWeiter}
@@ -46,15 +45,12 @@ const QuestionFooter = props => {
 }
 
 const bottomLayout = {
-    position: 'absolute',
-    bottom: '1em',
-    left: '1.5em',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    height: '2em',
-    width: '64.3%',
-    maxWidth: '120em'
+    marginTop: '0.7em',
+    height: '100%',
+    width: '100%'
 }
 
 export { QuestionFooter };

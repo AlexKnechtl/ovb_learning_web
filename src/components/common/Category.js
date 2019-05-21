@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Progress from 'react-progressbar';
 import Center from 'react-center';
@@ -14,7 +13,7 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
             textDecorationColor: '#fff0',
             marginLeft: '1.5em',
             marginBottom: '1.5em',
-            flexBasis: "18em",
+            flexBasis: "45%",
         }} {...props}>
             <p style={title}> {titleText} </p>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
