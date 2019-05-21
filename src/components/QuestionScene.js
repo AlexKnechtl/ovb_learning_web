@@ -71,7 +71,6 @@ class QuestionScene extends Component {
     checkAnswers() {
         this.setState({ check: !this.state.check });
         if (!this.state.check) {
-            var q = this.props.currentQuestion.question;
             var isright = new MultipleChoiceQuestionInteractor().checkIsQuestionRight(this.props.currentQuestion.question);
             this.setState({ lastAnswerRight: isright });
             console.log(isright);
@@ -116,19 +115,19 @@ class QuestionScene extends Component {
         const answer3Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer3.answer : '';
 
         const questionText = this.props.currentQuestion ? this.props.currentQuestion.question.question : ''; // +  this.props.currentQuestion  ? `\nAntwort Nummer ${this.props.currentQuestion.question.answer1.isRight ? '1' : this.props.currentQuestion.question.answer2.isRight ? '2' : '3'} ist korrekt` : '';
-        const questionHeaderText = this.props.currentQuestion ? `${this.props.currentQuestion.moduleId.replace("_", "\.")} Frage ${parseInt(this.props.currentQuestion.questionId.substr(4))}` : '';
+        const questionHeaderText = this.props.currentQuestion ? `${this.props.currentQuestion.moduleId.replace("_", ".")} Frage ${parseInt(this.props.currentQuestion.questionId.substr(4))}` : '';
 
-        const { falseQuestions, questionCount, seenQuestions: rightQuestions, successRate } = this.la.calcCurrentLearningStatsForModule(this.props.currentQuestion.moduleId);
+        const { falseQuestions, questionCount, seenQuestions: rightQuestions } = this.la.calcCurrentLearningStatsForModule(this.props.currentQuestion.moduleId);
         const { name: subModuleName } = this.props.modules.modules[this.props.currentQuestion.sectionId].modules[this.props.currentQuestion.moduleId];
 
         return (
             <header style={appHeader}>
-                <InteractSection title="Übungsmodus" >
+                <InteractSection title="Übungsmodus">
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
                         {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
 
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginTop: 6 }}>
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginBottom: 6 }}>
                         Frage {parseInt(this.props.currentQuestion.questionId.substr(4))} / {questionCount}
                     </h1>
 
@@ -178,6 +177,7 @@ class QuestionScene extends Component {
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <DisplaySection title={questionHeaderText}>
+                    <div style={{marginLeft: "1.5em"}}>
                     <p style={questionTextStyle}>
                         {questionText}
                     </p>
@@ -222,6 +222,7 @@ class QuestionScene extends Component {
                         mouseLeaveWeiter={() => { this.setState({ mouseOverWeiter: false }) }}
                         mouseBackState={this.state.mouseOverCancel}
                         mouseWeiterState={this.state.mouseOverWeiter} />
+                    </div>    
                 </DisplaySection>
 
                 <FinishedPopup ref={'popupInfo'} />

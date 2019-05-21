@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection, FinishedPopup, InteractSection, DisplaySection } from './common';
+import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -23,22 +23,6 @@ class SubCategoryScene extends Component {
     }
 
     la = new LearningAlgorithm(new QuestionService(), LearningService);
-
-    // mapModules() {
-    //     var currMID = this.props.match.params.catId;
-    //     if (!currMID) return undefined;
-    //     var currMods = this.props.modules.modules[currMID].modules;
-    //     return Object.keys(currMods).map(key => {
-    //         var stats = this.la.calcCurrentLearningStatsForModule(key);
-    //         return (<SubCategory key={key}
-    //             // onMouseEnter={() => this.setState({ currentSubmodule: key })}
-    //             onPress={() => this.setState({ currentSubmodule: key })}
-    //             titleText={`${key.replace('_', '.')} ${currMods[key].name}`}
-    //             learningState={stats.seenQuestions / stats.questionCount}
-    //             successRate={stats.successRate}
-    //         />);
-    //     });
-    // }
 
     toogleModal() {
         this.refs.popupInfo.openModal();
@@ -68,9 +52,13 @@ class SubCategoryScene extends Component {
         return (
             <header style={appHeader}>
 
-                <InteractSection title={this.props.modules.modules[currMID].name}
-                    openCategory={() => this.props.dispatchSelectCategory(this.state.currentModule)}
-                    currentModuleInfo={{seenQuestions, questionCount,successRate,falseQuestions}}>
+                <InteractSection title={this.props.modules.modules[currMID].name}>
+                <CategoryButton
+                        buttonText="Bereichsansicht"
+                        onPress={() => {}}
+                        image={iconBereiche} />
+
+                    <div align="right" style={{ marginRight: '11%' }}>
                         <ImageButton
                             onPress={this.startLearning}
                             buttonText="Übungsmodus"
@@ -89,6 +77,8 @@ class SubCategoryScene extends Component {
                                 buttonText="Fragen durchblättern"
                                 image={iconBook} />
                         </Link>
+                        </div>
+                        <Statistics currentModuleInfo={{seenQuestions, questionCount,successRate,falseQuestions}}/>
                 </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#58ACD9" }} />

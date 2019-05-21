@@ -2,16 +2,19 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, Options, Modules, InteractSection, DisplaySection } from './common';
+import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics } from './common';
 import './styles.css';
+// @ts-ignore
 import iconContinue from '../img/ic_continue.png'
+// @ts-ignore
 import iconBook from '../img/ic_look_through.png'
+// @ts-ignore
 import iconPdf from '../img/ic_pdf.png'
-import iconBereiche from '../img/icon_bereiche.png'
 
-import { signOutAction, SetCurrentModuleAction, initExamAction, GotModulesAction } from '../coreFork';
+import { signOutAction, initExamAction, GotModulesAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import iconBereiche from '../img/icon_bereiche.png'
 
 class Home extends Component {
     state = {
@@ -32,17 +35,17 @@ class Home extends Component {
 
     testButtonPress = () => {
         this.initialized = true;
-        if (this.state.testMode == false) {
+        if (!this.state.testMode) {
             this.setState({
                 testMode: !this.state.testMode,
                 // icon: icBack TODO: implement
             });
-        } else if (this.state.testMode == true) {
+        } else {
             // this.props.navigation.navigate('test');
             var mids = []
             Object.keys(this.state.categories).forEach(key => { if (this.state.categories[key].isPressed) mids.push(key); });
             console.log(mids);
-            if (mids.length == 0)
+            if (mids.length === 0)
                 return;
             this.props.dispatchStartExam(mids);
         }
@@ -50,7 +53,7 @@ class Home extends Component {
 
     categoryPress = (sectionID) => {
         this.initialized = true;
-        if (this.state.testMode == false) {
+        if (!this.state.testMode) {
             this.setState({ currentModule: sectionID })
         } else {
             var cat = this.state.categories[sectionID] || {};
@@ -64,26 +67,34 @@ class Home extends Component {
     }
 
     render() {
-        if (Object.keys(this.props.modules).length == 0) return null;
+        if (Object.keys(this.props.modules).length === 0) return null;
         var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0]; 
         return (
-            <header style={appHeader}>
+            <header 
+// @ts-ignore
+            style={appHeader}>
 
-                <InteractSection title={name}
-                    openCategory={() => this.props.dispatchSelectCategory(this.state.currentModule)}
-                    currentModuleInfo={this.props.modules[currMid]}
-                    >
-                    <ImageButton
-                            buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
-                            onPress={this.testButtonPress}
-                            image={iconContinue} />
-                        <ImageButton
-                            buttonText="Lernunterlagen"
-                            image={iconPdf} />
-                        <ImageButton
-                            buttonText="Übungsmodus"
-                            image={iconBook} />
+                <InteractSection title={name}>
                     
+                    <CategoryButton
+                        buttonText="Kategorieansicht"
+                        onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
+                        image={iconBereiche} />
+
+                    <div align="right" style={{ marginRight: '11%' }}>
+                        <ImageButton
+                                buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
+                                onPress={this.testButtonPress}
+                                image={iconContinue} />
+                            <ImageButton
+                                buttonText="Lernunterlagen"
+                                image={iconPdf} />
+                            <ImageButton
+                                buttonText="Übungsmodus"
+                                image={iconBook} />
+                    </div>
+
+                    <Statistics currentModuleInfo={this.props.modules[currMid]} />
                 </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#94C231" }} />

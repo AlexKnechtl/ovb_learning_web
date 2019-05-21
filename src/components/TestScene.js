@@ -2,14 +2,12 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooter, ImageLineButton } from './common';
+import { QuestionFooter } from './common';
+// @ts-ignore
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
-import iconContinue from '../img/ic_continue.png'
-import iconWrong from '../img/x_icon.png'
-import iconPdfRed from '../img/pdf_red.png'
-import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, MultipleChoiceQuestionInteractor, QuestionService } from '../coreFork';
+import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, MultipleChoiceQuestionInteractor } from '../coreFork';
 import { connect } from 'react-redux';
 
 class TestScene extends Component {
@@ -22,7 +20,6 @@ class TestScene extends Component {
     }
 
     checkAnswers() {
-        var q = this.props.exam.currentQuestion.question;
         var isright = new MultipleChoiceQuestionInteractor().checkIsQuestionRight(this.props.exam.currentQuestion.question);
         this.setState({ lastAnswerRight: isright });
         console.log(isright);
@@ -78,23 +75,29 @@ class TestScene extends Component {
         const marginAnswer2 = !answer2Clicked ? 0 : '5%';
         const marginAnswer3 = !answer3Clicked ? 0 : '5%';
 
-        const questionHeaderText = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", "\.")} Frage ${this.props.exam.currentQuestion.questionId.substr(4)}` : '';
+        const questionHeaderText = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", ".")} Frage ${this.props.exam.currentQuestion.questionId.substr(4)}` : '';
         const questionText = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.question : '';
         const answer1Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer1.answer : '';
         const answer2Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer2.answer : '';
         const answer3Text = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.answer3.answer : '';
-        const subModuleId = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", "\.")} ${this.props.modules.selectedSubmoduleName}` : '';
+        const subModuleId = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", ".")} ${this.props.modules.selectedSubmoduleName}` : '';
         const questionNumberText = this.props.exam.currentQuestion ? `Frage ${this.props.exam.currentIndex + 1} / ${this.props.exam.questions.length}` : '';
         const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
         return (
             <header style={appHeader}>
                 <div style={{ height: '100vh', width: '69.5%' }}>
-                    <h1 style={titleStyle}>{questionHeaderText}</h1>
-                    <p style={questionTextStyle}>{questionText}</p>
+                    <h1 
+// @ts-ignore
+                    style={titleStyle}>{questionHeaderText}</h1>
+                    <p 
+// @ts-ignore
+                    style={questionTextStyle}>{questionText}</p>
 
                     <div style={questionLine} />
 
-                    <h1 style={titleAnswer}>Antworten</h1>
+                    <h1 
+// @ts-ignore
+                    style={titleAnswer}>Antworten</h1>
 
                     <button
                         onClick={this.answer1Click.bind(this)}
@@ -153,7 +156,9 @@ class TestScene extends Component {
 
                 <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
 
-                <div style={interactSection} >
+                <div 
+// @ts-ignore
+                style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
                     <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
                         Prüfungsmodus
@@ -176,7 +181,6 @@ class TestScene extends Component {
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',
-    flexDirection: 'row',
     fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
@@ -194,7 +198,7 @@ const titleStyle = {
     color: '#003A65',
     width: '100%',
     textAlign: 'left',
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: '1.2em',
     marginLeft: '5%',
     marginRight: '5%',
@@ -228,41 +232,6 @@ const interactSection = {
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center"
-}
-
-const statisticsText = {
-    fontSize: 32,
-    textAlign: "right",
-    marginRight: '11%',
-    marginBottom: 0
-}
-
-const questionBackText = {
-    backgroundColor: '#fff',
-    padding: 12,
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: '#003A65',
-    width: '75%',
-    marginLeft: '10%',
-    marginRight: '10%',
-    marginTop: 12,
-    marginBottom: 12
-}
-
-const wrongAnswers = {
-    padding: 12,
-    fontWeight: 'bold',
-    fontSize: 22,
-    color: '#fff',
-    border: 'solid',
-    borderWidth: 2,
-    borderColor: '#fff',
-    width: '75%',
-    marginLeft: '10%',
-    marginRight: '10%',
-    marginTop: 12,
-    marginBottom: 12
 }
 
 // export default TestScene;
