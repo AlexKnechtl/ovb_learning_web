@@ -68,6 +68,7 @@ class Home extends Component {
 
     render() {
         if (Object.keys(this.props.modules).length === 0) return null;
+        if(!this.state.currentModule) this.setState({currentModule: Object.keys(this.props.modules)[0]});
         var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0]; 
         return (
             <header 
