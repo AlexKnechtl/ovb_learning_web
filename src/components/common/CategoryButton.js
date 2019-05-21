@@ -16,20 +16,19 @@ class CategoryButton extends React.Component{
                         flex: 1,
                         fontWeight: "bold",
                         backgroundColor: "#003A65",
-                        fontSize: "1em",
+                        fontSize: "0.9em",
                         height: '2em',
-                        minWidth: '10em',
-                        borderWidth: 2,
+                        borderWidth: '0.1em',
                         borderColor: this.state.hover ? '#fff9' : '#fff',
                         border: "solid",
                         textAlign: "center",
                         color: this.state.hover ? '#fff9' : '#fff',
-                        paddingLeft: '1em',
-                        paddingRight: '1em',
-                        marginBottom: 14,
+                        paddingLeft: '0.9em',
+                        paddingRight: '0.9em',
+                        marginBottom: '0.6em',
                     }}>
                     <Center>
-                        <img src={image} style={{ height: '1.6em', marginRight: 24, opacity: this.state.hover ? 0.8 : 1 }} alt="User Icon" />
+                        <img src={image} style={{ height: '1.5em', marginRight: '0.8em', opacity: this.state.hover ? 0.8 : 1 }} alt="User Icon" />
                         {buttonText}
                     </Center>
                 </button>

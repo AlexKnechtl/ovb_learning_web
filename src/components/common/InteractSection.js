@@ -1,5 +1,3 @@
-//@ts-check
-
 import React from 'react';
 
 import icon from '../../img/logo_ovb_white.png'

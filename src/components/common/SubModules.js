@@ -17,10 +17,6 @@ export default function SubModules({currMID, modules, la, onCatPress}) {
                 titleText={`${key.replace('_', '.')} ${modules[key].name}`}
                 learningState={stats.seenQuestions / stats.questionCount}
                 successRate={stats.successRate}
-                style={{marginLeft: '1.5em',
-                    marginBottom: '1.5em',
-                    flex: "1",
-                    flexBasis: "13em"}}
             />);
         })}
         {Object.keys(modules).map((v) => <div style={{marginLeft: '1.5em', marginBottom: '1.5em', flex: "1", flexBasis: "13em"}}/>)}

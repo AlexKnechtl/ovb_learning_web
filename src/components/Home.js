@@ -68,31 +68,28 @@ class Home extends Component {
 
     render() {
         if (Object.keys(this.props.modules).length === 0) return null;
-        if(!this.state.currentModule) this.setState({currentModule: Object.keys(this.props.modules)[0]});
-        var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0]; 
+        if (!this.state.currentModule) this.setState({ currentModule: Object.keys(this.props.modules)[0] });
+        var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
         return (
-            <header 
-// @ts-ignore
-            style={appHeader}>
-
-                <InteractSection title={name}>
-                    
-                    <CategoryButton
-                        buttonText="Kategorieansicht"
-                        onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
-                        image={iconBereiche} />
-
+            <header style={appHeader}>
+                
+                <InteractSection title={this.props.modules[currMid].name}>
                     <div align="right" style={{ marginRight: '11%' }}>
+                        <CategoryButton
+                            buttonText="Kategorieansicht"
+                            onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
+                            image={iconBereiche} />
+
                         <ImageButton
-                                buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
-                                onPress={this.testButtonPress}
-                                image={iconContinue} />
-                            <ImageButton
-                                buttonText="Lernunterlagen"
-                                image={iconPdf} />
-                            <ImageButton
-                                buttonText="Übungsmodus"
-                                image={iconBook} />
+                            buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
+                            onPress={this.testButtonPress}
+                            image={iconContinue} />
+                        <ImageButton
+                            buttonText="Lernunterlagen"
+                            image={iconPdf} />
+                        <ImageButton
+                            buttonText="Übungsmodus"
+                            image={iconBook} />
                     </div>
 
                     <Statistics currentModuleInfo={this.props.modules[currMid]} />
@@ -101,11 +98,11 @@ class Home extends Component {
                 <div style={{ width: '0.25em', backgroundColor: "#94C231" }} />
 
                 <DisplaySection title="Übungsbereiche" >
-                        <Modules modules={this.props.modules} 
-                                categoryPress={this.categoryPress} 
-                                chosenCategories={this.state.categories} 
-                                testMode={this.state.testMode}/>
-                    </DisplaySection>
+                    <Modules modules={this.props.modules}
+                        categoryPress={this.categoryPress}
+                        chosenCategories={this.state.categories}
+                        testMode={this.state.testMode} />
+                </DisplaySection>
                 <Options />
             </header>
         );

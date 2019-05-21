@@ -1,10 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 
 const Answer = props => {
     return (
         <div style={{
-            width: props.answerClicked ? '53em' : '54.5em',
+            width: props.answerClicked ? '45em' : '46.5em',
             maxWidth: '90%',
             height: '4em',
             marginBottom: '1em',
@@ -21,9 +20,9 @@ const Answer = props => {
                     width: '100%',
                     height: '100%',
                     textAlign: 'left',
-                    marginBottom: 16
+                    marginBottom: '0.6em'
                 }}>
-                <p style={{ fontSize: 16, color: props.colorAnswer, margin: 12, fontWeight: "bold" }}>
+                <p style={{ fontSize: 16, color: props.colorAnswer, margin: '0.4em', fontWeight: "bold" }}>
                     {props.text}
                 </p>
             </button>

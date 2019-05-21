@@ -177,52 +177,55 @@ class QuestionScene extends Component {
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <DisplaySection title={questionHeaderText}>
-                    <div style={{marginLeft: "1.5em"}}>
-                    <p style={questionTextStyle}>
-                        {questionText}
-                    </p>
+                    <div style={{ marginLeft: "1.5em" }}>
 
-                    <div style={questionLine} />
+                        <div style={questionTextStyle}>
+                            <p >
+                                {questionText}
+                            </p>
+                        </div>
 
-                    <h1 style={titleAnswer}>Antworten</h1>
+                        <div style={questionLine} />
 
-                    <Answer
-                        check={this.state.check}
-                        text={answer1Text}
-                        backgroundColor={background1}
-                        colorAnswer={colorAnswers}
-                        answerClicked={answer1Clicked}
-                        marginAnswer={marginAnswer1}
-                        onClick={this.answer1Click.bind(this)} />
+                        <h1 style={titleAnswer}>Antworten</h1>
 
-                    <Answer
-                        check={this.state.check}
-                        text={answer2Text}
-                        backgroundColor={background2}
-                        colorAnswer={colorAnswers}
-                        answerClicked={answer2Clicked}
-                        marginAnswer={marginAnswer2}
-                        onClick={this.answer2Click.bind(this)} />
+                        <Answer
+                            check={this.state.check}
+                            text={answer1Text}
+                            backgroundColor={background1}
+                            colorAnswer={colorAnswers}
+                            answerClicked={answer1Clicked}
+                            marginAnswer={marginAnswer1}
+                            onClick={this.answer1Click.bind(this)} />
 
-                    <Answer
-                        check={this.state.check}
-                        text={answer3Text}
-                        backgroundColor={background3}
-                        colorAnswer={colorAnswers}
-                        answerClicked={answer3Clicked}
-                        marginAnswer={marginAnswer3}
-                        onClick={this.answer3Click.bind(this)} />
+                        <Answer
+                            check={this.state.check}
+                            text={answer2Text}
+                            backgroundColor={background2}
+                            colorAnswer={colorAnswers}
+                            answerClicked={answer2Clicked}
+                            marginAnswer={marginAnswer2}
+                            onClick={this.answer2Click.bind(this)} />
 
-                    <QuestionFooter
-                        onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
-                        onPressBack={() => { }}
-                        mouseOverBack={() => { this.setState({ mouseOverCancel: true }) }}
-                        mouseLeaveBack={() => { this.setState({ mouseOverCancel: false }) }}
-                        mouseOverWeiter={() => { this.setState({ mouseOverWeiter: true }) }}
-                        mouseLeaveWeiter={() => { this.setState({ mouseOverWeiter: false }) }}
-                        mouseBackState={this.state.mouseOverCancel}
-                        mouseWeiterState={this.state.mouseOverWeiter} />
-                    </div>    
+                        <Answer
+                            check={this.state.check}
+                            text={answer3Text}
+                            backgroundColor={background3}
+                            colorAnswer={colorAnswers}
+                            answerClicked={answer3Clicked}
+                            marginAnswer={marginAnswer3}
+                            onClick={this.answer3Click.bind(this)} />
+
+                        <QuestionFooter
+                            onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
+                            onPressBack={() => { }}
+                            mouseOverBack={() => { this.setState({ mouseOverCancel: true }) }}
+                            mouseLeaveBack={() => { this.setState({ mouseOverCancel: false }) }}
+                            mouseOverWeiter={() => { this.setState({ mouseOverWeiter: true }) }}
+                            mouseLeaveWeiter={() => { this.setState({ mouseOverWeiter: false }) }}
+                            mouseBackState={this.state.mouseOverCancel}
+                            mouseWeiterState={this.state.mouseOverWeiter} />
+                    </div>
                 </DisplaySection>
 
                 <FinishedPopup ref={'popupInfo'} />
@@ -241,21 +244,10 @@ const appHeader = {
 }
 
 const questionLine = {
-    width: '53em',
+    width: '45em',
     maxWidth: '90%',
-    height: 3,
+    height: '0.1em',
     backgroundColor: "#58ACD9",
-}
-
-const titleStyle = {
-    color: '#003A65',
-    width: '100%',
-    maxWidth: '120em',
-    textAlign: 'left',
-    fontWeight: 'bold',
-    fontSize: '1.2em',
-    marginTop: '1.5em',
-    marginBottom: 4
 }
 
 const titleAnswer = {
@@ -264,58 +256,43 @@ const titleAnswer = {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: '1.2em',
-    marginBottom: 18
+    marginBottom: '0.6em'
 }
 
 const questionTextStyle = {
-    fontSize: 18,
+    fontSize: '0.6em',
+    width: '45em',
     color: '#003A65',
     textAlign: "left",
-    height: '15%',
-}
-
-const interactSection = {
-    backgroundColor: "#003A65",
-    width: '21em',
-    maxWidth: '30%',
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
-}
-
-const displaySection = {
-    width: '100%',
-    height: '100vh',
-    marginLeft: '4%',
-    marginRight: '4%'
+    height: '8em',
 }
 
 const questionBackText = {
     backgroundColor: '#fff',
-    padding: 12,
+    padding: '0.5em',
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: '0.8em',
     color: '#003A65',
     width: '75%',
     marginLeft: '10%',
     marginRight: '10%',
-    marginTop: 12,
-    marginBottom: 12
+    marginTop: '0.5em',
+    marginBottom: '0.5em'
 }
 
 const wrongAnswers = {
-    padding: 12,
+    padding: '0.5em',
     fontWeight: 'bold',
-    fontSize: 22,
+    fontSize: '0.8em',
     color: '#fff',
     border: 'solid',
-    borderWidth: 2,
+    borderWidth: '0.1em',
     borderColor: '#fff',
     width: '75%',
     marginLeft: '10%',
     marginRight: '10%',
-    marginTop: 12,
-    marginBottom: 12
+    marginTop: '0.5em',
+    marginBottom: '0.5em'
 }
 
 // export default QuestionScene;

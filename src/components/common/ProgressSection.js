@@ -11,22 +11,21 @@ const ProgressSection = ({progressText, progressColor, progress}) => {
                 {progressText}
             </p>
             <div style={row}>
-                <Progress style={progressBar} color={progressColor} height={22} completed={progress*100} />
+                <Progress style={progressBar} color={progressColor} height={'0.8em'} completed={progress*100} />
                 <p style={percentageText}>
                     {(progress*100).toFixed(0)}%
                 </p>
             </div>
         </div>
-
     )
 }
 
 const fortschrittText = {
-    fontSize: 24,
+    fontSize: '0.7em',
     textAlign: "left",
     marginLeft: '11%',
-    marginBottom: 5,
-    marginTop: 16,
+    marginBottom: '0.2em',
+    marginTop: '0.7em',
     fontWeight: "bold"
 }
 
@@ -35,11 +34,11 @@ const progressBar = {
     marginTop: 0,
     marginBottom: 0,
     width: '80%',
-    height: 22
+    height: '0.8em'
 }
 
 const percentageText = {
-    fontSize: 22,
+    fontSize: '0.7em',
     textAlign: "right",
     marginLeft: 5,
     marginTop: 0,
@@ -50,6 +49,7 @@ const percentageText = {
 const row = {
     display: "flex",
     flexDirection: "row",
+    alignItems: "center",
     marginLeft: '10%',
     marginRight: '10%'
 }

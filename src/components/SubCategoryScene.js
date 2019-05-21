@@ -1,7 +1,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { SubCategory, ImageButton, Options, CategoryButton, ProgressSection, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
+import { SubCategory, ImageButton, Options, CategoryButton, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -53,12 +53,12 @@ class SubCategoryScene extends Component {
             <header style={appHeader}>
 
                 <InteractSection title={this.props.modules.modules[currMID].name}>
-                <CategoryButton
-                        buttonText="Bereichsansicht"
-                        onPress={() => {}}
-                        image={iconBereiche} />
-
                     <div align="right" style={{ marginRight: '11%' }}>
+                        <CategoryButton
+                            buttonText="Bereichsansicht"
+                            onPress={() => { }}
+                            image={iconBereiche} />
+
                         <ImageButton
                             onPress={this.startLearning}
                             buttonText="Übungsmodus"
@@ -77,8 +77,8 @@ class SubCategoryScene extends Component {
                                 buttonText="Fragen durchblättern"
                                 image={iconBook} />
                         </Link>
-                        </div>
-                        <Statistics currentModuleInfo={{seenQuestions, questionCount,successRate,falseQuestions}}/>
+                    </div>
+                    <Statistics currentModuleInfo={{ seenQuestions, questionCount, successRate, falseQuestions }} />
                 </InteractSection>
 
                 <div style={{ width: '0.25em', backgroundColor: "#58ACD9" }} />

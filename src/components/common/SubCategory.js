@@ -5,18 +5,17 @@ import Progress from 'react-progressbar';
 import Center from 'react-center';
 import '../styles.css';
 
-const SubCategory = ({ titleText, onPress, successRate, learningState, style, ...props }) => {
+const SubCategory = ({ titleText, onPress, successRate, learningState, ...props }) => {
     return (
         <div onClick={onPress} style={{
             backgroundColor: '#003A65',
             backgroundSize: '100%',
-            width: '40%',
-            maxWidth: '18em',
             textDecorationLine: 'none',
             textDecoration: 'none',
             textDecorationColor: '#fff0',
-            margin: 0,
-            ...style
+            marginLeft: '1.5em',
+            marginBottom: '1.5em',
+            flexBasis: "16em",
         }} {...props}>
 
             <p style={title}>
@@ -49,6 +48,7 @@ const title = {
     color: "#fff",
     fontWeight: "bold",
     backgroundColor: "#fff3",
+    marginTop: 0,
     fontSize: "0.7em",
     marginBottom: '0.75em',
     textAlign: "left",
