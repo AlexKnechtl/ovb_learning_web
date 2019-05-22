@@ -53,11 +53,12 @@ class SubCategoryScene extends Component {
 
                 <InteractSection title={this.props.modules.modules[currMID].name}>
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
-                        <CategoryButton
-                            buttonText="Bereichsansicht"
-                            onPress={() => { }}
-                            image={iconBereiche} />
-
+                        <Link to="/">
+                            <CategoryButton
+                                buttonText="Bereichsansicht"
+                                onPress={() => { }}
+                                image={iconBereiche} />
+                        </Link>
                         <ImageButton
                             onPress={this.startLearning}
                             buttonText="Übungsmodus"
