@@ -14,7 +14,9 @@ import iconPdf from '../img/ic_pdf.png'
 import { signOutAction, initExamAction, GotModulesAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+
 import iconBereiche from '../img/icon_bereiche.png'
+import backButton from '../img/arrow.png'
 
 class Home extends Component {
     state = {
@@ -66,19 +68,27 @@ class Home extends Component {
         }
     }
 
+    categoryButtonPress = () => {
+        if (!this.state.testMode)
+            this.props.dispatchSelectCategory(this.state.currentModule)
+        else
+            this.setState({ testMode: !this.state.testMode });
+    }
+
     render() {
         if (Object.keys(this.props.modules).length === 0) return null;
         if (!this.state.currentModule) this.setState({ currentModule: Object.keys(this.props.modules)[0] });
         var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
         return (
             <header className="appHeader" style={appHeader}>
-                
+
                 <InteractSection title={this.props.modules[currMid].name}>
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
                         <CategoryButton
-                            buttonText="Kategorieansicht"
-                            onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
-                            image={iconBereiche} />
+                            buttonText={this.state.testMode ? "Abbrechen" : "Kategorieansicht"}
+                            testMode={this.state.testMode}
+                            onPress={this.categoryButtonPress}
+                            image={this.state.testMode ? backButton : iconBereiche} />
 
                         <ImageButton
                             buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
@@ -103,12 +113,12 @@ class Home extends Component {
                         chosenCategories={this.state.categories}
                         testMode={this.state.testMode} />
                 </DisplaySection>
-                <footer style={{position: "fixed", bottom:"0", left: "0"}}>
-                    <Options 
+                <footer style={{ position: "fixed", bottom: "0", left: "0" }}>
+                    <Options
                         onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
                         onPressImpressum={() => window.open("https://www.seekinnovation.at")}
                         onPressLogout={() => this.props.dispatchLogOut()}
-                        />
+                    />
                 </footer>
             </header>
         );
