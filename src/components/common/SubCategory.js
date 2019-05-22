@@ -52,6 +52,10 @@ const title = {
     fontSize: "0.7em",
     marginBottom: '0.75em',
     textAlign: "left",
+    maxLines: 1,
+    maxHeight: '1.3em',
+    height: '1.2em',
+    overflow: "hidden",
     paddingLeft: "0.6em",
     paddingTop: '0.3em',
     paddingBottom: '0.3em'
