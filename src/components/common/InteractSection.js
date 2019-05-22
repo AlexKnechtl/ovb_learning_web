@@ -4,7 +4,7 @@ import icon from '../../img/logo_ovb_white.png'
 
 const InteractSection = ({title, children}) => {
     return (
-        <div style={interactSection} >
+        <div className="blueBox" style={interactSection} >
             <img
                 src={icon}
                 style={iconStyle}
