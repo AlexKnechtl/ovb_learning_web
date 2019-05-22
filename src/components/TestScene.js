@@ -111,7 +111,6 @@ class TestScene extends Component {
                         <h1 style={titleAnswer}>Antworten</h1>
 
                         <Answer
-                            check={this.state.check}
                             text={answer1Text}
                             backgroundColor={backgroundColor1}
                             colorAnswer={textColor1}
@@ -120,22 +119,20 @@ class TestScene extends Component {
                             onClick={this.answer1Click.bind(this)} />
 
                         <Answer
-                            check={this.state.check}
-                            text={answer1Text}
+                            text={answer2Text}
                             backgroundColor={backgroundColor2}
                             colorAnswer={textColor2}
-                            answerClicked={answer1Clicked}
-                            marginAnswer={marginAnswer1}
-                            onClick={this.answer1Click.bind(this)} />
-
-                        <Answer
-                            check={this.state.check}
-                            text={answer2Text}
-                            backgroundColor={backgroundColor3}
-                            colorAnswer={textColor3}
                             answerClicked={answer2Clicked}
                             marginAnswer={marginAnswer2}
                             onClick={this.answer2Click.bind(this)} />
+
+                        <Answer
+                            text={answer3Text}
+                            backgroundColor={backgroundColor3}
+                            colorAnswer={textColor3}
+                            answerClicked={answer3Clicked}
+                            marginAnswer={marginAnswer3}
+                            onClick={this.answer3Click.bind(this)} />
 
                     <QuestionFooter
                         onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
