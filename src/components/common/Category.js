@@ -30,7 +30,7 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
                 </div>
                 <div align="center" style={{ width: '30%' }}>
                     <Center style={{
-                        backgroundColor: isPressed ? 'rgba(46, 239, 100, 0.55)' : '#fff2',
+                        backgroundColor: isPressed&&testMode ? 'rgba(46, 239, 100, 0.55)' : '#fff2',
                         width: '2em',
                         height: '2em',
                         flex: 1
