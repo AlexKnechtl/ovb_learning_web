@@ -1,7 +1,9 @@
+//@ts-check
+
 import React from 'react';
 import '../styles.css';
 
-const QuestionFooter = props => {
+const QuestionFooter = ({mouseBackState, mouseLeaveBack, onPressBack, onPressContinue, mouseOverBack, mouseOverWeiter, continueDisabled, mouseLeaveWeiter, mouseWeiterState }) => {
     return (
         <div style={bottomLayout} >
             <button
@@ -15,29 +17,29 @@ const QuestionFooter = props => {
                     marginRight: '0.5em',
                     borderColor: '#003A65',
                     flexGrow: 1,
-                    opacity: props.mouseBackState ? 0.7 : 1,
+                    opacity: mouseBackState ? 0.7 : 1,
                     height: '2em'
                 }}
-                onMouseOver={props.mouseOverBack}
-                onMouseLeave={props.mouseLeaveBack}
-                onClick={props.onPressBack}>
+                onMouseOver={mouseOverBack}
+                onMouseLeave={mouseLeaveBack}
+                onClick={onPressBack}>
                 Abbrechen
             </button>
 
             <button
                 style={{
                     backgroundColor: '#003A65',
-                    color: props.mouseWeiterState ? '#fff9' : '#fff',
+                    color: mouseWeiterState ? '#fff9' : '#fff',
                     fontWeight: "bold",
                     borderStyle: 'none',
                     fontSize: '0.7em',
                     flexGrow: 2,
                     height: '2em'
                 }}
-                onMouseOver={props.mouseOverWeiter}
-                onMouseLeave={props.mouseLeaveWeiter}
-                onClick={props.onPressContinue}
-                disabled={props.continueDisabled}>
+                onMouseOver={mouseOverWeiter}
+                onMouseLeave={mouseLeaveWeiter}
+                onClick={onPressContinue}
+                disabled={continueDisabled}>
                 Weiter
             </button>
         </div>

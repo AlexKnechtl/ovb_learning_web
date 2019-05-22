@@ -8,6 +8,7 @@ import './styles.css';
 
 import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, MultipleChoiceQuestionInteractor } from '../coreFork';
 import { connect } from 'react-redux';
+import { push } from 'connected-react-router';
 
 class TestScene extends Component {
     state = {
@@ -137,6 +138,7 @@ class TestScene extends Component {
                     <QuestionFooter
                         onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
                         continueDisabled={!this.state.check}
+                        onPressBack={()=>{confirm("Wirklich zurück?") && this.props.dispatchNavigation("/");}}
                     />
                     </div>
                 </DisplaySection>
@@ -182,7 +184,8 @@ const questionTextStyle = {
 const mapDispatchToProps = {
     dispatchGetNextQuestion: getNextExamQuestionAction,
     dispatchAnswerQuestion: answerExamQuestionAction,
-    dispatchFinishExam: finishExamAction
+    dispatchFinishExam: finishExamAction,
+    dispatchNavigation: push
 };
 
 const mapStateToProps = state => ({

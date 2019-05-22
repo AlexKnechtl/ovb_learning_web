@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
 import { Link } from "react-router-dom";
+import { goBack } from 'connected-react-router';
 
 class QuestionScene extends Component {
     state = {
@@ -226,7 +227,7 @@ class QuestionScene extends Component {
 
                         <QuestionFooter
                             onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
-                            onPressBack={() => { }}
+                            onPressBack={() => this.props.dispatchGoBack()}
                             mouseOverBack={() => { this.setState({ mouseOverCancel: true }) }}
                             mouseLeaveBack={() => { this.setState({ mouseOverCancel: false }) }}
                             mouseOverWeiter={() => { this.setState({ mouseOverWeiter: true }) }}
@@ -306,7 +307,8 @@ const wrongAnswers = {
 const mapDispatchToProps = {
     dispatchUpdateQuestion: updateCurrentQuestion,
     dispatchGetNextQuestion: getNextQuestionAction,
-    dispatchLearnFalseQuestions: learnFalseQuestionsFromModuleAction
+    dispatchLearnFalseQuestions: learnFalseQuestionsFromModuleAction,
+    dispatchGoBack: goBack
 };
 
 const mapStateToProps = state => ({
