@@ -20,7 +20,7 @@ export default function SubModules({currMID, modules, la, onCatPress}) {
                 style={{flexBasis: "13em", flex: "1", minWidth: "13em", marginLeft: '1.5em', marginBottom: '1.5em' }}
             />);
         })}
-        {Object.keys(modules).map((v) => <div style={{flexBasis: "13em", flex: "1", minWidth: "13em", marginLeft: '1.5em', marginBottom: '1.5em'  }}/>)}
+        {Object.keys(modules).map((v) => <div style={{flexBasis: "13em", flex: "1", minWidth: "13em", marginLeft: '1.5em'  }}/>)}
     </div>
   )
 }
