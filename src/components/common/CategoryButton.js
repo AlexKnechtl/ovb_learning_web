@@ -7,13 +7,12 @@ class CategoryButton extends React.Component {
 
     state = { hover: false }
     render() {
-        const { onPress, buttonText, image } = this.props;
+        const { onPress, buttonText, image, testMode } = this.props;
         return (
             <button onClick={onPress}
                 onMouseOver={() => this.setState({ hover: true })}
                 onMouseLeave={() => this.setState({ hover: false })}
                 style={{
-                    // flex: 1,
                     fontWeight: "bold",
                     backgroundColor: "#003A65",
                     fontSize: "0.9em",
@@ -28,7 +27,15 @@ class CategoryButton extends React.Component {
                     marginBottom: '0.6em',
                 }}>
                 <Center>
-                    <img src={image} style={{ height: '1.5em', marginRight: '0.8em', opacity: this.state.hover ? 0.8 : 1 }} alt="User Icon" />
+                    <img
+                        src={image}
+                        style={{
+                            height: '1.5em',
+                            marginRight: '0.8em',
+                            transform: testMode ? "rotate(180deg)" : "",
+                            opacity: this.state.hover ? 0.8 : 1
+                        }}
+                        alt="User Icon" />
                     {buttonText}
                 </Center>
             </button>
