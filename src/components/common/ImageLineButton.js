@@ -21,7 +21,7 @@ const ImageLineButton = props => {
                     color: props.mouseOverState ? '#fff9' : '#fff',
                     paddingLeft: '0.7em',
                     paddingRight: '0.7em',
-                    marginBottom: 14
+                    marginBottom: '0.5em'
                 }}>
                 <Center>
                     <img src={props.image} style={{ maxHeight: '1.2em', maxWidth: '1.3em', marginRight: 12, opacity: props.mouseOverState ? 0.8 : 1 }} alt="User Icon" />

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooterView, ImageLineButton, DisplaySection, InteractSection } from './common';
+import { ImageButton, QuestionFooterView, ImageLineButton, DisplaySection, InteractSection, Answer } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -68,14 +68,6 @@ class QuestionViewScene extends Component {
         const textColor1 = answer1Clicked ? "#003A65" : "#fff";
         const textColor2 = answer2Clicked ? "#003A65" : "#fff";
         const textColor3 = answer3Clicked ? "#003A65" : "#fff";
-
-        const fontWeightStyle = answer1Clicked ? "normal" : "bold";
-        const fontWeightStyle2 = answer2Clicked ? "normal" : "bold";
-        const fontWeightStyle3 = answer3Clicked ? "normal" : "bold";
-
-        const marginAnswer1 = answer1Clicked ? 20 : 0;
-        const marginAnswer2 = answer2Clicked ? 20 : 0;
-        const marginAnswer3 = answer3Clicked ? 20 : 0;
 
         var question = currQuestion.question.question;
 
@@ -152,63 +144,32 @@ class QuestionViewScene extends Component {
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <DisplaySection title={questionHeaderText}>
-                    <h1 style={titleStyle}>
-                        {questionHeaderText}
-                    </h1>
-                    <p style={questionText}>{question}</p>
-                    <div style={questionLine} />
+                    <div style={{ marginLeft: '1.5em', marginRight: '1.5em', height: '100%' }}>
+                        <p style={questionText}>{question}</p>
+                        <div style={questionLine} />
 
-                    <h1 style={titleAnswer}>Antworten</h1>
+                        <h1 style={titleAnswer}>Antworten</h1>
 
-                    <div
-                        style={{
-                            border: 'solid',
-                            borderColor: '#003A65',
-                            backgroundColor: backgroundColor1,
-                            borderWidth: 2,
-                            minHeight: '12%',
-                            outline: 'none',
-                            textAlign: 'left',
-                            width: '90%',
-                            marginLeft: '5%',
-                            marginRight: '5%',
-                            marginBottom: 16
-                        }}>
-                        <p style={{ fontSize: 14, color: textColor1, margin: 12 }}>{a1}</p>
-                    </div>
+                        <Answer
+                            check={this.state.check}
+                            text={a1}
+                            backgroundColor={backgroundColor1}
+                            colorAnswer={textColor1}
+                            answerClicked={answer1Clicked}/>
 
-                    <div
-                        style={{
-                            border: 'solid',
-                            borderColor: '#003A65',
-                            minHeight: '12%',
-                            backgroundColor: backgroundColor2,
-                            borderWidth: 2,
-                            textAlign: 'left',
-                            outline: 'none',
-                            width: '90%',
-                            marginLeft: '5%',
-                            marginRight: '5%',
-                            marginBottom: 16
-                        }}>
-                        <p style={{ fontSize: 14, color: textColor2, margin: 12 }}>{a2}</p>
-                    </div>
+                        <Answer
+                            check={this.state.check}
+                            text={a2}
+                            backgroundColor={backgroundColor2}
+                            colorAnswer={textColor2}
+                            answerClicked={answer2Clicked} />
 
-                    <div
-                        style={{
-                            border: 'solid',
-                            borderColor: '#003A65',
-                            backgroundColor: backgroundColor3,
-                            borderWidth: 2,
-                            minHeight: '12%',
-                            textAlign: 'left',
-                            width: '90%',
-                            outline: 'none',
-                            marginLeft: '5%',
-                            marginRight: '5%',
-                            marginBottom: 16
-                        }}>
-                        <p style={{ fontSize: 14, color: textColor3, margin: 12 }}>{a3}</p>
+                        <Answer
+                            check={this.state.check}
+                            text={a3}
+                            backgroundColor={backgroundColor3}
+                            colorAnswer={textColor3}
+                            answerClicked={answer3Clicked}/>
                     </div>
                 </DisplaySection>
 
@@ -231,20 +192,6 @@ const questionLine = {
     width: '90%',
     height: 3,
     backgroundColor: "#58ACD9",
-    marginLeft: '5%',
-    marginRight: '5%'
-}
-
-const titleStyle = {
-    color: '#003A65',
-    width: '100%',
-    textAlign: 'left',
-    fontWeight: 'bold',
-    fontSize: '1.2em',
-    marginLeft: '5%',
-    marginRight: '5%',
-    marginTop: '1.5em',
-    marginBottom: 4
 }
 
 const titleAnswer = {
@@ -253,8 +200,6 @@ const titleAnswer = {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: '1.2em',
-    marginLeft: '5%',
-    marginRight: '5%',
     marginBottom: 18
 }
 
@@ -263,23 +208,6 @@ const questionText = {
     color: '#003A65',
     textAlign: "left",
     height: '15%',
-    marginLeft: '5%',
-    marginRight: '5%',
-}
-
-const interactSection = {
-    backgroundColor: "#003A65",
-    width: '30%',
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
-}
-
-const displaySection = {
-    width: '100%',
-    height: '100vh',
-    marginLeft: '5%',
-    marginRight: '5%'
 }
 
 const questionBackText = {

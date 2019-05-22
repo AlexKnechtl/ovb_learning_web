@@ -98,6 +98,7 @@ class QuestionScene extends Component {
             this.props.dispatchGetNextQuestion();
             return null;
         }
+        
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
 
         const background1 = this.state.check ? this.props.currentQuestion && this.props.currentQuestion.question.answer1.isRight ? '#23B800' : '#B21515' : answer1Clicked ? 'white' : 'white';

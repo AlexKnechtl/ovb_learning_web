@@ -15,13 +15,13 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
             marginBottom: '1.5em',
             flexBasis: "45%",
         }} {...props}>
-            <p style={title}> {titleText} </p>
+            <p numberOfLines={1} style={title}> {titleText} </p>
             <div style={{ display: 'flex', flexDirection: 'row' }}>
                 <div style={{ width: '68%', textAlign: "center", marginLeft: 8 }}>
                     <div style={{ color: '#fff', fontSize: "0.65em" }}>
                         Lernfortschritt
                         </div>
-                    <Progress style={progressBar} color="#94C231" height={18} completed={learningState * 100} />
+                    <Progress style={progressBar} color="#94C231" height={'0.7em'} completed={learningState * 100} />
                     <p style={{ color: "#fff8", marginTop: 2, fontSize: '0.5em' }}>
                         {questionsRight} Fragen richtig / {questionsFalse} falsch
                         </p>
@@ -48,6 +48,9 @@ const title = {
     marginTop: 0,
     marginBottom: '0.85em',
     fontSize: "0.7em",
+    maxLines: '1',
+    maxHeight: '1.3em',
+    height: '1.3em',
     textAlign: "left",
     paddingLeft: "0.6em",
     paddingTop: '0.3em',
@@ -66,7 +69,7 @@ const percentageText = {
     flex: 1,
     color: '#fff',
     textAlign: "center",
-    fontSize: 16,
+    fontSize: '0.7em',
     fontWeight: "bold"
 }
 

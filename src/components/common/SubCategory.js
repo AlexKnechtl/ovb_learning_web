@@ -15,7 +15,7 @@ const SubCategory = ({ titleText, onPress, successRate, learningState, ...props 
             textDecorationColor: '#fff0',
             marginLeft: '1.5em',
             marginBottom: '1.5em',
-            flexBasis: "16em",
+            flexBasis: "45%",
         }} {...props}>
 
             <p style={title}>
@@ -27,7 +27,7 @@ const SubCategory = ({ titleText, onPress, successRate, learningState, ...props 
                     <div style={{ color: '#fff', fontSize: "0.65em" }}>
                         {(learningState * 100).toFixed(0)}% abgeschlossen
                     </div>
-                    <Progress style={progressBar} color="#58ACD9" height={18} completed={learningState * 100} />
+                    <Progress style={progressBar} color="#58ACD9" height={'0.6em'} completed={learningState * 100} />
                 </div>
                 <div align="center" style={{ width: '30%' }}>
                     <Center style={erfolgBackground}>
@@ -69,23 +69,24 @@ const percentageText = {
     flex: 1,
     color: '#fff',
     textAlign: "center",
-    fontSize: 16,
+    fontSize: '0.6em',
     fontWeight: "bold"
 }
 
 const erfolgBackground = {
     backgroundColor: '#fff2',
-    width: 55,
-    height: 35,
+    width: '1.8em',
+    height: '1.2em',
     borderColor: '#fff',
+    border: 'solid',
     borderWidth: 1,
     flex: 1
 }
 
 const erfolgschance = {
     color: "#fff",
-    fontSize: 10,
-    marginTop: 6,
+    fontSize: '0.4em',
+    marginTop: '0.4em',
     flex: 1
 }
 
