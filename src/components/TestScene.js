@@ -1,7 +1,6 @@
 
 
 import React, { Component } from 'react';
-import { } from 'react'
 import { QuestionFooter, InteractSection, DisplaySection, Answer } from './common';
 // @ts-ignore
 import './styles.css';
@@ -9,6 +8,7 @@ import './styles.css';
 import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, MultipleChoiceQuestionInteractor } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
+import {Prompt} from 'react-router-dom';
 
 class TestScene extends Component {
     state = {
@@ -85,7 +85,12 @@ class TestScene extends Component {
         const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
         return (
             <header style={appHeader}>
-
+                <Prompt
+                    when={true}
+                    message={location =>
+                        `Wollen sie wirklich den Testmodus beenden?`
+                    }
+                />
                 <InteractSection title="Prüfungsmodus">
 
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
@@ -138,7 +143,7 @@ class TestScene extends Component {
                     <QuestionFooter
                         onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
                         continueDisabled={!this.state.check}
-                        onPressBack={()=>{confirm("Wirklich zurück?") && this.props.dispatchNavigation("/");}}
+                        onPressBack={()=>{confirm("Wirklich zurück?") && this.props.dispatchNavigation("/");}} //TODO: Beautiful Popup instead of confirm
                     />
                     </div>
                 </DisplaySection>
