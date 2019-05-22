@@ -1,7 +1,7 @@
 //@ts-check
 import React, { Component } from 'react'
 import { Document, Page } from "react-pdf";
-import pdf from "../1.pdf";
+// import pdf from "../1.pdf";
 
 // setOptions({workerSrc: '../pdf.worker.js', });
 // pdfjs.GlobalWorkerOptions.workerSrc = '../pdf.worker.js';
