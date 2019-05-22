@@ -74,7 +74,7 @@ class Home extends Component {
             <header style={appHeader}>
                 
                 <InteractSection title={this.props.modules[currMid].name}>
-                    <div align="right" style={{ marginRight: '11%' }}>
+                    <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
                         <CategoryButton
                             buttonText="Kategorieansicht"
                             onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
@@ -103,9 +103,13 @@ class Home extends Component {
                         chosenCategories={this.state.categories}
                         testMode={this.state.testMode} />
                 </DisplaySection>
-                <Options 
-                    onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
-                    onPressImpressum={() => window.open("https://www.seekinnovation.at")}/>
+                <footer style={{position: "fixed", bottom:"0", left: "0"}}>
+                    <Options 
+                        onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
+                        onPressImpressum={() => window.open("https://www.seekinnovation.at")}
+                        onPressLogout={() => this.props.dispatchLogOut()}
+                        />
+                </footer>
             </header>
         );
     }

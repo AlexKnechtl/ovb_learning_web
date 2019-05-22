@@ -13,7 +13,7 @@ class CategoryButton extends React.Component {
                 onMouseOver={() => this.setState({ hover: true })}
                 onMouseLeave={() => this.setState({ hover: false })}
                 style={{
-                    flex: 1,
+                    // flex: 1,
                     fontWeight: "bold",
                     backgroundColor: "#003A65",
                     fontSize: "0.9em",

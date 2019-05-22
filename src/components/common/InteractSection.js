@@ -21,8 +21,9 @@ const InteractSection = ({title, children}) => {
 
 const interactSection = {
     backgroundColor: "#003A65",
-    width: '21em',
-    maxWidth: '30%',
+    // width: '21em',
+    width: 'max-content',
+    // maxWidth: '30%',
     justifyContent: "center",
     alignItems: "center",
     textAlign: "center"
