@@ -14,8 +14,8 @@ const QuestionFooter = props => {
                     color: '#003A65',
                     marginRight: '0.5em',
                     borderColor: '#003A65',
+                    flexGrow: 1,
                     opacity: props.mouseBackState ? 0.7 : 1,
-                    width: '30%',
                     height: '2em'
                 }}
                 onMouseOver={props.mouseOverBack}
@@ -31,7 +31,7 @@ const QuestionFooter = props => {
                     fontWeight: "bold",
                     borderStyle: 'none',
                     fontSize: '0.7em',
-                    width: '69%',
+                    flexGrow: 2,
                     height: '2em'
                 }}
                 onMouseOver={props.mouseOverWeiter}

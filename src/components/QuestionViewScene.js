@@ -145,7 +145,11 @@ class QuestionViewScene extends Component {
 
                 <DisplaySection title={questionHeaderText}>
                     <div style={{ marginLeft: '1.5em', marginRight: '1.5em', height: '100%' }}>
-                        <p style={questionText}>{question}</p>
+
+                        <p style={questionText}>
+                            {question}
+                        </p>
+
                         <div style={questionLine} />
 
                         <h1 style={titleAnswer}>Antworten</h1>
@@ -155,7 +159,7 @@ class QuestionViewScene extends Component {
                             text={a1}
                             backgroundColor={backgroundColor1}
                             colorAnswer={textColor1}
-                            answerClicked={answer1Clicked}/>
+                            answerClicked={answer1Clicked} />
 
                         <Answer
                             check={this.state.check}
@@ -169,11 +173,15 @@ class QuestionViewScene extends Component {
                             text={a3}
                             backgroundColor={backgroundColor3}
                             colorAnswer={textColor3}
-                            answerClicked={answer3Clicked}/>
+                            answerClicked={answer3Clicked} />
+
+                        <QuestionFooterView
+                            forwardClick={() => this.GetNextQuestion()}
+                            backwardClick={() => this.GetPrevQuestion()}
+                            backButtonDisabled={!cangetPrevQuestion}
+                            forwardButtonDisabled={!canGetNextQuestion} />
                     </div>
                 </DisplaySection>
-
-                <QuestionFooterView forwardClick={() => this.GetNextQuestion()} backwardClick={() => this.GetPrevQuestion()} backButtonDisabled={!cangetPrevQuestion} forwardButtonDisabled={!canGetNextQuestion} />
             </header>
         );
     }
@@ -189,8 +197,8 @@ const appHeader = {
 }
 
 const questionLine = {
-    width: '90%',
-    height: 3,
+    width: '100%',
+    height: '0.1em',
     backgroundColor: "#58ACD9",
 }
 
@@ -200,14 +208,16 @@ const titleAnswer = {
     textAlign: 'left',
     fontWeight: 'bold',
     fontSize: '1.2em',
-    marginBottom: 18
+    marginBottom: '0.6em'
 }
 
 const questionText = {
-    fontSize: 18,
+    fontSize: '0.6em',
+    width: '100%',
     color: '#003A65',
+    fontWeight: 'bold',
     textAlign: "left",
-    height: '15%',
+    height: '8em',
 }
 
 const questionBackText = {

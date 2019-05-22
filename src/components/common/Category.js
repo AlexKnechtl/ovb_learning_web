@@ -25,13 +25,28 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
                         </p>
                 </div>
                 <div align="center" style={{ width: '30%' }}>
-                    <Center style={erfolgBackground}>
-                        <p style={percentageText}>
-                            {(successRate * 100).toFixed(0)} %
-                        </p>
+                    <Center style={{
+                        backgroundColor: isPressed ? 'rgba(46, 239, 100, 0.55)' : '#fff2',
+                        width: '2em',
+                        height: '2em',
+                        flex: 1
+                    }}>
+                        {() => {
+                            if (!testMode) {
+                                isPressed = false;
+                                return <p style={percentageText}> {(successRate * 100).toFixed(0)} % </p>;
+                            } else {
+                                return <img source={require('../../img/ic_check.png')} style={{ width: isPressed ? 31 : 0, height: 24 }} />;
+                            }
+                        }}
                     </Center>
-                    <p style={erfolgschance}>
-                        Erfolgschance
+                    <p style={{
+                        fontSize: '0.5em',
+                        marginTop: 6,
+                        marginBottom: 0,
+                        flex: 1
+                    }}>
+                        {testMode ? '' : 'Erfolgschance'}
                     </p>
                 </div>
             </div>
@@ -73,17 +88,11 @@ const percentageText = {
 }
 
 const erfolgBackground = {
-    backgroundColor: '#fff2',
-    width: '2em',
-    height: '2em',
-    flex: 1
+
 }
 
 const erfolgschance = {
-    color: "#fff",
-    fontSize: '0.5em',
-    marginTop: 6,
-    flex: 1
+
 }
 
 export { Category };
