@@ -3,7 +3,6 @@
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, QuestionFooterView, ImageLineButton, DisplaySection, InteractSection, Answer } from './common';
-import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
 import iconWrong from '../img/x_icon.png'

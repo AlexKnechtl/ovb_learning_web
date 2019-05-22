@@ -146,7 +146,7 @@ class QuestionScene extends Component {
                         {rightQuestions} Antworten richtig
                     </p>
 
-                    <div style={{ backgroundColor: '#663399', height: '28%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, position: "absolute" }}>
+                    <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, position: "absolute" }}>
                         <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: '0.5em' }}>
                             Aktionen
                         </p>
@@ -228,7 +228,6 @@ class QuestionScene extends Component {
                             mouseWeiterState={this.state.mouseOverWeiter} />
                     </div>
                 </DisplaySection>
-
                 <FinishedPopup ref={'popupInfo'} />
             </header>
         );
@@ -272,7 +271,7 @@ const questionBackText = {
     backgroundColor: '#fff',
     padding: '0.5em',
     fontWeight: 'bold',
-    fontSize: '0.8em',
+    fontSize: '0.7em',
     color: '#003A65',
     width: '75%',
     marginLeft: '10%',
@@ -284,7 +283,7 @@ const questionBackText = {
 const wrongAnswers = {
     padding: '0.5em',
     fontWeight: 'bold',
-    fontSize: '0.8em',
+    fontSize: '0.7em',
     color: '#fff',
     border: 'solid',
     borderWidth: '0.1em',

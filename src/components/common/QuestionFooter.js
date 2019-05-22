@@ -49,6 +49,7 @@ const bottomLayout = {
     flexDirection: 'row',
     flexWrap: 'wrap',
     marginTop: '0.7em',
+    marginBottom: '0.8em',
     height: '100%',
     width: '100%'
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom'
 import Center from 'react-center'
 
 const ImageLineButton = props => {
@@ -12,15 +11,15 @@ const ImageLineButton = props => {
                     flex: 1,
                     fontWeight: "bold",
                     backgroundColor: '#fff0',
-                    fontSize: "0.8em",
+                    fontSize: "0.7em",
                     height: '2.3em',
                     border: "solid",
                     borderColor: props.mouseOverState ? '#fff9' : '#fff',
                     borderWidth: 2,
                     textAlign: "center",
                     color: props.mouseOverState ? '#fff9' : '#fff',
-                    paddingLeft: '0.7em',
-                    paddingRight: '0.7em',
+                    paddingLeft: '0.6em',
+                    paddingRight: '0.6em',
                     marginBottom: '0.5em'
                 }}>
                 <Center>
