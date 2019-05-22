@@ -25,9 +25,10 @@ export function Modules({ modules, categoryPress, chosenCategories, testMode }) 
           questionsFalse={modules[sectionID].falseQuestions || 0}
           learningState={(modules[sectionID].seenQuestions || 0) / (modules[sectionID].questionCount || 1)}
           successRate={modules[sectionID].successRate || 0}
+          style={{flexBasis: "13em", flex: "1", minWidth: "13em", marginLeft: '1.5em', marginBottom: '1.5em' }}
         />
       )}
-      {Object.keys(modules).map((v) => <div style={{ marginLeft: '1.5em', marginBottom: '1.5em', flex: "1", flexBasis: "17em" }} />)}
+      {Object.keys(modules).map((v) => <div style={{ flexBasis: "13em", flex: "1", minWidth: "13em", marginLeft: '1.5em' }} />)}
     </div>
   )
 }

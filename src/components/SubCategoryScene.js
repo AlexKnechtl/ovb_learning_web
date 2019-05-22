@@ -1,4 +1,4 @@
-
+//@ts-check
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, Options, CategoryButton, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
@@ -8,7 +8,7 @@ import iconContinue from '../img/ic_continue.png'
 import iconBook from '../img/ic_look_through.png'
 import iconWrongQuestions from '../img/ic_wrong_questions.png'
 import iconBereiche from '../img/icon_bereiche.png'
-import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction } from '../coreFork';
+import { SelectSubmoduleAction, setLearningModeAction, continueSectionLearningAction, LearningAlgorithm, QuestionService, LearningService, continueModuleLearningAction, learnFalseQuestionsFromModuleAction, signOutAction } from '../coreFork';
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
@@ -39,7 +39,6 @@ class SubCategoryScene extends Component {
 
     render() {
         // console.log(this.props.match.params.catId);
-
         if (!this.props.modules.modules) return;
         if (this.props.modules.modules.length === 0) return <Loading />;
         console.log(this.props.modules.modules);
@@ -47,12 +46,13 @@ class SubCategoryScene extends Component {
 
         if (!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists />
         const { image, modules, name, ...rest } = this.props.modules.modules[currMID];
+        if(!this.state.currentSubmodule) this.setState({currentSubmodule: Object.keys(modules)[0]})
         const { falseQuestions, questionCount, seenQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
-            <header style={appHeader}>
+            <header className="appHeader" style={appHeader}>
 
                 <InteractSection title={this.props.modules.modules[currMID].name}>
-                    <div align="right" style={{ marginRight: '11%' }}>
+                    <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
                         <CategoryButton
                             buttonText="Bereichsansicht"
                             onPress={() => { }}
@@ -90,9 +90,13 @@ class SubCategoryScene extends Component {
                     />
                 </DisplaySection>
 
-                <Options 
-                    onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
-                    onPressImpressum={() => window.open("https://www.seekinnovation.at")}/>
+                <footer style={{position: "fixed", bottom:"0", left: "0"}}>
+                    <Options 
+                        onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
+                        onPressImpressum={() => window.open("https://www.seekinnovation.at")}
+                        onPressLogout={() => this.props.dispatchLogOut()}
+                        />
+                </footer>
                 <FinishedPopup ref={'popupInfo'} />
             </header>
         );
@@ -102,7 +106,7 @@ class SubCategoryScene extends Component {
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',
-    flexDirection: 'row-reverse',
+    // flexDirection: 'row-reverse',
     fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
@@ -110,6 +114,7 @@ const appHeader = {
 
 // export default SubCategoryScene;
 const mapDispatchToProps = {
+    dispatchLogOut: signOutAction,
     dispatchSelectSubmodule: SelectSubmoduleAction,
     dispatchSelectLearningMode: setLearningModeAction,
     dispatchContinueSectionLearning: continueSectionLearningAction,

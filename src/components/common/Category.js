@@ -3,7 +3,7 @@ import Progress from 'react-progressbar';
 import Center from 'react-center';
 import '../styles.css';
 
-const Category = ({ imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode, ...props }) => {
+const Category = ({ imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode,style, ...props }) => {
     return (
         <div onClick={onPress} style={{
             backgroundImage: `url(${imageUri})`,
@@ -11,9 +11,7 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
             textDecorationLine: 'none',
             textDecoration: 'none',
             textDecorationColor: '#fff0',
-            marginLeft: '1.5em',
-            marginBottom: '1.5em',
-            flexBasis: "45%",
+            ...style
         }} {...props}>
             <p numberOfLines={1} style={title}> {titleText} </p>
             <div style={{ display: 'flex', flexDirection: 'row' }}>

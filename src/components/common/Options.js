@@ -79,14 +79,16 @@ class Options extends React.Component {
 
 const optionsStyle = {
     borderWidth: 1,
-    position: "absolute",
-    left: '1.5em',
-    bottom: '1.0em',
+    backgroundColor: '#fff',
+    // position: "absolute",
+    // left: '1.5em',
+    // bottom: '1.0em',
     border: 'solid',
     borderColor: '#003A65',
     paddingBottom: '0.2em',
     paddingRight: '0.7em',
-    paddingLeft: '0.7em'
+    paddingLeft: '0.7em',
+    margin: '0 0 1em 1.5em'
 }
 
 export { Options };

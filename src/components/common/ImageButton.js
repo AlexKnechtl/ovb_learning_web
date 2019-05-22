@@ -11,7 +11,7 @@ class ImageButton extends React.Component {
                 onMouseLeave={() => this.setState({ hover: false })}
                 onClick={onPress}
                 style={{
-                    flex: 1,
+                    // flex: 1,
                     fontWeight: "bold",
                     backgroundColor: this.state.hover ? "#fff9" : "#fff",
                     fontSize: "0.8em",

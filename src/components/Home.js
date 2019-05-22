@@ -71,10 +71,10 @@ class Home extends Component {
         if (!this.state.currentModule) this.setState({ currentModule: Object.keys(this.props.modules)[0] });
         var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
         return (
-            <header style={appHeader}>
+            <header className="appHeader" style={appHeader}>
                 
                 <InteractSection title={this.props.modules[currMid].name}>
-                    <div align="right" style={{ marginRight: '11%' }}>
+                    <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
                         <CategoryButton
                             buttonText="Kategorieansicht"
                             onPress={() => this.props.dispatchSelectCategory(this.state.currentModule)}
@@ -103,9 +103,13 @@ class Home extends Component {
                         chosenCategories={this.state.categories}
                         testMode={this.state.testMode} />
                 </DisplaySection>
-                <Options 
-                    onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
-                    onPressImpressum={() => window.open("https://www.seekinnovation.at")}/>
+                <footer style={{position: "fixed", bottom:"0", left: "0"}}>
+                    <Options 
+                        onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
+                        onPressImpressum={() => window.open("https://www.seekinnovation.at")}
+                        onPressLogout={() => this.props.dispatchLogOut()}
+                        />
+                </footer>
             </header>
         );
     }
@@ -114,7 +118,7 @@ class Home extends Component {
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',
-    flexDirection: 'row-reverse',
+    // flexDirection: 'row-reverse',
     fontFamily: 'Roboto Slab',
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'

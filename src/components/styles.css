@@ -15,3 +15,21 @@
   .rows .row {
     display: inline-block;
   }
+
+  .blueBox {
+    width: max-content;
+  }
+
+  .appHeader {
+    flex-direction: row-reverse;
+  }
+
+@media (max-width:60em){
+  .appHeader {
+    flex-direction: column-reverse;
+  }
+  .blueBox {
+    width: 100%;
+    padding-bottom: 4em;
+  }
+}
