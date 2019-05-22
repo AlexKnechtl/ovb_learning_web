@@ -170,6 +170,7 @@ class QuestionScene extends Component {
                                         this.toogleModal();
                                     else
                                         this.props.dispatchLearnFalseQuestions(this.props.currentQuestion.moduleId);
+                                        this.props.dispatchGetNextQuestion();
                                 }} />
                         </div>
                     </div>

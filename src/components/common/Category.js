@@ -1,7 +1,11 @@
+//@ts-check
+
 import React from 'react';
 import Progress from 'react-progressbar';
 import Center from 'react-center';
 import '../styles.css';
+
+import checkImg from '../../img/ic_check.png';
 
 const Category = ({ imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode,style, ...props }) => {
     return (
@@ -31,14 +35,11 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
                         height: '2em',
                         flex: 1
                     }}>
-                        {() => {
-                            if (!testMode) {
-                                isPressed = false;
-                                return <p style={percentageText}> {(successRate * 100).toFixed(0)} % </p>;
-                            } else {
-                                return <img source={require('../../img/ic_check.png')} style={{ width: isPressed ? 31 : 0, height: 24 }} />;
-                            }
-                        }}
+                        {
+                            !testMode?
+                             <p style={percentageText}> {(successRate * 100).toFixed(0)} % </p> : 
+                             <img src={checkImg} alt="check" style={{ width: isPressed ? 31 : 0, height: 24 }} />
+                        }
                     </Center>
                     <p style={{
                         fontSize: '0.5em',

@@ -11,7 +11,7 @@ import iconBook from '../img/ic_look_through.png'
 // @ts-ignore
 import iconPdf from '../img/ic_pdf.png'
 
-import { signOutAction, initExamAction, GotModulesAction } from '../coreFork';
+import { signOutAction, initExamAction, GotModulesAction, continueSectionLearningAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import iconBereiche from '../img/icon_bereiche.png'
@@ -89,6 +89,7 @@ class Home extends Component {
                             image={iconPdf} />
                         <ImageButton
                             buttonText="Übungsmodus"
+                            onPress={() => this.props.dispatchContinueSectionLearning(this.state.currentModule)}
                             image={iconBook} />
                     </div>
 
@@ -130,6 +131,7 @@ const setCurrentModuleAction = (catId) => push(`/category/${catId}`);
 const mapDispatchToProps = {
     dispatchLogOut: signOutAction,
     dispatchSelectCategory: setCurrentModuleAction,
+    dispatchContinueSectionLearning: continueSectionLearningAction,
     dispatchStartExam: initExamAction,
     dispatchUpdateModules: GotModulesAction
 };
