@@ -9,7 +9,7 @@ import './styles.css';
 import iconContinue from '../img/ic_continue.png'
 import { getNextExamResultQuestionAction, getPrevExamResultQuestionAction } from '../coreFork';
 import { connect } from 'react-redux';
-
+import { Link } from "react-router-dom";
 class TestResultScene extends Component {
     state = {
         answer1Clicked: false,
@@ -160,10 +160,12 @@ class TestResultScene extends Component {
                         </p>
 
                         <div align="right" style={{ marginRight: '11%' }}>
+                        <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
                             <ImageButton
                                 // link="/kategorien"
                                 buttonText="PDF öffnen"
                                 image={iconContinue} />
+                        </Link>
 
                             <ImageButton
                                 buttonText="Falsche Fragen üben"

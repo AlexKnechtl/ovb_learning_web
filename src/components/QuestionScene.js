@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 
 import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
+import { Link } from "react-router-dom";
 
 class QuestionScene extends Component {
     state = {
@@ -121,6 +122,9 @@ class QuestionScene extends Component {
         const { falseQuestions, questionCount, seenQuestions: rightQuestions } = this.la.calcCurrentLearningStatsForModule(this.props.currentQuestion.moduleId);
         const { name: subModuleName } = this.props.modules.modules[this.props.currentQuestion.sectionId].modules[this.props.currentQuestion.moduleId];
 
+        const pdfSrc = ((this.props.currentQuestion || {}).pdfInfo || {}).url;
+        const pdfPage = ((this.props.currentQuestion || {}).pdfInfo || {}).pageNumber;
+
         return (
             <header style={appHeader}>
                 <InteractSection title="Übungsmodus">
@@ -152,12 +156,14 @@ class QuestionScene extends Component {
                         </p>
 
                         <div align="right" style={{ marginRight: '11%' }}>
+                        <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
                             <ImageButton
                                 mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
                                 mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
                                 mouseOverBtn={this.state.mouseOverPdf}
                                 buttonText="PDF öffnen"
                                 image={iconPdfRed} />
+                        </Link>
 
                             <ImageLineButton
                                 mouseOver={() => { this.setState({ mouseOverWrong: true }) }}

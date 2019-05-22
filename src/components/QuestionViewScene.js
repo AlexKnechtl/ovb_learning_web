@@ -11,6 +11,7 @@ import { QuestionService, LearningAlgorithm, LearningService } from '../coreFork
 import { connect } from 'react-redux';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
+import { Link } from "react-router-dom";
 
 class QuestionViewScene extends Component {
     state = {
@@ -116,13 +117,14 @@ class QuestionViewScene extends Component {
                         </p>
 
                         <div align="right" style={{ marginRight: '11%' }}>
-                            <ImageButton
-                                mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
-                                mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
-                                mouseOverBtn={this.state.mouseOverPdf}
-                                buttonText="PDF öffnen"
-                                image={iconPdfRed} />
-
+                            <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
+                                <ImageButton
+                                    mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
+                                    mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
+                                    mouseOverBtn={this.state.mouseOverPdf}
+                                    buttonText="PDF öffnen"
+                                    image={iconPdfRed} />
+                            </Link>
                             <ImageLineButton
                                 mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
                                 mouseLeave={() => { this.setState({ mouseOverWrong: false }) }}

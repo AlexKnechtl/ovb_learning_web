@@ -19,7 +19,9 @@ import { connectRouter, ConnectedRouter, push, routerMiddleware } from 'connecte
 import { navigationSagas } from './NavigationSagas';
 import PrivateRoute from './PrivateRoute';
 import TestStatistics from './components/TestStatistics';
-
+import PDFScene from './components/PDFScene';
+import { pdfjs } from 'react-pdf';
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export const history = createBrowserHistory();
 
@@ -41,6 +43,7 @@ class App extends Component {
               <PrivateRoute path="/test" component={TestScene} />
               <PrivateRoute path="/testResult" component={TestResultScene} />
               <PrivateRoute path="/testStatistics" component={TestStatistics}/>
+              <Route path="/pdf" component={PDFScene} />
               <PrivateRoute path="/" component={Home} />
             </Switch>
           </div>
