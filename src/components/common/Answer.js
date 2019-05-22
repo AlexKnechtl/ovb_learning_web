@@ -3,6 +3,7 @@ import React from 'react';
 const Answer = props => {
     return (
         <div style={{
+            display: 'flex',
             width: '100%',
             height: '4em',
             marginBottom: '1em',
@@ -16,12 +17,12 @@ const Answer = props => {
                     backgroundColor: props.backgroundColor,
                     borderWidth: props.answerClicked ? 3 : 0,
                     outline: 'none',
-                    width: '100%',
+                    flexGrow: 1,
                     height: '100%',
                     textAlign: 'left',
                     marginBottom: '0.6em'
                 }}>
-                <p style={{ fontSize: '1em', color: props.colorAnswer, margin: '0.4em', fontWeight: "bold" }}>
+                <p style={{ fontSize: 16, color: props.colorAnswer, margin: '0.4em', fontWeight: "bold" }}>
                     {props.text}
                 </p>
             </button>
