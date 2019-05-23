@@ -1,14 +1,14 @@
 
 
 import React, { Component } from 'react';
-import { QuestionFooter, InteractSection, DisplaySection, Answer } from './common';
+import { QuestionFooter, InteractSection, DisplaySection, Answer, SurePopup } from './common';
 // @ts-ignore
 import './styles.css';
 
 import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, MultipleChoiceQuestionInteractor } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-import {Prompt} from 'react-router-dom';
+import { Prompt } from 'react-router-dom';
 
 class TestScene extends Component {
     state = {
@@ -52,6 +52,14 @@ class TestScene extends Component {
         // this.checkAnswers();
     }
 
+    toogleModal() {
+        this.refs.surePopup.openModal();
+    }
+
+    closeModal() {
+        this.refs.surePopup.closeModal();
+    }
+
     render() {
         const currentQuestion = this.props.exam.currentQuestion;
         if (this.props.exam.questions && this.props.exam.currentIndex >= this.props.exam.questions.length)
@@ -66,14 +74,6 @@ class TestScene extends Component {
         const textColor1 = answer1Clicked ? "#003A65" : "#fff";
         const textColor2 = answer2Clicked ? "#003A65" : "#fff";
         const textColor3 = answer3Clicked ? "#003A65" : "#fff";
-
-        const fontWeightStyle = !answer1Clicked ? "bold" : "normal";
-        const fontWeightStyle2 = !answer2Clicked ? "bold" : "normal";
-        const fontWeightStyle3 = !answer3Clicked ? "bold" : "normal";
-
-        const marginAnswer1 = !answer1Clicked ? 0 : '5%';
-        const marginAnswer2 = !answer2Clicked ? 0 : '5%';
-        const marginAnswer3 = !answer3Clicked ? 0 : '5%';
 
         const questionHeaderText = this.props.exam.currentQuestion ? `${this.props.exam.currentQuestion.moduleId.replace("_", ".")} Frage ${this.props.exam.currentQuestion.questionId.substr(4)}` : '';
         const questionText = this.props.exam.currentQuestion ? this.props.exam.currentQuestion.question.question : '';
@@ -121,7 +121,6 @@ class TestScene extends Component {
                             backgroundColor={backgroundColor1}
                             colorAnswer={textColor1}
                             answerClicked={answer1Clicked}
-                            marginAnswer={marginAnswer1}
                             onClick={this.answer1Click.bind(this)} />
 
                         <Answer
@@ -129,7 +128,6 @@ class TestScene extends Component {
                             backgroundColor={backgroundColor2}
                             colorAnswer={textColor2}
                             answerClicked={answer2Clicked}
-                            marginAnswer={marginAnswer2}
                             onClick={this.answer2Click.bind(this)} />
 
                         <Answer
@@ -137,16 +135,16 @@ class TestScene extends Component {
                             backgroundColor={backgroundColor3}
                             colorAnswer={textColor3}
                             answerClicked={answer3Clicked}
-                            marginAnswer={marginAnswer3}
                             onClick={this.answer3Click.bind(this)} />
 
-                    <QuestionFooter
-                        onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
-                        continueDisabled={!this.state.check}
-                        onPressBack={()=>{confirm("Wirklich zurück?") && this.props.dispatchNavigation("/");}} //TODO: Beautiful Popup instead of confirm
-                    />
+                        <QuestionFooter
+                            onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
+                            continueDisabled={!this.state.check}
+                            onPressBack={() => this.toogleModal()}
+                        />
                     </div>
                 </DisplaySection>
+                <SurePopup ref={'surePopup'} />
             </header >
         );
     }

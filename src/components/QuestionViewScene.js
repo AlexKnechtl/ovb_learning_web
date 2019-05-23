@@ -89,7 +89,7 @@ class QuestionViewScene extends Component {
             <header style={appHeader}>
 
                 <InteractSection title="Übungsmodus">
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '18em', textAlign: 'center', margin: '0 auto' }}>
                         {currQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
 

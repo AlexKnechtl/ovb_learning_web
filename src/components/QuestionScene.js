@@ -109,9 +109,9 @@ class QuestionScene extends Component {
 
         const colorAnswers = answer1Clicked && answer2Clicked && answer3Clicked ? '#003A65' : '#fff';
 
-        const marginAnswer1 = answer1Clicked ? '0%' : '-5%'
-        const marginAnswer2 = answer2Clicked ? '0%' : '-5%'
-        const marginAnswer3 = answer3Clicked ? '0%' : '-5%'
+        const marginAnswer1 = answer1Clicked ? 0 : '-1.5em'
+        const marginAnswer2 = answer2Clicked ? 0 : '-1.5em'
+        const marginAnswer3 = answer3Clicked ? 0 : '-1.5em' 
 
         const answer1Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer1.answer : '';
         const answer2Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer2.answer : '';
@@ -129,7 +129,7 @@ class QuestionScene extends Component {
         return (
             <header style={appHeader}>
                 <InteractSection title="Übungsmodus">
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
+                <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '90%' }}>
                         {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
 

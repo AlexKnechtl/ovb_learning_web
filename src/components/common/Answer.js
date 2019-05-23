@@ -7,7 +7,7 @@ const Answer = props => {
             width: '100%',
             height: '4em',
             marginBottom: '1em',
-            marginLeft: props.answerClicked ? 0 : '-1.5em'
+            marginLeft: props.marginAnswer
         }}>
             <button disabled={props.check}
                 onClick={props.onClick}
