@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics, PDFPopup } from './common';
+import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics, PDFPopup, AppHeader } from './common';
 import './styles.css';
 // @ts-ignore
 import iconContinue from '../img/ic_continue.png'
@@ -17,7 +17,6 @@ import { push } from 'connected-react-router';
 
 import iconBereiche from '../img/icon_bereiche.png'
 import backButton from '../img/arrow.png'
-import AppHeader from './common/AppHeader';
 
 class Home extends Component {
     state = {
@@ -90,7 +89,6 @@ class Home extends Component {
         var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
         return (
             <AppHeader>
-
                 <InteractSection title={this.props.modules[currMid].name}>
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
                         <CategoryButton

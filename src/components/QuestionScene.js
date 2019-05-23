@@ -4,7 +4,7 @@ import React, { Component } from 'react';
 import { } from 'react'
 import './styles.css';
 
-import { ImageButton, QuestionFooter, ImageLineButton, FinishedPopup, InteractSection, Answer, DisplaySection } from './common';
+import { ImageButton, QuestionFooter, ImageLineButton, FinishedPopup, InteractSection, Answer, DisplaySection, AppHeader } from './common';
 import { updateCurrentQuestion, getNextQuestionAction, MultipleChoiceQuestionInteractor, LearningAlgorithm, QuestionService, LearningService, learnFalseQuestionsFromModuleAction } from '../coreFork';
 import { connect } from 'react-redux';
 
@@ -12,7 +12,6 @@ import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
 import { Link } from "react-router-dom";
 import { goBack } from 'connected-react-router';
-import AppHeader from './common/AppHeader';
 
 class QuestionScene extends Component {
     state = {

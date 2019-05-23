@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooter, QuestionFooterView } from './common';
+import { ImageButton, QuestionFooter, QuestionFooterView, AppHeader } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -10,7 +10,7 @@ import iconContinue from '../img/ic_continue.png'
 import { getNextExamResultQuestionAction, getPrevExamResultQuestionAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
-import AppHeader from './common/AppHeader';
+
 class TestResultScene extends Component {
     state = {
         answer1Clicked: false,

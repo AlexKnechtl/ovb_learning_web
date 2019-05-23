@@ -21,9 +21,10 @@ class CategoryButton extends React.Component {
                     borderColor: this.state.hover ? '#fff9' : '#fff',
                     border: "solid",
                     textAlign: "center",
+                    width: '12.5em',
                     color: this.state.hover ? '#fff9' : '#fff',
-                    paddingLeft: '0.9em',
-                    paddingRight: '0.9em',
+                    paddingLeft: '0.8em',
+                    paddingRight: '0.8em',
                     marginBottom: '0.6em',
                 }}>
                 <Center>

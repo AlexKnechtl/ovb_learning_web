@@ -2,8 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button, StatisticsCategories } from './common';
-import AppHeader from './common/AppHeader';
+import { Button, StatisticsCategories, InteractSection, AppHeader, DisplaySection } from './common';
 
 class TestStatistics extends Component {
     state = {
@@ -36,24 +35,38 @@ class TestStatistics extends Component {
 
         return (
             <AppHeader>
-            <div >
-                <div style={{color: "#000"}}>
+                <InteractSection title="Statistiken">
                     <div >
-                        <p >
-                            {percentageRight.toFixed(0)}%
+                        <p style={wrongAnswers}>
+                            {this.props.exam.r} Antworten falsch
                         </p>
 
                         <p style={questionBackText}>
-                            {this.props.exam.falseQuestions} Antworten richtig
+                            {this.props.exam.right} Antworten richtig
                         </p>
                     </div>
-                    <div >
-                        <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
+                </InteractSection>
+
+                <div style={displaySection}>
+                    <div style={{ color: "#000" }}>
+                        <div >
+                            <p >
+                                {percentageRight.toFixed(0)}%
+                            </p>
+
+                            <p style={questionBackText}>
+                                {this.props.exam.falseQuestions} Antworten richtig
+                            </p>
+                        </div>
+                        <div >
+                            <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
+                        </div>
                     </div>
+                    <div />
+                    <StatisticsCategories
+                        modules={this.props.modules.modules}
+                        finishedStats={this.props.exam.finishedStats} />
                 </div>
-                <div />
-                <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats}/>
-            </div>
             </AppHeader>
         );
     }
@@ -92,14 +105,9 @@ return (
     </div>
 );*/
 
-// onPress={() => this.props.dispatchInitStatsForModule(key)} buttonText="open viewDetails" 
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    // flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
+const displaySection = {
+    width: '100%',
+    height: '100%'
 }
 
 const wrongAnswers = {
