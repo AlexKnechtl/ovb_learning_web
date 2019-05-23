@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button, StatisticsCategories, InteractSection, AppHeader, DisplaySection } from './common';
+import { Button, StatisticsCategories, InteractSection, AppHeader  } from './common';
 
 class TestStatistics extends Component {
     state = {
@@ -38,14 +38,16 @@ class TestStatistics extends Component {
                 <InteractSection title="Statistiken">
                     <div >
                         <p style={wrongAnswers}>
-                            {this.props.exam.r} Antworten falsch
+                            {this.props.exam.falseQuestions} Antworten falsch
                         </p>
 
                         <p style={questionBackText}>
-                            {this.props.exam.right} Antworten richtig
+                            {this.props.exam.rightQuestions} Antworten richtig
                         </p>
                     </div>
                 </InteractSection>
+
+                <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <div style={displaySection}>
                     <div style={{ color: "#000" }}>
