@@ -132,7 +132,7 @@ class Home extends Component {
                         onPressLogout={() => this.props.dispatchLogOut()}
                     />
                 </footer>
-                <PDFPopup ref={'popupPDF'} />
+                <PDFPopup ref={'popupPDF'} modules={(this.props.modules[this.state.currentModule]||{}).modules}/>
             </AppHeader>
         );
     }
