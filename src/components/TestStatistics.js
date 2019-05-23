@@ -2,13 +2,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { StatisticModules, InteractSection, DisplaySection } from './common';
+import { InteractSection, DisplaySection } from './common';
 import AppHeader from './common/AppHeader';
-import { Button, StatisticsCategories } from './common';
+import { StatisticsCategories } from './common';
 
 class TestStatistics extends Component {
     state = {
         icon: null,
+        selectedModule: null
     }
 
     navigateHome = () => {
@@ -34,24 +35,27 @@ class TestStatistics extends Component {
         const bestandenp = this.props.exam.percentageRight >= 0.6 ? 'Bestanden!' : 'Nicht bestanden.';
         const infop = this.props.exam.percentageRight >= 0.6 ? 'Weiter so! :)' : 'Nächstes mal schaffst du es!';
         const percentageRight = this.props.exam.percentageRight * 100;
-
+        let {selectedModule} = this.state;
+        if(!selectedModule) selectedModule = Object.keys(this.props.exam.finishedStats)[0];
+        const {falseQuestions, rightQuestions, percentageRight: currModPercentageRight, count} = this.props.exam.finishedStats[selectedModule];
+        const {name: currModuleName} = this.props.modules.modules[selectedModule];
         return (
             <AppHeader>
                 <InteractSection title="Statistiken">
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
 
                         <p style={wrongAnswers}>
-                            {this.props.exam.currentModule.falseQuestions} Antworten falsch
+                            {falseQuestions} Antworten falsch
                         </p>
 
                         <p style={questionBackText}>
-                            {this.props.exam.falseQuestions} Antworten richtig
+                            {rightQuestions} Antworten richtig
                         </p>
                     </div>
                 </InteractSection>
 
-                <DisplaySection title={this.props.exam.title}>
-                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats}/>
+                <DisplaySection title={bestandenp}>
+                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats} onStatPress={(k)=>this.setState({selectedModule: k})}/>
                 </DisplaySection>
 
                 })}
@@ -59,41 +63,6 @@ class TestStatistics extends Component {
         );
     }
 }
-
-/*
-return (
-    <div >
-        <div>
-            <div >
-                <p >
-                    {percentageRight.toFixed(0)}%
-                </p>
-                <div>
-                    <p >
-                        {bestandenp}
-                    </p>
-                    <p >
-                        {infop}
-                    </p>
-                </div>
-            </div>
-            <div >
-                <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
-            </div>
-        </div>
-        <div />
-        <div style={{ "borderColor": "black", "border": "solid", "borderWidth": "2px" }}>
-            <StatisticModules
-                modules={this.props.modules}
-                categoryPress={this.categoryPress}
-                chosenCategories={this.state.categories}
-                testMode={this.state.testMode} />
-            })}
-        </div>
-    </div>
-);*/
-
-// onPress={() => this.props.dispatchInitStatsForModule(key)} buttonText="open viewDetails" 
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',

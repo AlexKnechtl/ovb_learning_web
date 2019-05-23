@@ -10,13 +10,13 @@ const icFailed = require('../../img/ic_wrong_red.png')
 
 const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState, onPress, style }) => {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', flexDirection: 'column' }} onClick={onPress}>
             <div style={{
                 backgroundImage: `url(${imageUri})`,
                 backgroundSize: '110%',
                 textDecorationLine: 'none',
                 textDecoration: 'none',
-                textDecorationColor: '#fff0'
+                textDecorationColor: '#fff0',
                 ...style
             }}>
                 <p numberOfLines={1} style={title}> {titleText} </p>
