@@ -14,6 +14,7 @@ export * from './InteractSection';
 export * from './DisplaySection';
 export * from './Answer';
 export * from './Modules';
+export * from './StatisticModules';
 export * from './SubModules';
 export * from './Statistics';
 export * from './SurePopup';
