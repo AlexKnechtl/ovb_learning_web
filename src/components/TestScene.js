@@ -84,7 +84,7 @@ class TestScene extends Component {
         const questionNumberText = this.props.exam.currentQuestion ? `Frage ${this.props.exam.currentIndex + 1} / ${this.props.exam.questions.length}` : '';
         const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
         return (
-            <header style={appHeader}>
+            <AppHeader>
                 <Prompt
                     when={true}
                     message={location =>
@@ -145,18 +145,9 @@ class TestScene extends Component {
                     </div>
                 </DisplaySection>
                 <SurePopup ref={'surePopup'} />
-            </header >
+            </AppHeader>
         );
     }
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 const questionLine = {

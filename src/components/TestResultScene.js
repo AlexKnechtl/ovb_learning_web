@@ -10,6 +10,7 @@ import iconContinue from '../img/ic_continue.png'
 import { getNextExamResultQuestionAction, getPrevExamResultQuestionAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import AppHeader from './common/AppHeader';
 class TestResultScene extends Component {
     state = {
         answer1Clicked: false,
@@ -78,7 +79,7 @@ class TestResultScene extends Component {
         const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
 
         return (
-            <header style={appHeader}>
+            <AppHeader>
                 <div style={{ height: '100vh', width: '69.5%' }}>
                     <h1 style={titleStyle}>{questionHeaderText}</h1>
                     <p style={questionText}>{question}</p>
@@ -182,7 +183,7 @@ class TestResultScene extends Component {
                         Weiter
                     </button>
                 </div>
-            </header>
+            </AppHeader>
         );
     }
 }
@@ -217,15 +218,6 @@ const weiterButton = {
     marginRight: 12,
     width: '50%',
     height: 40
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'row',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 const questionLine = {

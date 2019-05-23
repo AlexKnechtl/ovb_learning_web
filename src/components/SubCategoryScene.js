@@ -14,6 +14,7 @@ import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
 import SubModules from './common/SubModules';
+import AppHeader from './common/AppHeader';
 
 class SubCategoryScene extends Component {
 
@@ -49,7 +50,7 @@ class SubCategoryScene extends Component {
         if(!this.state.currentSubmodule) this.setState({currentSubmodule: Object.keys(modules)[0]})
         const { falseQuestions, questionCount, seenQuestions, successRate } = this.state.currentSubmodule ? this.la.calcCurrentLearningStatsForModule(this.state.currentSubmodule) : rest;
         return (
-            <header className="appHeader" style={appHeader}>
+            <AppHeader>
 
                 <InteractSection title={this.props.modules.modules[currMID].name}>
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
@@ -99,18 +100,9 @@ class SubCategoryScene extends Component {
                         />
                 </footer>
                 <FinishedPopup ref={'popupInfo'} />
-            </header>
+            </AppHeader>
         );
     }
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    // flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 // export default SubCategoryScene;

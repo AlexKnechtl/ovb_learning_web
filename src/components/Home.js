@@ -17,6 +17,7 @@ import { push } from 'connected-react-router';
 
 import iconBereiche from '../img/icon_bereiche.png'
 import backButton from '../img/arrow.png'
+import AppHeader from './common/AppHeader';
 
 class Home extends Component {
     state = {
@@ -80,7 +81,7 @@ class Home extends Component {
         if (!this.state.currentModule) this.setState({ currentModule: Object.keys(this.props.modules)[0] });
         var currMid = this.state.currentModule ? this.state.currentModule : Object.keys(this.props.modules)[0];
         return (
-            <header className="appHeader" style={appHeader}>
+            <AppHeader>
 
                 <InteractSection title={this.props.modules[currMid].name}>
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
@@ -121,18 +122,9 @@ class Home extends Component {
                         onPressLogout={() => this.props.dispatchLogOut()}
                     />
                 </footer>
-            </header>
+            </AppHeader>
         );
     }
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    // flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 
