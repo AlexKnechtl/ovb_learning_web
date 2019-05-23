@@ -8,7 +8,7 @@ import '../styles.css';
 const icSucceded = require('../../img/ic_check_green.png')
 const icFailed = require('../../img/ic_wrong_red.png')
 
-const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState, style }) => {
+const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState, onPress, style }) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }} onClick={onPress}>
             <div style={{
