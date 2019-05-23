@@ -7,7 +7,7 @@ import '../styles.css';
 
 import checkImg from '../../img/ic_check.png';
 
-const Category = ({ imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode,style, ...props }) => {
+const Category = ({ imageUri, titleText, onPress, learningState, isPressed, questionsFalse, questionsRight, successRate, testMode, style, ...props }) => {
     return (
         <div onClick={onPress} style={{
             backgroundImage: `url(${imageUri})`,
@@ -30,15 +30,15 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
                 </div>
                 <div align="center" style={{ width: '30%' }}>
                     <Center style={{
-                        backgroundColor: isPressed&&testMode ? 'rgba(46, 239, 100, 0.55)' : '#fff2',
+                        backgroundColor: isPressed && testMode ? 'rgba(46, 239, 100, 0.55)' : '#fff2',
                         width: '2em',
                         height: '2em',
                         flex: 1
                     }}>
                         {
-                            !testMode?
-                             <p style={percentageText}> {(successRate * 100).toFixed(0)} % </p> : 
-                             <img src={checkImg} alt="check" style={{ width: isPressed ? 31 : 0, height: 24 }} />
+                            !testMode ?
+                                <p style={percentageText}> {(successRate * 100).toFixed(0)} % </p> :
+                                <img src={checkImg} alt="check" style={{ width: isPressed ? 31 : 0, height: 24 }} />
                         }
                     </Center>
                     <p style={{
@@ -86,14 +86,6 @@ const percentageText = {
     textAlign: "center",
     fontSize: '0.7em',
     fontWeight: "bold"
-}
-
-const erfolgBackground = {
-
-}
-
-const erfolgschance = {
-
 }
 
 export { Category };

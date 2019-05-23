@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics } from './common';
+import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics, PDFPopup } from './common';
 import './styles.css';
 // @ts-ignore
 import iconContinue from '../img/ic_continue.png'
@@ -76,6 +76,14 @@ class Home extends Component {
             this.setState({ testMode: !this.state.testMode });
     }
 
+    toogleModal() {
+        this.refs.popupPDF.openModal();
+    }
+
+    closeModal() {
+        this.refs.popupPDF.closeModal();
+    }
+
     render() {
         if (Object.keys(this.props.modules).length === 0) return null;
         if (!this.state.currentModule) this.setState({ currentModule: Object.keys(this.props.modules)[0] });
@@ -97,6 +105,7 @@ class Home extends Component {
                             image={iconContinue} />
                         <ImageButton
                             buttonText="Lernunterlagen"
+                            onPress={() => this.toogleModal()}
                             image={iconPdf} />
                         <ImageButton
                             buttonText="Übungsmodus"
@@ -114,6 +123,7 @@ class Home extends Component {
                         categoryPress={this.categoryPress}
                         chosenCategories={this.state.categories}
                         testMode={this.state.testMode} />
+
                 </DisplaySection>
                 <footer style={{ position: "fixed", bottom: "0", left: "0" }}>
                     <Options
@@ -122,6 +132,7 @@ class Home extends Component {
                         onPressLogout={() => this.props.dispatchLogOut()}
                     />
                 </footer>
+                <PDFPopup ref={'popupPDF'} />
             </AppHeader>
         );
     }

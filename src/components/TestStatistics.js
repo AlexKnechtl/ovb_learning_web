@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button } from './common';
+import { Button, StatisticsCategory } from './common';
 
 class TestStatistics extends Component {
     state = {
@@ -43,22 +43,24 @@ class TestStatistics extends Component {
                         var currModResult = this.props.exam.finishedStats[key];
                         var moduleName = this.props.modules.modules[key].name;
                         var imageUri = this.props.modules.modules[key].image;
-                        return <div style={{ borderWidth: "1px", margin: "3%", border: 'solid' }}>
-                            <p>key={key} </p>
-                            <p>titlep={moduleName} </p>
-                            <p>questionsFalse={currModResult.falseQuestions}</p>
-                            <p>questionsRight={currModResult.rightQuestions}</p>
-                            <p>success={currModResult.percentageRight >= 0.6}</p>
-                            <p>learningState={currModResult.percentageRight}</p>
-                            <p>imageUri={imageUri}</p>
-                            <Button onPress={() => this.props.dispatchInitStatsForModule(key)} buttonText="open viewDetails" />
-                        </div>;
-                    })}
+                        return <StatisticsCategory
+                            titleText={moduleName}
+                            questionsRight={currModResult.rightQuestions}
+                            questionsFalse={currModResult.falseQuestions}
+                            learningState={currModResult.percentageRight}
+                            imageUri={imageUri}
+                            success={currModResult.percentageRight >= 0.6}
+                            key={key} >
+                        </StatisticsCategory>;
+
+                })}
                 </div>
             </div>
         );
     }
 }
+
+// onPress={() => this.props.dispatchInitStatsForModule(key)} buttonText="open viewDetails" 
 
 const mapDispatchToProps = {
     dispatchInitStatsForModule: getExamResultStatsForModuleAction
