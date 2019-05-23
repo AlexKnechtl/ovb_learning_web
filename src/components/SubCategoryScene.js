@@ -1,7 +1,7 @@
 //@ts-check
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, Options, CategoryButton, FinishedPopup, InteractSection, DisplaySection, Statistics } from './common';
+import { ImageButton, Options, CategoryButton, FinishedPopup, InteractSection, DisplaySection, Statistics, AppHeader } from './common';
 import './styles.css';
 
 import iconContinue from '../img/ic_continue.png'
@@ -14,7 +14,6 @@ import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
 import SubModules from './common/SubModules';
-import AppHeader from './common/AppHeader';
 
 class SubCategoryScene extends Component {
 

@@ -2,9 +2,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { InteractSection, DisplaySection } from './common';
-import AppHeader from './common/AppHeader';
-import { StatisticsCategories } from './common';
+import { Button, StatisticsCategories, InteractSection, AppHeader, DisplaySection  } from './common';
 
 class TestStatistics extends Component {
     state = {
@@ -42,8 +40,7 @@ class TestStatistics extends Component {
         return (
             <AppHeader>
                 <InteractSection title="Statistiken">
-                    <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
-
+                    <div >
                         <p style={wrongAnswers}>
                             {falseQuestions} Antworten falsch
                         </p>
@@ -53,23 +50,29 @@ class TestStatistics extends Component {
                         </p>
                     </div>
                 </InteractSection>
+                
+                <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <DisplaySection title={bestandenp}>
                     <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats} onStatPress={(k)=>this.setState({selectedModule: k})}/>
-                </DisplaySection>
+                    <div style={{ color: "#000" }}>
+                        <div >
+                            <p >
+                                {percentageRight.toFixed(0)}%
+                            </p>
 
-                })}
+                            <p style={questionBackText}>
+                                {this.props.exam.falseQuestions} Antworten richtig
+                            </p>
+                        </div>
+                        <div >
+                            <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
+                        </div>
+                    </div>
+                </DisplaySection>
             </AppHeader>
         );
     }
-}
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    // flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 const wrongAnswers = {

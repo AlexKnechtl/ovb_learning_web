@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooterView, ImageLineButton, DisplaySection, InteractSection, Answer } from './common';
+import { ImageButton, QuestionFooterView, ImageLineButton, DisplaySection, InteractSection, Answer, AppHeader } from './common';
 import './styles.css';
 
 import iconWrong from '../img/x_icon.png'
@@ -12,7 +12,6 @@ import { connect } from 'react-redux';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
-import AppHeader from './common/AppHeader';
 
 class QuestionViewScene extends Component {
     state = {

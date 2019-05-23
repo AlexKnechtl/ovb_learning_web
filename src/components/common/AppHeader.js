@@ -1,12 +1,13 @@
 import React from 'react'
 
-export default function AppHeader({children}) {
+const AppHeader = ({ children }) => {
     return (
         <header className="appHeader" style={appHeader}>
             {children}
         </header>
     )
 }
+
 const appHeader = {
     minHeight: '100vh',
     display: 'flex',
@@ -15,3 +16,5 @@ const appHeader = {
     fontSize: `calc(10px + 2vmin)`,
     color: 'white'
 }
+
+export { AppHeader };
