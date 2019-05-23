@@ -17,3 +17,4 @@ export * from './Modules';
 export * from './SubModules';
 export * from './Statistics';
 export * from './SurePopup';
+export * from './StatisticsCategory';

@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics } from './common';
+import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics, StatisticsCategory } from './common';
 import './styles.css';
 // @ts-ignore
 import iconContinue from '../img/ic_continue.png'
@@ -113,6 +113,10 @@ class Home extends Component {
                         categoryPress={this.categoryPress}
                         chosenCategories={this.state.categories}
                         testMode={this.state.testMode} />
+
+                        <StatisticsCategory >
+
+                        </StatisticsCategory>
                 </DisplaySection>
                 <footer style={{ position: "fixed", bottom: "0", left: "0" }}>
                     <Options
