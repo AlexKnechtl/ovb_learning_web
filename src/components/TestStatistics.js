@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button, StatisticsCategories } from './common';
+import { StatisticModules, InteractSection, DisplaySection } from './common';
 import AppHeader from './common/AppHeader';
+import { Button, StatisticsCategories } from './common';
 
 class TestStatistics extends Component {
     state = {
@@ -36,24 +37,24 @@ class TestStatistics extends Component {
 
         return (
             <AppHeader>
-            <div >
-                <div style={{color: "#000"}}>
-                    <div >
-                        <p >
-                            {percentageRight.toFixed(0)}%
+                <InteractSection title="Statistiken">
+                    <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
+
+                        <p style={wrongAnswers}>
+                            {this.props.exam.currentModule.falseQuestions} Antworten falsch
                         </p>
 
                         <p style={questionBackText}>
                             {this.props.exam.falseQuestions} Antworten richtig
                         </p>
                     </div>
-                    <div >
-                        <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
-                    </div>
-                </div>
-                <div />
-                <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats}/>
-            </div>
+                </InteractSection>
+
+                <DisplaySection title={this.props.exam.title}>
+                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats}/>
+                </DisplaySection>
+
+                })}
             </AppHeader>
         );
     }
