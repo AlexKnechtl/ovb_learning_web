@@ -8,7 +8,7 @@ import '../styles.css';
 const icSucceded = require('../../img/ic_check_green.png')
 const icFailed = require('../../img/ic_wrong_red.png')
 
-const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState, onPress }) => {
+const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState, onPress, style }) => {
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <div style={{
@@ -17,6 +17,7 @@ const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, ques
                 textDecorationLine: 'none',
                 textDecoration: 'none',
                 textDecorationColor: '#fff0'
+                ...style
             }}>
                 <p numberOfLines={1} style={title}> {titleText} </p>
                 <div style={{ display: 'flex', alignItems: 'center', flexDirection: "row", marginTop: 8, justifyContent: "space-between" }}>

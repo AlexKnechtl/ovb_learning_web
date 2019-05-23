@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
+import AppHeader from './common/AppHeader';
 
 class QuestionViewScene extends Component {
     state = {
@@ -86,7 +87,7 @@ class QuestionViewScene extends Component {
             successRate } = this.la.calcCurrentLearningStatsForModule(currQuestion.moduleId);
         const { name: subModuleName } = this.props.modules.modules[currQuestion.sectionId].modules[currQuestion.moduleId];
         return (
-            <header style={appHeader}>
+            <AppHeader>
 
                 <InteractSection title="Übungsmodus">
                     <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '18em', textAlign: 'center', margin: '0 auto' }}>
@@ -183,18 +184,9 @@ class QuestionViewScene extends Component {
                             forwardButtonDisabled={!canGetNextQuestion} />
                     </div>
                 </DisplaySection>
-            </header>
+            </AppHeader>
         );
     }
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 const questionLine = {

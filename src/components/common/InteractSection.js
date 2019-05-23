@@ -5,15 +5,16 @@ import icon from '../../img/logo_ovb_white.png'
 const InteractSection = ({title, children}) => {
     return (
         <div className="blueBox" style={interactSection} >
-            <img
-                src={icon}
-                style={iconStyle}
-                alt="OVB-Logo" />
+            <div style={{alignItems: "center"}}>
+                <img
+                    src={icon}
+                    style={iconStyle}
+                    alt="OVB-Logo" />
 
-            <h1 style={titleStyle}>
-                {title}
-            </h1>
-
+                <h1 style={titleStyle}>
+                    {title}
+                </h1>
+            </div>
            {children}
         </div>
     )
@@ -21,9 +22,11 @@ const InteractSection = ({title, children}) => {
 
 const interactSection = {
     backgroundColor: "#003A65",
-    justifyContent: "center",
-    alignItems: "center",
-    textAlign: "center"
+    justifyContent: "flex-start",
+    // alignItems: "center",
+    textAlign: "center",
+    display: "flex",
+    flexDirection: "column"
 }
 
 const titleStyle = {

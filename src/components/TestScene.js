@@ -1,4 +1,4 @@
-
+//@ts-check
 
 import React, { Component } from 'react';
 import { QuestionFooter, InteractSection, DisplaySection, Answer, SurePopup } from './common';
@@ -9,6 +9,7 @@ import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, 
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Prompt } from 'react-router-dom';
+import AppHeader from './common/AppHeader';
 
 class TestScene extends Component {
     state = {
@@ -84,9 +85,9 @@ class TestScene extends Component {
         const questionNumberText = this.props.exam.currentQuestion ? `Frage ${this.props.exam.currentIndex + 1} / ${this.props.exam.questions.length}` : '';
         const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
         return (
-            <header style={appHeader}>
+            <AppHeader>
                 <Prompt
-                    when={true}
+                    when={this.props.exam.currentIndex < this.props.exam.questions.length-1}
                     message={location =>
                         `Wollen sie wirklich den Testmodus beenden?`
                     }
@@ -145,18 +146,9 @@ class TestScene extends Component {
                     </div>
                 </DisplaySection>
                 <SurePopup ref={'surePopup'} />
-            </header >
+            </AppHeader>
         );
     }
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 const questionLine = {

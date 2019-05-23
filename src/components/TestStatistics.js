@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
 import { StatisticModules, InteractSection, DisplaySection } from './common';
+import AppHeader from './common/AppHeader';
+import { Button, StatisticsCategories } from './common';
 
 class TestStatistics extends Component {
     state = {
@@ -34,7 +36,7 @@ class TestStatistics extends Component {
         const percentageRight = this.props.exam.percentageRight * 100;
 
         return (
-            <header className="appHeader" style={appHeader}>
+            <AppHeader>
                 <InteractSection title="Statistiken">
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
 
@@ -49,17 +51,11 @@ class TestStatistics extends Component {
                 </InteractSection>
 
                 <DisplaySection title={this.props.exam.title}>
-
-                    <StatisticModules
-                        modules={this.props.modules}
-                        categoryPress={this.categoryPress}
-                        chosenCategories={this.state.categories}
-                        testMode={this.state.testMode} />
+                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats}/>
                 </DisplaySection>
 
                 })}
-            </header>
-
+            </AppHeader>
         );
     }
 }
