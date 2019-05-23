@@ -1,4 +1,4 @@
-
+//@ts-check
 
 import React, { Component } from 'react';
 import { QuestionFooter, InteractSection, DisplaySection, Answer, SurePopup } from './common';
@@ -9,6 +9,7 @@ import { getNextExamQuestionAction, answerExamQuestionAction, finishExamAction, 
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
 import { Prompt } from 'react-router-dom';
+import AppHeader from './common/AppHeader';
 
 class TestScene extends Component {
     state = {

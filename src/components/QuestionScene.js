@@ -132,6 +132,7 @@ class QuestionScene extends Component {
         return (
             <AppHeader>
                 <InteractSection title="Übungsmodus">
+                <div style={{display: "flex", flexDirection: "column", flex: "1"}}>
                 <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '90%' }}>
                         {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
@@ -154,7 +155,7 @@ class QuestionScene extends Component {
                         {rightQuestions} Antworten richtig
                     </p>
 
-                    <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, position: "absolute" }}>
+                    <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, flex: "1" }}>
                         <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: '0.5em' }}>
                             Aktionen
                         </p>
@@ -183,6 +184,7 @@ class QuestionScene extends Component {
                                         this.props.dispatchGetNextQuestion();
                                 }} />
                         </div>
+                    </div>
                     </div>
                 </InteractSection>
 

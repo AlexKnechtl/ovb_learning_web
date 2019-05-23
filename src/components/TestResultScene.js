@@ -2,7 +2,7 @@
 
 import React, { Component } from 'react';
 import { } from 'react'
-import { ImageButton, QuestionFooter } from './common';
+import { ImageButton, QuestionFooter, QuestionFooterView } from './common';
 import icon from '../img/logo_ovb_white.png'
 import './styles.css';
 
@@ -80,6 +80,42 @@ class TestResultScene extends Component {
 
         return (
             <AppHeader>
+                
+                <div style={interactSection} >
+                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
+                    <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
+                        Prüfung
+                    </h1>
+
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
+                        {subModuleId + " " + subModuleName}
+                    </h1>
+
+                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%' }}>
+                        {questionNumberText}
+                    </h1>
+
+                    <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
+                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
+                            Aktionen
+                        </p>
+
+                        <div align="right" style={{ marginRight: '11%' }}>
+                        <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
+                            <ImageButton
+                                // link="/kategorien"
+                                buttonText="PDF öffnen"
+                                image={iconContinue} />
+                        </Link>
+
+                            <ImageButton
+                                buttonText="Falsche Fragen üben"
+                                image={iconContinue} />
+                        </div>
+                    </div>
+                </div>
+                <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
+
                 <div style={{ height: '100vh', width: '69.5%' }}>
                     <h1 style={titleStyle}>{questionHeaderText}</h1>
                     <p style={questionText}>{question}</p>
@@ -137,51 +173,11 @@ class TestResultScene extends Component {
                         }}>
                         <p style={{ fontSize: 14, color: '#fff', margin: 12 }}>{a3}</p>
                     </div>
-                </div>
-
-                <div style={{ width: '0.5%', backgroundColor: '#663399' }} />
-
-                <div style={interactSection} >
-                    <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
-                    <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>
-                        Prüfung
-                    </h1>
-
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6 }}>
-                        {subModuleId + " " + subModuleName}
-                    </h1>
-
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%' }}>
-                        {questionNumberText}
-                    </h1>
-
-                    <div style={{ backgroundColor: '#663399', height: '28%', paddingLeft: 16, paddinTop: 16, marginTop: '12.7%', bottom: 0, position: "absolute" }}>
-                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: 12 }}>
-                            Aktionen
-                        </p>
-
-                        <div align="right" style={{ marginRight: '11%' }}>
-                        <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
-                            <ImageButton
-                                // link="/kategorien"
-                                buttonText="PDF öffnen"
-                                image={iconContinue} />
-                        </Link>
-
-                            <ImageButton
-                                buttonText="Falsche Fragen üben"
-                                image={iconContinue} />
-                        </div>
-                    </div>
-                </div>
-
-                <div style={bottomLayout} >
-                    <button style={backButton} onClick={() => this.props.dispatchGetPrevQuestion()} disabled={!cangetPrevQuestion}>
-                        Vor
-                    </button>
-                    <button style={weiterButton} onClick={() => this.props.dispatchGetNextQuestion()} disabled={!canGetNextQuestion}>
-                        Weiter
-                    </button>
+                    <QuestionFooterView
+                            forwardClick={() => this.props.dispatchGetPrevQuestion()}
+                            backwardClick={() => this.props.dispatchGetNextQuestion()}
+                            backButtonDisabled={!cangetPrevQuestion}
+                            forwardButtonDisabled={!canGetNextQuestion} />
                 </div>
             </AppHeader>
         );
