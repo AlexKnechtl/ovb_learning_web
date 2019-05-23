@@ -87,7 +87,7 @@ class TestScene extends Component {
         return (
             <AppHeader>
                 <Prompt
-                    when={true}
+                    when={this.props.exam.currentIndex < this.props.exam.questions.length-1}
                     message={location =>
                         `Wollen sie wirklich den Testmodus beenden?`
                     }
