@@ -8,7 +8,7 @@ import '../styles.css';
 const icSucceded = require('../../img/ic_check_green.png')
 const icFailed = require('../../img/ic_wrong_red.png')
 
-const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState }) => {
+const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, questionsFalse, learningState, style }) => {
     return (
         <div style={{
             backgroundImage: `url(${imageUri})`,
@@ -16,6 +16,7 @@ const StatisticsCategory = ({ titleText, questionsRight, success, imageUri, ques
             textDecorationLine: 'none',
             textDecoration: 'none',
             textDecorationColor: '#fff0',
+            ...style
         }}>
             <p style={titleTextStyle}>
                 {titleText}

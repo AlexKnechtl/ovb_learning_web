@@ -2,7 +2,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button, StatisticsCategory } from './common';
+import { Button, StatisticsCategories } from './common';
+import AppHeader from './common/AppHeader';
 
 class TestStatistics extends Component {
     state = {
@@ -18,8 +19,9 @@ class TestStatistics extends Component {
         const infop = this.props.exam.percentageRight >= 0.6 ? 'Weiter so! :)' : 'Nächstes mal schaffst du es!';
         const percentageRight = this.props.exam.percentageRight * 100;
         return (
+            <AppHeader>
             <div >
-                <div>
+                <div style={{color: "#000"}}>
                     <div >
                         <p >
                             {percentageRight.toFixed(0)}%
@@ -38,24 +40,9 @@ class TestStatistics extends Component {
                     </div>
                 </div>
                 <div />
-                <div style={{ "borderColor": "black", "border": "solid", "borderWidth": "2px" }}>
-                    {Object.keys(this.props.exam.finishedStats).map(key => {
-                        var currModResult = this.props.exam.finishedStats[key];
-                        var moduleName = this.props.modules.modules[key].name;
-                        var imageUri = this.props.modules.modules[key].image;
-                        return <StatisticsCategory
-                            titleText={moduleName}
-                            questionsRight={currModResult.rightQuestions}
-                            questionsFalse={currModResult.falseQuestions}
-                            learningState={currModResult.percentageRight}
-                            imageUri={imageUri}
-                            success={currModResult.percentageRight >= 0.6}
-                            key={key} >
-                        </StatisticsCategory>;
-
-                })}
-                </div>
+                <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats}/>
             </div>
+            </AppHeader>
         );
     }
 }
