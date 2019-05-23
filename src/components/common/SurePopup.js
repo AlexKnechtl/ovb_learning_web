@@ -55,7 +55,7 @@ class SurePopup extends Component {
                         </Center>
                     </button>
                     <button
-                        onClick={() => { this.closeModal() }}
+                        onClick={() => { this.closeModal(); this.props.onPressEnd(); }}
                         style={buttonStyle}>
                         <Center style={buttonText}>
                             Beenden

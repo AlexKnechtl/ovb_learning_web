@@ -60,11 +60,24 @@ class TestScene extends Component {
     closeModal() {
         this.refs.surePopup.closeModal();
     }
+    abbort = false;
+
+    handleBlockedNavigation = (location) => {
+        
+        if(!this.abbort){
+            this.toogleModal();
+            return false;
+        }
+        else return true;
+    }
 
     render() {
         const currentQuestion = this.props.exam.currentQuestion;
-        if (this.props.exam.questions && this.props.exam.currentIndex >= this.props.exam.questions.length)
+        var canGoBack = false;
+        if (this.props.exam.questions && this.props.exam.currentIndex >= this.props.exam.questions.length){
             this.props.dispatchFinishExam();
+            canGoBack = true;
+        }
         if (!currentQuestion) return null;
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
 
@@ -87,10 +100,8 @@ class TestScene extends Component {
         return (
             <AppHeader>
                 <Prompt
-                    when={this.props.exam.currentIndex < this.props.exam.questions.length-1}
-                    message={location =>
-                        `Wollen sie wirklich den Testmodus beenden?`
-                    }
+                    when={!canGoBack}
+                    message={this.handleBlockedNavigation} 
                 />
                 <InteractSection title="Prüfungsmodus">
 
@@ -145,7 +156,8 @@ class TestScene extends Component {
                         />
                     </div>
                 </DisplaySection>
-                <SurePopup ref={'surePopup'} />
+                <SurePopup ref={'surePopup'} 
+                    onPressEnd={() => {this.abbort = true; this.props.dispatchNavigation("/");}}/>
             </AppHeader>
         );
     }
