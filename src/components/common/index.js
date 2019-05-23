@@ -18,3 +18,4 @@ export * from './SubModules';
 export * from './Statistics';
 export * from './SurePopup';
 export * from './StatisticsCategory';
+export * from './PDFPopup';

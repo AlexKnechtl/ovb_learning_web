@@ -59,10 +59,12 @@ class SubCategoryScene extends Component {
                                 onPress={() => { }}
                                 image={iconBereiche} />
                         </Link>
+
                         <ImageButton
                             onPress={this.startLearning}
                             buttonText="Übungsmodus"
                             image={iconContinue} />
+                            
                         <ImageButton
                             onPress={() => {
                                 if (this.state.currentSubmodule && falseQuestions == 0)
