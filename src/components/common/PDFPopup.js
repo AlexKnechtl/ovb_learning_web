@@ -1,9 +1,11 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react';
 import Modal from 'react-awesome-modal';
 import Center from 'react-center'
 import '../styles.css';
-
+import { Link } from "react-router-dom";    
 class PDFPopup extends Component {
     constructor() {
         super();
@@ -31,6 +33,8 @@ class PDFPopup extends Component {
     }
 
     render() {
+        const scriptInfos = this.props.modules||{};
+        console.log(Object.keys(scriptInfos).map(key=> <div><p>{scriptInfos[key].name}</p><p>{scriptInfos[key].pdf}</p></div>));
         return (
             <Modal
                 ref={"myModal"}
@@ -48,9 +52,11 @@ class PDFPopup extends Component {
                 <p style={{ fontSize: '0.9em', textAlign: "center", fontWeight: 'bold', color: "#003A65", marginTop: 0, marginBottom: 14, marginRight: '2em', marginLeft: '2em' }}>
                     Skripten
                 </p>
-
+                <div style={{color: "#000"}}> 
+                    {/*TODO: Beautify*/}
+                    {Object.keys(scriptInfos).map(key=> <div><Link to={`/pdf?url=${btoa(scriptInfos[key].pdf)}`}><p>{scriptInfos[key].name}</p></Link></div>)}
+                </div>
                 <div style={lineColor} />
-
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
                     <button
                         onClick={() => { this.closeModal() }}

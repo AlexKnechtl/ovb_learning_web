@@ -1,3 +1,5 @@
+//@ts-check
+
 import React, { Component } from 'react';
 import { } from 'react'
 import './styles.css';
@@ -10,6 +12,7 @@ import iconWrong from '../img/x_icon.png'
 import iconPdfRed from '../img/pdf_red.png'
 import { Link } from "react-router-dom";
 import { goBack } from 'connected-react-router';
+import AppHeader from './common/AppHeader';
 
 class QuestionScene extends Component {
     state = {
@@ -127,8 +130,9 @@ class QuestionScene extends Component {
         const pdfPage = ((this.props.currentQuestion || {}).pdfInfo || {}).pageNumber;
 
         return (
-            <header style={appHeader}>
+            <AppHeader>
                 <InteractSection title="Übungsmodus">
+                <div style={{display: "flex", flexDirection: "column", flex: "1"}}>
                 <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '90%' }}>
                         {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
                     </h1>
@@ -151,7 +155,7 @@ class QuestionScene extends Component {
                         {rightQuestions} Antworten richtig
                     </p>
 
-                    <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, position: "absolute" }}>
+                    <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, flex: "1" }}>
                         <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: '0.5em' }}>
                             Aktionen
                         </p>
@@ -180,6 +184,7 @@ class QuestionScene extends Component {
                                         this.props.dispatchGetNextQuestion();
                                 }} />
                         </div>
+                    </div>
                     </div>
                 </InteractSection>
 
@@ -237,18 +242,9 @@ class QuestionScene extends Component {
                     </div>
                 </DisplaySection>
                 <FinishedPopup ref={'popupInfo'} />
-            </header>
+            </AppHeader>
         );
     }
-}
-
-const appHeader = {
-    minHeight: '100vh',
-    display: 'flex',
-    flexDirection: 'row-reverse',
-    fontFamily: 'Roboto Slab',
-    fontSize: `calc(10px + 2vmin)`,
-    color: 'white'
 }
 
 const questionLine = {
