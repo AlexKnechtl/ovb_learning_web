@@ -79,8 +79,7 @@ class TestResultScene extends Component {
         const subModuleName = this.props.modules.modules[currentQuestion.sectionId].modules[currentQuestion.moduleId].name;
 
         return (
-            <AppHeader>
-                
+            <AppHeader>   
                 <div style={interactSection} >
                     <img src={icon} style={{ marginTop: '5vh', width: '17%' }} alt="OVB-Logo" />
                     <h1 style={{ fontSize: '1.3em', fontWeight: 'bold', marginTop: '3%' }}>

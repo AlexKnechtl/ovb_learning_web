@@ -59,7 +59,7 @@ class LoadingPopup extends Component {
                         fontSize: '0.8em'
                     }}>
                         Lade Daten...
-                </p>
+                    </p>
                 </div>
             </Modal>
         );

@@ -3,6 +3,11 @@ import React, { Component } from 'react'
 import { Document, Page } from "react-pdf";
 import { LoadingPopup } from './common';
 
+import arrow from '../img/arrow.png';
+import arrowPage from '../img/page_icon.png';
+import zoomIn from '../img/zoom_in_icon.png';
+import zoomOut from '../img/zoom_out_icon.png';
+
 export default class PDFScene extends Component {
 
   constructor(props) {
@@ -56,11 +61,47 @@ export default class PDFScene extends Component {
           }}>
             Skriptum über irgendwas
           </p>
-          <p style={{ position: 'absolute', left: '50%', color: '#fff', fontSize: 18 }}>
-            {pageNumber / numPages}
-          </p>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '0em', transform: 'translateX(-50%)' }}>
+            <img
+              onClick={this.goToPrevPage}
+              src={arrowPage}
+              style={{ width: 30, height: 20, marginRight: 42, marginLeft: 0, marginTop: 0, marginBottom: 0, transform: "rotate(180deg)" }}
+              alt="Error" />
+            <img
+              onClick={this.goToPrevPage}
+              src={arrow}
+              style={{ width: 36, height: 30, marginRight: 36, marginLeft: 0, marginTop: 0, marginBottom: 0, transform: "rotate(180deg)" }}
+              alt="Error" />
+            <p style={{ fontSize: 18, color: '#fff' }}>
+              {pageNumber + "/" + numPages}
+            </p>
+            <img
+              onClick={this.goToNextPage}
+              src={arrow}
+              style={{ width: 36, height: 30, marginLeft: 36, marginTop: 0, marginBottom: 0, marginRight: 0 }}
+              alt="Error" />
+            <img
+              onClick={this.goToNextPage}
+              src={arrowPage}
+              style={{ width: 30, height: 20, marginLeft: 42, marginTop: 0, marginBottom: 0, marginRight: 0 }}
+              alt="Error" />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: '10%'}}>
+            <img
+              onClick={this.goToPrevPage}
+              src={zoomIn}
+              style={{ width: 40, height: 40, marginLeft: 0, marginTop: 0, marginBottom: 0}}
+              alt="Error" />
+            <img
+              onClick={this.goToNextPage}
+              src={zoomOut}
+              style={{ width: 40, height: 40, marginTop: 0, marginBottom: 0, marginRight: 0 }}
+              alt="Error" />
+          </div>
+
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', textAlign: 'center', marginTop: 6 }}>
           <Document
             file={url}
             loading={() => this.toogleModal()}

@@ -96,7 +96,6 @@ class Home extends Component {
                             testMode={this.state.testMode}
                             onPress={this.categoryButtonPress}
                             image={this.state.testMode ? backButton : iconBereiche} />
-
                         <ImageButton
                             buttonText={!this.state.testMode ? "Prüfung auswählen" : "Prüfungs starten"}
                             onPress={this.testButtonPress}
