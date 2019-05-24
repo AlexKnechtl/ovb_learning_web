@@ -29,7 +29,7 @@ export default class PDFScene extends Component {
     this.setState(state => ({ pageNumber: state.pageNumber>1?state.pageNumber - 1:1 }));
 
   goToNextPage = () =>
-    this.setState(state => ({ pageNumber: state.pageNumber < state.pageNum ? state.pageNumber + 1 : state.pageNum }));
+    this.setState(state => ({ pageNumber: state.pageNumber < state.numPages ? state.pageNumber + 1 : state.numPages }));
 
     goToFirstPage = () =>
     this.setState(state => ({ pageNumber: 1 }));
