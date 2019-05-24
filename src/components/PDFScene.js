@@ -60,7 +60,7 @@ export default class PDFScene extends Component {
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, textAlign: 'center', backgroundColor: '#003A65', height: `${this.state.pageHeight+500}` }}>
-        <div style={{ width: '100%', height: '3.5em', backgroundColor: '#032C4A', position: 'relative', textAlign: 'left' }}>
+        <div style={{ width: '100%', height: '3.5em', backgroundColor: '#032C4A', position: 'fixed', textAlign: 'left' }}>
           <p style={{
             color: '#fff',
             fontSize: 18,
@@ -109,7 +109,7 @@ export default class PDFScene extends Component {
           </div>
 
         </div>
-        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', textAlign: 'center', marginTop: 6 }}>
+        <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: "5em", textAlign: 'center', paddingBottom: "2em" }}>
           <Document
             file={url}
             loading={(props) => {this.toogleModal.bind(this); return <p></p>}}
@@ -119,6 +119,55 @@ export default class PDFScene extends Component {
           >
             <Page height={this.state.pageHeight} pageNumber={pageNumber} />
           </Document>
+        </div>
+        <div style={{ width: '100%', height: '3.5em', backgroundColor: '#032C4A', position: 'fixed', textAlign: 'left' }}>
+          <p style={{
+            color: '#fff',
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginLeft: 24
+          }}>
+            { decodeURI(params.get('pdfname'))||"Skriptum über irgendwas"}
+          </p>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '0em', transform: 'translateX(-50%)' }}>
+            <img
+              onClick={this.goToFirstPage}
+              src={arrowPage}
+              style={{ width: 30, height: 20, marginRight: 42, marginLeft: 0, marginTop: 0, marginBottom: 0, transform: "rotate(180deg)" }}
+              alt="Error" />
+            <img
+              onClick={this.goToPrevPage}
+              src={arrow}
+              style={{ width: 36, height: 30, marginRight: 36, marginLeft: 0, marginTop: 0, marginBottom: 0, transform: "rotate(180deg)" }}
+              alt="Error" />
+            <p style={{ fontSize: 18, color: '#fff' }}>
+              {pageNumber + "/" + numPages}
+            </p>
+            <img
+              onClick={this.goToNextPage}
+              src={arrow}
+              style={{ width: 36, height: 30, marginLeft: 36, marginTop: 0, marginBottom: 0, marginRight: 0 }}
+              alt="Error" />
+            <img
+              onClick={this.goToLastPage}
+              src={arrowPage}
+              style={{ width: 30, height: 20, marginLeft: 42, marginTop: 0, marginBottom: 0, marginRight: 0 }}
+              alt="Error" />
+          </div>
+
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: '10%', top: "0.5em"}}>
+            <img
+              onClick={()=>this.setState(state=>({pageHeight: state.pageHeight + 100}))}
+              src={zoomIn}
+              style={{ width: 40, height: 40, marginLeft: 0, marginTop: 0, marginBottom: 0}}
+              alt="Error" />
+            <img
+              onClick={()=>this.setState(state=>({pageHeight: state.pageHeight - 100}))}
+              src={zoomOut}
+              style={{ width: 40, height: 40, marginTop: 0, marginBottom: 0, marginRight: 0 }}
+              alt="Error" />
+          </div>
+
         </div>
         <LoadingPopup ref={'popupLoading'} />
       </div>
