@@ -118,7 +118,6 @@ const buttonStyle = {
 
 const backButtonStyle = {
     display: 'flex',
-
     border: "none",
     height: 56,
     flexGrow: 3,

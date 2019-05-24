@@ -1,8 +1,12 @@
-//@ts-check
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button, StatisticsCategories, InteractSection, AppHeader, DisplaySection  } from './common';
+import { Button, StatisticsCategories, InteractSection, AppHeader } from './common';
+import Center from 'react-center'
+
+import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 class TestStatistics extends Component {
     state = {
@@ -31,16 +35,25 @@ class TestStatistics extends Component {
 
     render() {
         const bestandenp = this.props.exam.percentageRight >= 0.6 ? 'Bestanden!' : 'Nicht bestanden.';
-        const infop = this.props.exam.percentageRight >= 0.6 ? 'Weiter so! :)' : 'Nächstes mal schaffst du es!';
+        const infoText = this.props.exam.percentageRight >= 0.6 ? 'Weiter so! :)' : 'Nächstes mal schaffst du es!';
+
         const percentageRight = this.props.exam.percentageRight * 100;
-        let {selectedModule} = this.state;
-        if(!selectedModule) selectedModule = Object.keys(this.props.exam.finishedStats)[0];
-        const {falseQuestions, rightQuestions, percentageRight: currModPercentageRight, count} = this.props.exam.finishedStats[selectedModule];
-        const {name: currModuleName} = this.props.modules.modules[selectedModule];
+
+        let { selectedModule } = this.state;
+        if (!selectedModule) selectedModule = Object.keys(this.props.exam.finishedStats)[0];
+
+        const { falseQuestions, rightQuestions, percentageRight: currModPercentageRight, count } = this.props.exam.finishedStats[selectedModule];
+        const { name: currModuleName } = this.props.modules.modules[selectedModule];
+
         return (
             <AppHeader>
                 <InteractSection title="Statistiken">
                     <div >
+                        <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
+                            <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
+                                Statistik Aktuell
+                        </p>
+                        </div>
                         <p style={wrongAnswers}>
                             {falseQuestions} Antworten falsch
                         </p>
@@ -50,11 +63,59 @@ class TestStatistics extends Component {
                         </p>
                     </div>
                 </InteractSection>
-                
+
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
-                <DisplaySection title={bestandenp}>
-                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats} onStatPress={(k)=>this.setState({selectedModule: k})}/>
+                <div style={displaySection}>
+                    <div style={{ display: 'flex', alignItems: 'center', height: '30vh', width: '100%', backgroundColor: '#003A65', position: 'relative' }}>
+                        <div style={{ height: '20vh', width: '20vh', marginLeft: '2.5em' }}>
+                            <CircularProgressbar
+                                styles={{
+                                    path: {
+                                        // Path color
+                                        stroke: `rgba(46, 239, 106, ${percentageRight.toFixed(0)})`,
+                                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                        strokeLinecap: 'butt',
+                                    },
+                                    // Customize the circle behind the path, i.e. the "total progress"
+                                    trail: {
+                                        // Trail color
+                                        stroke: '#fff',
+                                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                        strokeLinecap: 'butt',
+                                    },
+                                    // Customize the text
+                                    text: {
+                                        // Text color
+                                        fill: '#fff',
+                                        // Text size
+                                        fontSize: '18px',
+                                    },
+                                }}
+                                value={percentageRight.toFixed(0)}
+                                text={`${percentageRight.toFixed(0)}%`} />
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', marginLeft: '2.5em' }}>
+                            <p style={{ marginBottom: '0.1em', fontSize: '1.7em' }}>
+                                {bestandenp}
+                            </p>
+                            <p style={{ marginTop: '0.1em', fontSize: '1em' }}>
+                                {infoText}
+                            </p>
+                        </div>
+                        <button
+                            onPress={() => this.props.onPressEnd()}
+                            style={backButtonStyle}>
+                            <Center>
+                                <img
+                                    src={require('../img/arrow.png')}
+                                    style={backImgStyle}
+                                    alt="User Icon" />
+                                Zurück zu den Kategorien
+                            </Center>
+                        </button>
+                    </div>
+                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats} onStatPress={(k) => this.setState({ selectedModule: k })} />
                     <div style={{ color: "#000" }}>
                         <div >
                             <p >
@@ -69,8 +130,8 @@ class TestStatistics extends Component {
                             <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
                         </div>
                     </div>
-                </DisplaySection>
-            </AppHeader>
+                </div>
+            </AppHeader >
         );
     }
 }
@@ -101,6 +162,30 @@ const questionBackText = {
     marginRight: '10%',
     marginTop: '0.5em',
     marginBottom: '0.5em'
+}
+
+const backButtonStyle = {
+    backgroundColor: "#663399",
+    border: 'none',
+    color: '#fff',
+    fontSize: '0.7em',
+    position: 'absolute',
+    bottom: 0,
+    right: 0,
+    fontWeight: 'bold',
+    padding: '0.6em'
+}
+
+const backImgStyle = {
+    maxHeight: '1.3em',
+    maxWidth: '1.3em',
+    marginRight: '0.4em',
+    transform: "rotate(180deg)"
+}
+
+const displaySection = {
+    width: '100%',
+    height: '100%'
 }
 
 const mapDispatchToProps = {

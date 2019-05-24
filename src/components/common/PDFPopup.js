@@ -5,7 +5,8 @@ import { } from 'react';
 import Modal from 'react-awesome-modal';
 import Center from 'react-center'
 import '../styles.css';
-import { Link } from "react-router-dom";    
+import { PdfListElement } from '../common';
+
 class PDFPopup extends Component {
     constructor() {
         super();
@@ -33,8 +34,8 @@ class PDFPopup extends Component {
     }
 
     render() {
-        const scriptInfos = this.props.modules||{};
-        console.log(Object.keys(scriptInfos).map(key=> <div><p>{scriptInfos[key].name}</p><p>{scriptInfos[key].pdf}</p></div>));
+        const scriptInfos = this.props.modules || {};
+        console.log(Object.keys(scriptInfos).map(key => <div><p>{scriptInfos[key].name}</p><p>{scriptInfos[key].pdf}</p></div>));
         return (
             <Modal
                 ref={"myModal"}
@@ -49,12 +50,15 @@ class PDFPopup extends Component {
                     <img style={{ height: '3em', width: '3em' }} src={require('../../img/pdf_icon.png')} alt="Error" />
                 </div>
 
-                <p style={{ fontSize: '0.9em', textAlign: "center", fontWeight: 'bold', color: "#003A65", marginTop: 0, marginBottom: 14, marginRight: '2em', marginLeft: '2em' }}>
+                <p style={{ fontSize: '0.9em', textAlign: "center", fontWeight: 'bold', color: "#003A65", marginTop: 0, marginBottom: 8, marginRight: '2em', marginLeft: '2em' }}>
                     Skripten
                 </p>
-                <div style={{color: "#000"}}> 
-                    {/*TODO: Beautify*/}
-                    {Object.keys(scriptInfos).map(key=> <div><Link to={`/pdf?url=${btoa(scriptInfos[key].pdf)}`}><p>{scriptInfos[key].name}</p></Link></div>)}
+                <div style={{ backgroundColor: "#003A65", paddingTop: 8, paddingBottom: 8 }}>
+                    {Object.keys(scriptInfos).map(key =>
+                        <PdfListElement
+                            pdfSource={`/pdf?url=${btoa(scriptInfos[key].pdf)}`}
+                            pdfName={scriptInfos[key].name} />
+                    )}
                 </div>
                 <div style={lineColor} />
                 <div style={{ display: 'flex', flexDirection: 'row' }}>
@@ -62,18 +66,11 @@ class PDFPopup extends Component {
                         onClick={() => { this.closeModal() }}
                         style={backButtonStyle}>
                         <Center style={buttonText}>
-                            Zurück
-                        </Center>
-                    </button>
-                    <button
-                        onClick={() => { this.closeModal() }}
-                        style={buttonStyle}>
-                        <Center style={buttonText}>
-                            Beenden
                             <img
                                 src={require('../../img/arrow.png')}
-                                style={{ height: '1.4em', width: '1.7em', marginLeft: '0.6em' }}
+                                style={{ height: '1.7em', width: '2em', marginRight: '1em', marginLeft: '-0.3em', transform: "rotate(180deg)" }}
                                 alt="User Icon" />
+                            Zurück
                         </Center>
                     </button>
                 </div>
@@ -102,8 +99,8 @@ const floatingActionButton = {
     display: 'flex',
     alignSelf: 'center',
     margin: "0 auto",
-    marginTop: '1em',
-    marginBottom: '0.5em',
+    marginTop: '0.4em',
+    marginBottom: '0.2em',
     justifyContent: "center",
     alignItems: "center",
 };
@@ -114,22 +111,10 @@ const lineColor = {
     width: '100%'
 };
 
-const buttonStyle = {
-    display: 'flex',
-    width: '100%',
-    border: "none",
-    height: 56,
-    backgroundColor: '#003A65',
-    justifyContent: 'center',
-    flexDirection: 'row',
-    alignItems: 'center',
-    paddingLeft: 8,
-    paddingRight: 8
-};
-
 const backButtonStyle = {
     display: 'flex',
     border: "none",
+    flexGrow: 2,
     height: 56,
     flexGrow: 3,
     backgroundColor: '#002F53',
@@ -143,7 +128,7 @@ const backButtonStyle = {
 const buttonText = {
     fontWeight: 'bold',
     color: '#fff',
-    fontSize: 17
+    fontSize: 20
 }
 
 export { PDFPopup };
