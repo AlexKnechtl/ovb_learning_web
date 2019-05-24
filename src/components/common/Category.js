@@ -12,6 +12,7 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
         <div onClick={onPress} style={{
             backgroundImage: `url(${imageUri})`,
             backgroundSize: '110%',
+            backgroundColor: '#003A65',
             textDecorationLine: 'none',
             textDecoration: 'none',
             textDecorationColor: '#fff0',
@@ -85,6 +86,7 @@ const percentageText = {
     color: '#fff',
     textAlign: "center",
     fontSize: '0.7em',
+    marginBottom: 4,
     fontWeight: "bold"
 }
 

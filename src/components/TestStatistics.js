@@ -2,10 +2,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { Button, StatisticsCategories, InteractSection, AppHeader } from './common';
+import { StatisticsCategories, InteractSection, AppHeader, ImageButton } from './common';
 import Center from 'react-center'
 
-import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
+import iconBook from '../img/ic_look_through.png'
+
+import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
 class TestStatistics extends Component {
@@ -48,8 +50,16 @@ class TestStatistics extends Component {
         return (
             <AppHeader>
                 <InteractSection title="Statistiken">
+                    <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
+                        <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: '0.7em', width: '90%', textAlign: 'right'}}>
+                            {currModuleName}
+                        </h1>
+                        <ImageButton
+                            buttonText="Fragen durchblättern"
+                            image={iconBook} />
+                    </div>
                     <div >
-                        <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
+                        <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '20%' }}>
                             <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
                                 Statistik Aktuell
                         </p>
@@ -67,28 +77,20 @@ class TestStatistics extends Component {
                 <div style={{ width: '0.25em', backgroundColor: '#663399' }} />
 
                 <div style={displaySection}>
-                    <div style={{ display: 'flex', alignItems: 'center', height: '30vh', width: '100%', backgroundColor: '#003A65', position: 'relative' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', height: '30vh', width: '100%', backgroundColor: '#003A65', position: 'relative', marginBottom: '1.5em' }}>
                         <div style={{ height: '20vh', width: '20vh', marginLeft: '2.5em' }}>
                             <CircularProgressbar
                                 styles={{
                                     path: {
-                                        // Path color
                                         stroke: `rgba(46, 239, 106, ${percentageRight.toFixed(0)})`,
-                                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                                         strokeLinecap: 'butt',
                                     },
-                                    // Customize the circle behind the path, i.e. the "total progress"
                                     trail: {
-                                        // Trail color
                                         stroke: '#fff',
-                                        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
                                         strokeLinecap: 'butt',
                                     },
-                                    // Customize the text
                                     text: {
-                                        // Text color
                                         fill: '#fff',
-                                        // Text size
                                         fontSize: '18px',
                                     },
                                 }}
@@ -104,7 +106,7 @@ class TestStatistics extends Component {
                             </p>
                         </div>
                         <button
-                            onPress={() => this.props.onPressEnd()}
+                            onPress={() => this.navigateHome()}
                             style={backButtonStyle}>
                             <Center>
                                 <img
@@ -115,21 +117,10 @@ class TestStatistics extends Component {
                             </Center>
                         </button>
                     </div>
-                    <StatisticsCategories modules={this.props.modules.modules} finishedStats={this.props.exam.finishedStats} onStatPress={(k) => this.setState({ selectedModule: k })} />
-                    <div style={{ color: "#000" }}>
-                        <div >
-                            <p >
-                                {percentageRight.toFixed(0)}%
-                            </p>
-
-                            <p style={questionBackText}>
-                                {this.props.exam.falseQuestions} Antworten richtig
-                            </p>
-                        </div>
-                        <div >
-                            <Button onPress={() => this.navigateHome()} buttonText="Weiter Lernen" />
-                        </div>
-                    </div>
+                    <StatisticsCategories
+                        modules={this.props.modules.modules}
+                        finishedStats={this.props.exam.finishedStats}
+                        onStatPress={(k) => this.setState({ selectedModule: k })} />
                 </div>
             </AppHeader >
         );
