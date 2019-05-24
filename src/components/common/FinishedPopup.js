@@ -34,7 +34,7 @@ class FinishedPopup extends Component {
         return (
             <Modal
                 ref={"myModal"}
-                visible={this.state.modalIsOpen}
+                visible={this.props.show || this.state.modalIsOpen}
                 onClickAway={() => this.closeModal()}
                 style={customStyles}
                 contentLabel="Example Modal" >
@@ -55,7 +55,7 @@ class FinishedPopup extends Component {
                 <div style={lineColor} />
 
                 <button
-                    onClick={() => { this.closeModal() }}
+                    onClick={() => { this.closeModal(); this.props.onPress(); }}
                     style={buttonStyle}>
                     <Center style={buttonText}>
                         Weiter

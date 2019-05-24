@@ -6,10 +6,10 @@ import '../styles.css';
 
 import arrow from '../../img/arrow.png'
 
-const QuestionFooterView = ({ backButtonDisabled = false, forwardButtonDisabled = false, forwardClick, backwardClick }) => {
+const QuestionFooterView = ({ backButtonDisabled = false, forwardButtonDisabled = false, forwardClick, backwardClick, abbortClick }) => {
     return (
         <div style={bottomLayout} >
-            <button style={backButton}>
+            <button style={backButton} onClick={abbortClick}>
                 Abbrechen
             </button>
             <button onClick={backwardClick} disabled={backButtonDisabled} style={{
