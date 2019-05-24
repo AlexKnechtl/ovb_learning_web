@@ -107,7 +107,7 @@ class TestResultScene extends Component {
                                 mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
                                 mouseOverBtn={this.state.mouseOverPdf}
                                 buttonText="PDF öffnen"
-                                image={iconPdfRed} />
+                                image={iconContinue} />
                         </Link>}
                         </div>
                     </div>
