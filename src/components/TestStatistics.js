@@ -1,9 +1,10 @@
-
+//@ts-check
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
 import { StatisticsCategories, InteractSection, AppHeader, ImageButton } from './common';
 import Center from 'react-center'
+import { Link } from 'react-router-dom';
 
 import iconBook from '../img/ic_look_through.png'
 
@@ -55,6 +56,7 @@ class TestStatistics extends Component {
                             {currModuleName}
                         </h1>
                         <ImageButton
+                            onPress={()=>this.props.dispatchInitStatsForModule(this.state.selectedModule)}
                             buttonText="Fragen durchblättern"
                             image={iconBook} />
                     </div>
@@ -62,7 +64,7 @@ class TestStatistics extends Component {
                         <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '20%' }}>
                             <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
                                 Statistik Aktuell
-                        </p>
+                            </p>
                         </div>
                         <p style={wrongAnswers}>
                             {falseQuestions} Antworten falsch
@@ -105,6 +107,7 @@ class TestStatistics extends Component {
                                 {infoText}
                             </p>
                         </div>
+                        <Link to="/" >
                         <button
                             onPress={() => this.navigateHome()}
                             style={backButtonStyle}>
@@ -116,6 +119,7 @@ class TestStatistics extends Component {
                                 Zurück zu den Kategorien
                             </Center>
                         </button>
+                        </Link>
                     </div>
                     <StatisticsCategories
                         modules={this.props.modules.modules}
