@@ -65,7 +65,7 @@ class TestResultScene extends Component {
         var a3 = currentQuestion.question.answer3.answer;
         const pdfSrc = ((currentQuestion||{}).pdfInfo||{}).url;
         const pdfPage = ((currentQuestion||{}).pdfInfo||{}).pageNumber;
-
+        const scriptName = ((currentQuestion || {}).pdfInfo || {}).scriptName;
         var canGetNextQuestion = this.props.examResult.canGetNextQuestion;
         var cangetPrevQuestion = this.props.examResult.currentIndex > 0;
 
@@ -101,12 +101,14 @@ class TestResultScene extends Component {
                         </p>
 
                         <div align="right" style={{ marginRight: '11%' }}>
-                        <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
+                        {pdfSrc && <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}&pdfname=${encodeURI(scriptName)}`}>
                             <ImageButton
-                                // link="/kategorien"
+                                mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
+                                mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
+                                mouseOverBtn={this.state.mouseOverPdf}
                                 buttonText="PDF öffnen"
-                                image={iconContinue} />
-                        </Link>
+                                image={iconPdfRed} />
+                        </Link>}
                         </div>
                     </div>
                 </div>

@@ -55,6 +55,8 @@ export default class PDFScene extends Component {
 
   render() {
     const { pageNumber, numPages, url } = this.state;
+    
+    let params = new URLSearchParams(this.props.location.search);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, textAlign: 'center', backgroundColor: '#003A65', height: `${this.state.pageHeight+500}` }}>
@@ -65,7 +67,7 @@ export default class PDFScene extends Component {
             fontWeight: 'bold',
             marginLeft: 24
           }}>
-            Skriptum über irgendwas
+            { decodeURI(params.get('pdfname'))||"Skriptum über irgendwas"}
           </p>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '0em', transform: 'translateX(-50%)' }}>
             <img

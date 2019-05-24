@@ -57,7 +57,7 @@ class PDFPopup extends Component {
                 <div style={{ backgroundColor: "#003A65", paddingTop: 8, paddingBottom: 8 }}>
                     {Object.keys(scriptInfos).map(key =>
                         <PdfListElement
-                            pdfSource={`/pdf?url=${btoa(scriptInfos[key].pdf)}`}
+                            pdfSource={`/pdf?url=${btoa(scriptInfos[key].pdf)}&pdfname=${encodeURI(scriptInfos[key].name)}`}
                             pdfName={scriptInfos[key].name} />
                     )}
                 </div>

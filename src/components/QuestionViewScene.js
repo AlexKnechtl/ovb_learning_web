@@ -80,12 +80,14 @@ class QuestionViewScene extends Component {
         var cangetPrevQuestion = this.state.currentIndex > 0;
         const pdfSrc = ((currQuestion || {}).pdfInfo || {}).url;
         const pdfPage = ((currQuestion || {}).pdfInfo || {}).pageNumber;
+        const scriptName = ((currQuestion || {}).pdfInfo || {}).scriptName;
         const questionHeaderText = `${currQuestion.moduleId.replace("_", "\.")} Frage ${parseInt(currQuestion.questionId.substr(4))}`;
         const { falseQuestions,
             questionCount,
             seenQuestions: rightQuestions,
             successRate } = this.la.calcCurrentLearningStatsForModule(currQuestion.moduleId);
         const { name: subModuleName } = this.props.modules.modules[currQuestion.sectionId].modules[currQuestion.moduleId];
+
         return (
             <AppHeader>
 
@@ -118,14 +120,14 @@ class QuestionViewScene extends Component {
                         </p>
 
                         <div align="right" style={{ marginRight: '11%' }}>
-                            <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
+                            {pdfSrc && <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}&pdfname=${encodeURI(scriptName)}`}>
                                 <ImageButton
                                     mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
                                     mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
                                     mouseOverBtn={this.state.mouseOverPdf}
                                     buttonText="PDF öffnen"
                                     image={iconPdfRed} />
-                            </Link>
+                            </Link>}
                             <ImageLineButton
                                 mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
                                 mouseLeave={() => { this.setState({ mouseOverWrong: false }) }}

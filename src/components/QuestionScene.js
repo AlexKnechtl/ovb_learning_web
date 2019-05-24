@@ -127,6 +127,7 @@ class QuestionScene extends Component {
 
         const pdfSrc = ((this.props.currentQuestion || {}).pdfInfo || {}).url;
         const pdfPage = ((this.props.currentQuestion || {}).pdfInfo || {}).pageNumber;
+        const scriptName = ((this.props.currentQuestion || {}).pdfInfo || {}).scriptName;
 
         return (
             <AppHeader>
@@ -160,14 +161,14 @@ class QuestionScene extends Component {
                         </p>
 
                         <div align="right" style={{ marginRight: '11%' }}>
-                        <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}`}>
+                        {pdfSrc && <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}&pdfname=${encodeURI(scriptName)}`}>
                             <ImageButton
                                 mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
                                 mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
                                 mouseOverBtn={this.state.mouseOverPdf}
                                 buttonText="PDF öffnen"
                                 image={iconPdfRed} />
-                        </Link>
+                        </Link>}
 
                             <ImageLineButton
                                 mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
