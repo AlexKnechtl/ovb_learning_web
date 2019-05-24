@@ -112,7 +112,7 @@ export default class PDFScene extends Component {
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%', height: '100vh', textAlign: 'center', marginTop: 6 }}>
           <Document
             file={url}
-            loading={(props) => {this.toogleModal(); return <p></p>}}
+            loading={(props) => {this.toogleModal.bind(this); return <p></p>}}
             onLoadError={(error) => console.log(error)}
             onLoadSuccess={this.onDocumentLoadSuccess}
             onSourceSuccess={() => console.log('Document received')}
