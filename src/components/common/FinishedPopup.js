@@ -55,7 +55,7 @@ class FinishedPopup extends Component {
                 <div style={lineColor} />
 
                 <button
-                    onClick={() => { this.closeModal(); this.props.onPress(); }}
+                    onClick={() => { this.closeModal(); this.props.onPress && this.props.onPress(); }}
                     style={buttonStyle}>
                     <Center style={buttonText}>
                         Weiter
