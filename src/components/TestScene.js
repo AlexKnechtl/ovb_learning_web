@@ -16,7 +16,9 @@ class TestScene extends Component {
         answer2Clicked: true,
         answer3Clicked: true,
         check: false,
-        lastAnswerRight: undefined
+        lastAnswerRight: undefined,
+        mouseOverWeiter: false,
+        mouseOverCancel: false
     }
 
     checkAnswers() {
@@ -152,6 +154,12 @@ class TestScene extends Component {
                             onPressContinue={() => this.state.check ? this.checkAnswers() : {}}
                             continueDisabled={!this.state.check}
                             onPressBack={() => this.toogleModal()}
+                            mouseOverBack={() => { this.setState({ mouseOverCancel: true }) }}
+                            mouseLeaveBack={() => { this.setState({ mouseOverCancel: false }) }}
+                            mouseOverWeiter={() => { this.setState({ mouseOverWeiter: true }) }}
+                            mouseLeaveWeiter={() => { this.setState({ mouseOverWeiter: false }) }}
+                            mouseBackState={this.state.mouseOverCancel}
+                            mouseWeiterState={this.state.mouseOverWeiter}
                         />
                     </div>
                 </DisplaySection>
