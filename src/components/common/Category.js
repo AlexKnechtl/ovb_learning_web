@@ -86,7 +86,6 @@ const percentageText = {
     color: '#fff',
     textAlign: "center",
     fontSize: '0.7em',
-    marginBottom: 4,
     fontWeight: "bold"
 }
 
