@@ -1,4 +1,4 @@
-
+//@ts-check
 
 import React, { Component } from 'react';
 import { } from 'react'
@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import Loading from './Loading';
 import PageNotExists from './PageNotExists';
 import { Link } from "react-router-dom";
+import { goBack } from 'connected-react-router';
 
 class QuestionViewScene extends Component {
     state = {
@@ -177,8 +178,10 @@ class QuestionViewScene extends Component {
                             answerClicked={answer3Clicked} />
 
                         <QuestionFooterView
+                            abbortClick={() => this.props.dispatchGoBack()}
                             forwardClick={() => this.GetNextQuestion()}
                             backwardClick={() => this.GetPrevQuestion()}
+                            
                             backButtonDisabled={!cangetPrevQuestion}
                             forwardButtonDisabled={!canGetNextQuestion} />
                     </div>
@@ -241,6 +244,7 @@ const wrongAnswers = {
 }
 
 const mapDispatchToProps = {
+    dispatchGoBack: goBack
 };
 
 const mapStateToProps = state => ({

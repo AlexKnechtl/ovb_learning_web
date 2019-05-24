@@ -100,7 +100,7 @@ class QuestionScene extends Component {
     render() {
         if (!this.props.currentQuestion) {
             this.props.dispatchGetNextQuestion();
-            return null;
+            return <FinishedPopup ref={'popupInfo'} show={this.props.noMoreQuestions} onPress={() => this.props.dispatchGoBack()} />;
         }
         
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
@@ -240,7 +240,7 @@ class QuestionScene extends Component {
                             mouseWeiterState={this.state.mouseOverWeiter} />
                     </div>
                 </DisplaySection>
-                <FinishedPopup ref={'popupInfo'} />
+                <FinishedPopup ref={'popupInfo'} show={this.props.noMoreQuestions} onPress={() => this.props.dispatchGoBack()} />
             </AppHeader>
         );
     }

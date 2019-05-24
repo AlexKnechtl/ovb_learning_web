@@ -2,25 +2,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { getExamResultStatsForModuleAction } from '../coreFork';
-import { StatisticsCategories, InteractSection, AppHeader, ImageButton } from './common';
+import { StatisticsCategories, InteractSection, AppHeader, ImageButton, SurePopup } from './common';
 import Center from 'react-center'
-import { Link } from 'react-router-dom';
+import { Link, Prompt } from 'react-router-dom';
 
 import iconBook from '../img/ic_look_through.png'
 
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import { push } from 'connected-react-router';
 
 class TestStatistics extends Component {
     state = {
         icon: null,
         selectedModule: null
     }
-
-    navigateHome = () => {
-        this.props.navigation.navigate('main');
+    toogleModal() {
+        this.refs.surePopup.openModal();
     }
-
     categoryPress = (sectionID) => {
         this.initialized = true;
         if (!this.state.testMode) {
@@ -34,6 +33,16 @@ class TestStatistics extends Component {
                 }
             });
         }
+    }
+    abbort = false;
+
+    handleBlockedNavigation = (location) => {
+        
+        if(!this.abbort){
+            this.toogleModal();
+            return false;
+        }
+        else return true;
     }
 
     render() {
@@ -50,13 +59,17 @@ class TestStatistics extends Component {
 
         return (
             <AppHeader>
+                <Prompt
+                    when={true}
+                    message={this.handleBlockedNavigation} 
+                />
                 <InteractSection title="Statistiken">
                     <div align="right" style={{ margin: '0 1em 0 3em', alignItems: "flex-end", display: "flex", flexDirection: "column" }}>
                         <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: '0.7em', width: '90%', textAlign: 'right'}}>
                             {currModuleName}
                         </h1>
                         <ImageButton
-                            onPress={()=>this.props.dispatchInitStatsForModule(this.state.selectedModule)}
+                            onPress={()=>{this.abbort = true;this.props.dispatchInitStatsForModule(selectedModule);}}
                             buttonText="Fragen durchblättern"
                             image={iconBook} />
                     </div>
@@ -107,9 +120,8 @@ class TestStatistics extends Component {
                                 {infoText}
                             </p>
                         </div>
-                        <Link to="/" >
                         <button
-                            onPress={() => this.navigateHome()}
+                            onClick={() => {this.abbort = true; this.props.dispatchNavigation("/");}}
                             style={backButtonStyle}>
                             <Center>
                                 <img
@@ -119,13 +131,15 @@ class TestStatistics extends Component {
                                 Zurück zu den Kategorien
                             </Center>
                         </button>
-                        </Link>
                     </div>
                     <StatisticsCategories
                         modules={this.props.modules.modules}
                         finishedStats={this.props.exam.finishedStats}
                         onStatPress={(k) => this.setState({ selectedModule: k })} />
                 </div>
+                
+                <SurePopup ref={'surePopup'} 
+                    onPressEnd={() => {this.abbort = true; this.props.dispatchNavigation("/");}}/>
             </AppHeader >
         );
     }
@@ -184,7 +198,8 @@ const displaySection = {
 }
 
 const mapDispatchToProps = {
-    dispatchInitStatsForModule: getExamResultStatsForModuleAction
+    dispatchInitStatsForModule: getExamResultStatsForModuleAction,
+    dispatchNavigation: push
 };
 
 const mapStateToProps = state => ({

@@ -10,6 +10,7 @@ import iconContinue from '../img/ic_continue.png'
 import { getNextExamResultQuestionAction, getPrevExamResultQuestionAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { Link } from "react-router-dom";
+import { goBack } from 'connected-react-router';
 
 class TestResultScene extends Component {
     state = {
@@ -107,10 +108,6 @@ class TestResultScene extends Component {
                                 buttonText="PDF öffnen"
                                 image={iconContinue} />
                         </Link>
-
-                            <ImageButton
-                                buttonText="Falsche Fragen üben"
-                                image={iconContinue} />
                         </div>
                     </div>
                 </div>
@@ -174,10 +171,11 @@ class TestResultScene extends Component {
                         <p style={{ fontSize: 14, color: '#fff', margin: 12 }}>{a3}</p>
                     </div>
                     <QuestionFooterView
-                            forwardClick={() => this.props.dispatchGetPrevQuestion()}
-                            backwardClick={() => this.props.dispatchGetNextQuestion()}
+                            backwardClick={() => this.props.dispatchGetPrevQuestion()}
+                            forwardClick={() => this.props.dispatchGetNextQuestion()}
                             backButtonDisabled={!cangetPrevQuestion}
-                            forwardButtonDisabled={!canGetNextQuestion} />
+                            forwardButtonDisabled={!canGetNextQuestion} 
+                            abbortClick={() => this.props.dispatchGoBack()}/>
                 </div>
             </AppHeader>
         );
@@ -301,7 +299,8 @@ const wrongAnswers = {
 
 const mapDispatchToProps = {
     dispatchGetNextQuestion: getNextExamResultQuestionAction,
-    dispatchGetPrevQuestion: getPrevExamResultQuestionAction
+    dispatchGetPrevQuestion: getPrevExamResultQuestionAction,
+    dispatchGoBack: goBack
 };
 
 const mapStateToProps = state => ({
