@@ -12,7 +12,8 @@ class PDFPopup extends Component {
         super();
 
         this.state = {
-            modalIsOpen: false
+            modalIsOpen: false,
+            mouseOver: false,
         };
 
         this.openModal = this.openModal.bind(this);
@@ -68,7 +69,7 @@ class PDFPopup extends Component {
                         <Center style={buttonText}>
                             <img
                                 src={require('../../img/arrow.png')}
-                                style={{ height: '1.7em', width: '2em', marginRight: '1em', marginLeft: '-0.3em', transform: "rotate(180deg)" }}
+                                style={{ height: '1.6em', width: '1.9em', marginRight: '1em', marginLeft: '-0.3em', transform: "rotate(180deg)" }}
                                 alt="User Icon" />
                             Zurück
                         </Center>
@@ -128,7 +129,7 @@ const backButtonStyle = {
 const buttonText = {
     fontWeight: 'bold',
     color: '#fff',
-    fontSize: 20
+    fontSize: 22
 }
 
 export { PDFPopup };
