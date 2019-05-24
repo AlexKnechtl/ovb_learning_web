@@ -17,7 +17,7 @@ export default class PDFScene extends Component {
     let pageNum = params.get('page') || 1;
     let url = atob(params.get('url'));
 
-    this.state = { url, pageNumber: parseInt(pageNum), numPages: null };
+    this.state = { url, pageNumber: parseInt(pageNum), numPages: null , pageHeight: 1000};
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
@@ -26,12 +26,18 @@ export default class PDFScene extends Component {
   };
 
   goToPrevPage = () =>
-    this.setState(state => ({ pageNumber: state.pageNumber - 1 }));
+    this.setState(state => ({ pageNumber: state.pageNumber>1?state.pageNumber - 1:1 }));
 
   goToNextPage = () =>
-    this.setState(state => ({ pageNumber: state.pageNumber + 1 }));
+    this.setState(state => ({ pageNumber: state.pageNumber < state.pageNum ? state.pageNumber + 1 : state.pageNum }));
 
-  toogleModal() {
+    goToFirstPage = () =>
+    this.setState(state => ({ pageNumber: 1 }));
+
+  goToLastPage = () =>
+    this.setState(state => ({ pageNumber: state.numPages }));
+
+  toogleModal = ()=> {
     this.refs.popupLoading.openModal();
   }
 
@@ -51,7 +57,7 @@ export default class PDFScene extends Component {
     const { pageNumber, numPages, url } = this.state;
 
     return (
-      <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, textAlign: 'center', backgroundColor: '#003A65' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', flexGrow: 1, textAlign: 'center', backgroundColor: '#003A65', height: `${this.state.pageHeight+500}` }}>
         <div style={{ width: '100%', height: '3.5em', backgroundColor: '#032C4A', position: 'relative', textAlign: 'left' }}>
           <p style={{
             color: '#fff',
@@ -63,7 +69,7 @@ export default class PDFScene extends Component {
           </p>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', left: '50%', top: '0em', transform: 'translateX(-50%)' }}>
             <img
-              onClick={this.goToPrevPage}
+              onClick={this.goToFirstPage}
               src={arrowPage}
               style={{ width: 30, height: 20, marginRight: 42, marginLeft: 0, marginTop: 0, marginBottom: 0, transform: "rotate(180deg)" }}
               alt="Error" />
@@ -81,20 +87,20 @@ export default class PDFScene extends Component {
               style={{ width: 36, height: 30, marginLeft: 36, marginTop: 0, marginBottom: 0, marginRight: 0 }}
               alt="Error" />
             <img
-              onClick={this.goToNextPage}
+              onClick={this.goToLastPage}
               src={arrowPage}
               style={{ width: 30, height: 20, marginLeft: 42, marginTop: 0, marginBottom: 0, marginRight: 0 }}
               alt="Error" />
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: '10%'}}>
+          <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'absolute', right: '10%', top: "0.5em"}}>
             <img
-              onClick={this.goToPrevPage}
+              onClick={()=>this.setState(state=>({pageHeight: state.pageHeight + 100}))}
               src={zoomIn}
               style={{ width: 40, height: 40, marginLeft: 0, marginTop: 0, marginBottom: 0}}
               alt="Error" />
             <img
-              onClick={this.goToNextPage}
+              onClick={()=>this.setState(state=>({pageHeight: state.pageHeight - 100}))}
               src={zoomOut}
               style={{ width: 40, height: 40, marginTop: 0, marginBottom: 0, marginRight: 0 }}
               alt="Error" />
@@ -105,12 +111,11 @@ export default class PDFScene extends Component {
           <Document
             file={url}
             loading={(props) => {this.toogleModal(); return <p></p>}}
-            on
             onLoadError={(error) => console.log(error)}
             onLoadSuccess={this.onDocumentLoadSuccess}
             onSourceSuccess={() => console.log('Document received')}
           >
-            <Page height={1000} pageNumber={pageNumber} />
+            <Page height={this.state.pageHeight} pageNumber={pageNumber} />
           </Document>
         </div>
         <LoadingPopup ref={'popupLoading'} />
