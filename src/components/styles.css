@@ -33,3 +33,13 @@
     padding-bottom: 4em;
   }
 }
+
+.titlePDF {
+  display: flex;
+  color: rgb(255, 255, 255);
+  font-size: 18px;
+  font-weight: bold;
+  margin-left: 24px;
+  max-width: 15%;
+  max-height: 1em; 
+}
