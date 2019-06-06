@@ -32,7 +32,7 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-        console.log(this.state);
+//console.log(this.state);
     }
 
     testButtonPress = () => {
@@ -46,7 +46,7 @@ class Home extends Component {
             // this.props.navigation.navigate('test');
             var mids = []
             Object.keys(this.state.categories).forEach(key => { if (this.state.categories[key].isPressed) mids.push(key); });
-            console.log(mids);
+//console.log(mids);
             if (mids.length === 0)
                 return;
             this.props.dispatchStartExam(mids);
