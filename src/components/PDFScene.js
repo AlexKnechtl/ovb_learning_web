@@ -57,9 +57,9 @@ export default class PDFScene extends Component {
           <Document
             file={url}
             loading={(props) => { this.toogleModal.bind(this); return <p></p> }}
-            onLoadError={(error) => console.log(error)}
+//console.log(error)}
             onLoadSuccess={this.onDocumentLoadSuccess}
-            onSourceSuccess={() => console.log('Document received')}
+//console.log('Document received')}
           >
             <Page height={this.state.pageHeight} pageNumber={pageNumber} />
           </Document>

@@ -41,7 +41,7 @@ class SubCategoryScene extends Component {
         // console.log(this.props.match.params.catId);
         if (!this.props.modules.modules) return;
         if (this.props.modules.modules.length === 0) return <Loading />;
-        console.log(this.props.modules.modules);
+//console.log(this.props.modules.modules);
         var currMID = this.props.match.params.catId;
 
         if (!this.props.modules.modules.hasOwnProperty(currMID)) return <PageNotExists />

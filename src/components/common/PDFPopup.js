@@ -36,7 +36,7 @@ class PDFPopup extends Component {
 
     render() {
         const scriptInfos = this.props.modules || {};
-        console.log(Object.keys(scriptInfos).map(key => <div><p>{scriptInfos[key].name}</p><p>{scriptInfos[key].pdf}</p></div>));
+//console.log(Object.keys(scriptInfos).map(key => <div><p>{scriptInfos[key].name}</p><p>{scriptInfos[key].pdf}</p></div>));
         return (
             <Modal
                 ref={"myModal"}

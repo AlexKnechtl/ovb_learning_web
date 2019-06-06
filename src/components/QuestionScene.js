@@ -77,7 +77,7 @@ class QuestionScene extends Component {
         if (!this.state.check) {
             var isright = new MultipleChoiceQuestionInteractor().checkIsQuestionRight(this.props.currentQuestion.question);
             this.setState({ lastAnswerRight: isright });
-            console.log(isright);
+//console.log(isright);
             // var answeredRight = this.state.answer1Clicked == q.answer1.isRight && this.state.answer2Clicked == q.answer2.isRight && this.state.answer3Clicked == q.answer3.isRight;
             this.props.dispatchUpdateQuestion({ questionid: this.props.currentQuestion.questionId, answeredRight: isright });
         } else {

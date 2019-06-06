@@ -24,7 +24,7 @@ class TestScene extends Component {
     checkAnswers() {
         var isright = new MultipleChoiceQuestionInteractor().checkIsQuestionRight(this.props.exam.currentQuestion.question);
         this.setState({ lastAnswerRight: isright });
-        console.log(isright);
+//console.log(isright);
         this.props.dispatchAnswerQuestion(this.props.exam.currentIndex, isright);
         this.props.dispatchGetNextQuestion();
         this.setState({ answer1Clicked: true, answer2Clicked: true, answer3Clicked: true, check: false });
