@@ -53,7 +53,7 @@ class QuestionViewScene extends Component {
     render() {
         if (!(this.props.modules || {}).modules) return;
         if (this.props.modules.modules.length === 0) return <Loading />;
-        console.log(this.props.modules.modules);
+//console.log(this.props.modules.modules);
         if (this.pageNotExists) return <PageNotExists />
 
         const currQuestion = this.state.currentQuestion;
