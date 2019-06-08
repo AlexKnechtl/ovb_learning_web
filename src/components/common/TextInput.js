@@ -1,20 +1,20 @@
 //@ts-check
-
 import React from 'react';
 import '../styles.css';
 import PropTypes from 'prop-types';
 
-const TextInput = ({icon, name, hint, onChange, ...restProps}) => {
+const TextInput = ({ icon, name, hint, onChange, ...restProps }) => {
     return (
         <div style={rowTransparent} >
             <img src={icon} style={{ height: '1em', marginLeft: '0.6em' }} alt="User Icon" />
             <hr style={verticalLine} />
             <div style={{ flexDirection: 'row' }} >
-                <input style={inputStyle} type="text" onChange={onChange} name={name} placeholder={hint} {...restProps}/>
+                <input style={inputStyle} type="text" onChange={onChange} name={name} placeholder={hint} {...restProps} />
             </div>
         </div>
     )
 }
+
 TextInput.propTypes = {
     onChange: PropTypes.func,
     hint: PropTypes.string,
@@ -22,13 +22,8 @@ TextInput.propTypes = {
     icon: PropTypes.any
 }
 
-// TextInput.defaultProps ={
-//     /** @type {(event: React.ChangeEvent<HTMLInputElement>)=> void} */
-//     onChange: (e) => {}
-// }
-
 const rowTransparent = {
-    backgroundColor: '#fff3',
+    backgroundColor: 'rgba(255,255,255,0.3)',
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -52,7 +47,8 @@ const verticalLine = {
 }
 
 const inputStyle = {
-    backgroundColor: '#fff0',
+    width: '100%',
+    backgroundColor: 'rgba(255,255,255,0)',
     borderStyle: 'none',
     fontSize: '0.8em',
     margin: 0,

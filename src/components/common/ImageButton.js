@@ -4,7 +4,7 @@ import Center from 'react-center'
 class ImageButton extends React.Component {
     state = { hover: false }
     render() {
-        const { image, onPress, buttonText } = this.props;
+        const { image, onPress, buttonText, pdfButton } = this.props;
         return (
             <button
                 onMouseOver={() => this.setState({ hover: true })}
@@ -18,7 +18,7 @@ class ImageButton extends React.Component {
                     height: '2em',
                     border: "none",
                     textAlign: "center",
-                    color: "#003A65",
+                    color: pdfButton ? "#663399" : "#003A65",
                     paddingLeft: '0.7em',
                     paddingRight: '0.7em',
                     marginBottom: '0.5em',

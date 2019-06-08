@@ -9,7 +9,7 @@
   }
   
   ::-ms-input-placeholder { /* Microsoft Edge */
-    color: #fff8;
+    color: rgb(255, 255, 255, 0.8);
   }
 
   .rows .row {
@@ -30,7 +30,7 @@
   }
   .blueBox {
     width: 100%;
-    padding-bottom: 4em;
+    padding-bottom: 4em;  
   }
 }
 
@@ -42,4 +42,17 @@
   margin-left: 24px;
   max-width: 15%;
   max-height: 1em; 
+}
+
+.rowTransparent {
+  background-color: #fff3;
+  display: 'flex';
+  flexDirection: 'row';
+  flexWrap: 'wrap';
+  height: '2em';
+  marginBottom: '0.7em';
+  width: '80%';
+  minWidth: '4em';
+  alignItems: 'center';
+  marginLeft: '10%';
 }

@@ -15,7 +15,7 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
             backgroundColor: '#003A65',
             textDecorationLine: 'none',
             textDecoration: 'none',
-            textDecorationColor: '#fff0',
+            textDecorationColor: 'rgba(255,255,255,0)',
             ...style
         }} {...props}>
             <p numberOfLines={1} style={title}> {titleText} </p>
@@ -25,13 +25,13 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
                         Lernfortschritt
                         </div>
                     <Progress style={progressBar} color="#94C231" height={'0.7em'} completed={learningState * 100} />
-                    <p style={{ color: "#fff8", marginTop: 2, fontSize: '0.5em' }}>
+                    <p style={{ color: 'rgba(255,255,255,0.8)', marginTop: 2, fontSize: '0.5em' }}>
                         {questionsRight} Fragen richtig / {questionsFalse} falsch
                         </p>
                 </div>
                 <div align="center" style={{ width: '30%' }}>
                     <Center style={{
-                        backgroundColor: isPressed && testMode ? 'rgba(46, 239, 100, 0.55)' : '#fff2',
+                        backgroundColor: isPressed && testMode ? 'rgba(46, 239, 100, 0.55)' : 'rgba(255,255,255,0.2)',
                         width: '2em',
                         height: '2em',
                         flex: 1
@@ -59,7 +59,7 @@ const Category = ({ imageUri, titleText, onPress, learningState, isPressed, ques
 const title = {
     color: "#fff",
     fontWeight: "bold",
-    backgroundColor: "#fff3",
+    backgroundColor: 'rgba(255,255,255,0.3)',
     marginTop: 0,
     marginBottom: '0.85em',
     fontSize: "0.7em",
@@ -76,7 +76,7 @@ const title = {
 const progressBar = {
     marginLeft: '10%',
     marginRight: '10%',
-    backgroundColor: "#fff3",
+    backgroundColor: 'rgba(255,255,255,0.3)',
     margin: 6
 }
 

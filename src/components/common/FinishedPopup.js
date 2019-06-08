@@ -65,7 +65,6 @@ class FinishedPopup extends Component {
                             alt="User Icon" />
                     </Center>
                 </button>
-
             </Modal>
         );
     }

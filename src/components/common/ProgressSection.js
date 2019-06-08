@@ -24,7 +24,7 @@ const fortschrittText = {
     fontSize: '0.7em',
     textAlign: "left",
     marginLeft: '11%',
-    marginBottom: '0.2em',
+    marginBottom: '0.15em',
     marginTop: '0.7em',
     fontWeight: "bold"
 }
@@ -40,7 +40,7 @@ const progressBar = {
 const percentageText = {
     fontSize: '0.7em',
     textAlign: "right",
-    marginLeft: 5,
+    marginLeft: 12,
     marginTop: 0,
     marginBottom: 0,
     fontWeight: "bold"

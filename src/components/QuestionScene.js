@@ -102,7 +102,7 @@ class QuestionScene extends Component {
             this.props.dispatchGetNextQuestion();
             return <FinishedPopup ref={'popupInfo'} show={this.props.noMoreQuestions} onPress={() => this.props.dispatchGoBack()} />;
         }
-        
+
         const { answer1Clicked, answer2Clicked, answer3Clicked } = this.state;
 
         const background1 = this.state.check ? this.props.currentQuestion && this.props.currentQuestion.question.answer1.isRight ? '#23B800' : '#B21515' : answer1Clicked ? 'white' : 'white';
@@ -113,7 +113,16 @@ class QuestionScene extends Component {
 
         const marginAnswer1 = answer1Clicked ? 0 : '-1.5em'
         const marginAnswer2 = answer2Clicked ? 0 : '-1.5em'
-        const marginAnswer3 = answer3Clicked ? 0 : '-1.5em' 
+        const marginAnswer3 = answer3Clicked ? 0 : '-1.5em'
+
+        let lineColor1;
+
+        if (background1 == '#23B800' && !answer1Clicked || background2 == '#23B800' && !answer2Clicked || background3 == '#23B800' && !answer3Clicked)
+            lineColor1 = '#23B800';
+        else if (answer1Clicked && answer2Clicked && answer3Clicked)
+            lineColor1 = '#00B7E5'
+        else
+            lineColor1 = '#B21515'
 
         const answer1Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer1.answer : '';
         const answer2Text = this.props.currentQuestion ? this.props.currentQuestion.question.answer2.answer : '';
@@ -132,59 +141,60 @@ class QuestionScene extends Component {
         return (
             <AppHeader>
                 <InteractSection title="Übungsmodus">
-                <div style={{display: "flex", flexDirection: "column", flex: "1"}}>
-                <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '90%' }}>
-                        {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
-                    </h1>
+                    <div style={{ display: "flex", flexDirection: "column", flex: "1" }}>
+                        <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', marginBottom: 6, width: '90%' }}>
+                            {this.props.currentQuestion.moduleId.replace('_', '.')} {subModuleName}
+                        </h1>
 
-                    <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginBottom: 6 }}>
-                        Frage {parseInt(this.props.currentQuestion.questionId.substr(4))} / {questionCount}
-                    </h1>
+                        <h1 style={{ fontSize: '0.8em', fontWeight: 'bold', marginTop: '3%', textAlign: 'right', marginRight: '11%', marginBottom: 6 }}>
+                            Frage {parseInt(this.props.currentQuestion.questionId.substr(4))} / {questionCount}
+                        </h1>
 
-                    <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
-                        <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
-                            Statistik Aktuell
+                        <div align="left" style={{ marginLeft: '10%', marginBottom: -4, marginTop: '12%' }}>
+                            <p style={{ textALign: 'left', color: '#fff', margin: 0 }}>
+                                Statistik Aktuell
                         </p>
-                    </div>
-
-                    <p style={wrongAnswers}>
-                        {falseQuestions} Antworten falsch
-                    </p>
-
-                    <p style={questionBackText}>
-                        {rightQuestions} Antworten richtig
-                    </p>
-
-                    <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, flex: "1" }}>
-                        <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: '0.5em' }}>
-                            Aktionen
-                        </p>
-
-                        <div align="right" style={{ marginRight: '11%' }}>
-                        {pdfSrc && <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}&pdfname=${encodeURI(scriptName)}`}>
-                            <ImageButton
-                                mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
-                                mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
-                                mouseOverBtn={this.state.mouseOverPdf}
-                                buttonText="PDF öffnen"
-                                image={iconPdfRed} />
-                        </Link>}
-
-                            <ImageLineButton
-                                mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
-                                mouseLeave={() => { this.setState({ mouseOverWrong: false }) }}
-                                mouseOverState={this.state.mouseOverWrong}
-                                buttonText="Falsche Fragen üben"
-                                image={iconWrong}
-                                onPress={() => {
-                                    if (falseQuestions == 0)
-                                        this.toogleModal();
-                                    else
-                                        this.props.dispatchLearnFalseQuestions(this.props.currentQuestion.moduleId);
-                                        this.props.dispatchGetNextQuestion();
-                                }} />
                         </div>
-                    </div>
+
+                        <p style={wrongAnswers}>
+                            {falseQuestions} Antworten falsch
+                    </p>
+
+                        <p style={questionBackText}>
+                            {rightQuestions} Antworten richtig
+                    </p>
+
+                        <div style={{ backgroundColor: '#663399', height: '30%', paddingTop: '0.5em', marginTop: '12.7%', bottom: 0, flex: "1" }}>
+                            <p style={{ textAlign: "left", color: '#fff', marginTop: 0, marginLeft: '0.5em' }}>
+                                Aktionen
+                        </p>
+
+                            <div align="right" style={{ marginRight: '11%' }}>
+                                {pdfSrc && <Link to={`/pdf?url=${btoa(pdfSrc)}&page=${pdfPage}&pdfname=${encodeURI(scriptName)}`}>
+                                    <ImageButton
+                                        mouseOver={() => { this.setState({ mouseOverPdf: true }) }}
+                                        mouseLeave={() => { this.setState({ mouseOverPdf: false }) }}
+                                        mouseOverBtn={this.state.mouseOverPdf}
+                                        pdfButton={true}
+                                        buttonText="PDF öffnen"
+                                        image={iconPdfRed} />
+                                </Link>}
+
+                                <ImageLineButton
+                                    mouseOver={() => { this.setState({ mouseOverWrong: true }) }}
+                                    mouseLeave={() => { this.setState({ mouseOverWrong: false }) }}
+                                    mouseOverState={this.state.mouseOverWrong}
+                                    buttonText="Falsche Fragen üben"
+                                    image={iconWrong}
+                                    onPress={() => {
+                                        if (falseQuestions == 0)
+                                            this.toogleModal();
+                                        else
+                                            this.props.dispatchLearnFalseQuestions(this.props.currentQuestion.moduleId);
+                                        this.props.dispatchGetNextQuestion();
+                                    }} />
+                            </div>
+                        </div>
                     </div>
                 </InteractSection>
 
@@ -199,7 +209,11 @@ class QuestionScene extends Component {
                             </p>
                         </div>
 
-                        <div style={questionLine} />
+                        <div style={{
+                            width: '100%',
+                            height: '0.2em',
+                            backgroundColor: lineColor1,
+                        }} />
 
                         <h1 style={titleAnswer}>Antworten</h1>
 

@@ -22,7 +22,7 @@ const Answer = props => {
                     textAlign: 'left',
                     marginBottom: '0.6em'
                 }}>
-                <p style={{ fontSize: 16, color: props.colorAnswer, margin: '0.4em', fontWeight: "bold" }}>
+                <p style={{ fontSize: 16, color: props.colorAnswer, padding: '1.5em', margin: 0, fontWeight: "bold" }}>
                     {props.text}
                 </p>
             </button>
