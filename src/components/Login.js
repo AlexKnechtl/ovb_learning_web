@@ -58,7 +58,8 @@ class Login extends Component {
                         onChange={(event)=> this.setState({email: event.target.value})}
                         hint="E-Mail"
                         icon={userIcon}
-                        name="email" />
+                        name="email"
+                        autofocus={true} />
 
                     <TextInput
                         type="password"

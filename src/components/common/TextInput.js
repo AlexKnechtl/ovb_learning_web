@@ -3,13 +3,13 @@ import React from 'react';
 import '../styles.css';
 import PropTypes from 'prop-types';
 
-const TextInput = ({ icon, name, hint, onChange, ...restProps }) => {
+const TextInput = ({icon, name, hint, onChange, autofocus = false, ...restProps}) => {
     return (
         <div style={rowTransparent} >
             <img src={icon} style={{ height: '1em', marginLeft: '0.6em' }} alt="User Icon" />
             <hr style={verticalLine} />
             <div style={{ flexDirection: 'row' }} >
-                <input style={inputStyle} type="text" onChange={onChange} name={name} placeholder={hint} {...restProps} />
+                <input style={inputStyle} type="text" onChange={onChange} name={name} placeholder={hint} autofocus={autofocus} {...restProps} />
             </div>
         </div>
     )
