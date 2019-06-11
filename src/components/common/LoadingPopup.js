@@ -33,7 +33,8 @@ class LoadingPopup extends Component {
                 ref={"myModal"}
                 visible={this.state.modalIsOpen}
                 style={customStyles}
-                contentLabel="Example Modal" >
+                contentLabel="Example Modal"
+                isOpen={!!this.props.show} >
 
                 <div style={{ display: 'flex', alignItems:'center', flexDirection: 'column', width: '100%', height: '100%', backgroundColor: '#003A65', textAlign: 'center' }}>
                     <img src={icon} style={ovbIcon} alt="ovb_logo" />

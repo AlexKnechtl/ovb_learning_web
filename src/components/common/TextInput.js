@@ -9,7 +9,7 @@ const TextInput = ({icon, name, hint, onChange, autofocus = false, ...restProps}
             <img src={icon} style={{ height: '1em', marginLeft: '0.6em' }} alt="User Icon" />
             <hr style={verticalLine} />
             <div style={{ flexDirection: 'row' }} >
-                <input style={inputStyle} type="text" onChange={onChange} name={name} placeholder={hint} autofocus={autofocus} {...restProps} />
+                <input style={inputStyle} type="text" onChange={onChange} name={name} placeholder={hint} autoFocus={autofocus} {...restProps} />
             </div>
         </div>
     )

@@ -22,7 +22,6 @@ export default class PDFScene extends Component {
   }
 
   onDocumentLoadSuccess = ({ numPages }) => {
-    this.closeModal();
     this.setState({ numPages });
   };
 
@@ -38,14 +37,6 @@ export default class PDFScene extends Component {
   goToLastPage = () =>
     this.setState(state => ({ pageNumber: state.numPages }));
 
-  toogleModal = () => {
-    this.refs.popupLoading.openModal();
-  }
-
-  closeModal() {
-    this.refs.popupLoading.closeModal();
-  }
-
   render() {
     const { pageNumber, numPages, url } = this.state;
 
@@ -56,7 +47,7 @@ export default class PDFScene extends Component {
         <div style={{ display: 'flex', justifyContent: 'center', width: '100%', marginTop: "5em", textAlign: 'center', paddingBottom: "2em" }}>
           <Document
             file={url}
-            loading={(props) => { this.toogleModal.bind(this); return <p></p> }}
+            loading={<LoadingPopup show={true} />}
 //console.log(error)}
             onLoadSuccess={this.onDocumentLoadSuccess}
 //console.log('Document received')}
@@ -115,7 +106,6 @@ export default class PDFScene extends Component {
               alt="Error" />
           </div>
         </div>
-        <LoadingPopup ref={'popupLoading'} />
       </div>
     );
   }

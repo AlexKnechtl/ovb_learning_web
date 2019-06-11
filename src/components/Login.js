@@ -29,10 +29,10 @@ class Login extends Component {
 
     //setHover = () => this.setState({ hovered: true });
     //cancelHover = () => this.setState({ hovered: false });
-    handleSubmit = (event)=>{
-        event.preventDefault();
-        this.props.loginUser(this.state);
-    };
+    // handleSubmit = (event)=>{
+    //     event.preventDefault();
+    //     this.props.loginUser(this.state);
+    // };
     render() {
         const from = ((this.props.location.state||{}).from||{}).pathname;
         const redirect = !!((this.props.location.state||{}).canBeCalledDirectly);
@@ -52,7 +52,6 @@ class Login extends Component {
                 <div style={loginSection}>
                     <img src={icon} style={ovbIcon} alt="ovb_logo" />
                     <p style={{ marginTop: '3vh', fontSize: '48px' }}>Learning Suite</p>
-                <form onSubmit={this.handleSubmit}>
                     <TextInput
                         type="email"
                         onChange={(event)=> this.setState({email: event.target.value})}
@@ -73,7 +72,6 @@ class Login extends Component {
                         buttonText="Anmelden">
                         Anmelden
                     </Button>
-                </form>
                     {this.props.error !== "" && <p>{this.props.error}</p>}
                 </div>
             </header>
