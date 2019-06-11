@@ -52,7 +52,7 @@ class Login extends Component {
                 </div>
                 <div style={loginSection}>
                     <img src={icon} style={ovbIcon} alt="ovb_logo" />
-                    <p style={{ marginTop: '3vh', fontSize: '48px' }}>Learning Suite</p>
+                    <p style={{ marginTop: '3vh', fontSize: '48px', minWidth: "10.5em" }}>Learning Suite</p>
                     <TextInput
                         type="email"
                         onChange={(event)=> this.setState({email: event.target.value})}
@@ -113,9 +113,8 @@ const row = {
 
 const loginSection = {
     backgroundColor: "#003A65",
-    width: '30%',
-    textAlign: "center",
-    minWidth: "maxContent"
+    width: 'max-content',
+    textAlign: "center"
 }
 
 const ovbIcon = {
