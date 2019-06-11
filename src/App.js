@@ -21,6 +21,7 @@ import PrivateRoute from './PrivateRoute';
 import TestStatistics from './components/TestStatistics';
 import PDFScene from './components/PDFScene';
 import { pdfjs } from 'react-pdf';
+import PasswordResetScene from './components/PasswordResetScene';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export const history = createBrowserHistory();
@@ -36,7 +37,8 @@ class App extends Component {
         <ConnectedRouter history={history}>
           <div>
             <Switch>
-              <Route path="/login" component={Login} exact />
+              <Route path="/login/reset" component={PasswordResetScene} />
+              <Route path="/login" component={Login} />
               <PrivateRoute path="/category/:catId" component={SubCategoryScene} canBeCalledDirectly/>
               <PrivateRoute path="/question" component={QuestionScene} />
               <PrivateRoute path="/questionView/:subCatId" component={QuestionViewScene} canBeCalledDirectly/>

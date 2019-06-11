@@ -3,6 +3,7 @@
 import React, { Component } from 'react';
 import { } from 'react'
 import { Button, TextInput } from './common';
+import { Link } from "react-router-dom";
 
 //Images
 import icon from '../img/logo_ovb_white.png'
@@ -72,6 +73,9 @@ class Login extends Component {
                         buttonText="Anmelden">
                         Anmelden
                     </Button>
+                    <Link to="/login/reset" style={{color: "#fff"}}>
+                        <p>Passwort zurück setzen...</p>
+                    </Link>
                     {this.props.error !== "" && <p>{this.props.error}</p>}
                 </div>
             </header>
@@ -110,7 +114,8 @@ const row = {
 const loginSection = {
     backgroundColor: "#003A65",
     width: '30%',
-    textAlign: "center"
+    textAlign: "center",
+    minWidth: "maxContent"
 }
 
 const ovbIcon = {
