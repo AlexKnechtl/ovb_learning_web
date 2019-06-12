@@ -15,8 +15,8 @@ export default function PasswordResetScene() {
     var [email, setEmail] = useState("");
     const [emailSent, setEmailSent] = useState(false)
     const [error, setError] = useState("")
-
     const authenticator = new AuthInteractor(new AuthService());
+
     return (
         <header style={appHeader}>
             <div style={imageSection}>
@@ -31,14 +31,14 @@ export default function PasswordResetScene() {
             <div style={loginSection}>
                 <img src={icon} style={ovbIcon} alt="ovb_logo" />
                 <p style={{ marginTop: '3vh', fontSize: '1.3em', minWidth: "10.5em", marginBottom: '1.8vh' }}>Passwort zurücksetzen</p>
-                <p style={{ marginTop: '0.2vh', fontSize: '0.5em', marginBottom: '5vh', marginLeft: '10%', marginRight: '10%' }}>Tippe hier deine E-Mail Adresse ein um dein Learning Suite{"\n"}Passwort zu ändern</p>
+                <p style={{ marginTop: '0.2vh', fontSize: '0.5em', marginBottom: '5vh', marginLeft: '10%', marginRight: '10%' }}>Tippe hier deine E-Mail Adresse ein um dein Learning Suite Passwort zu ändern</p>
                 {!emailSent && <TextInput type="email"
                     onChange={(event) => setEmail(event.target.value)}
                     hint="E-Mail"
                     icon={userIcon}
                     name="email"
                     autofocus={true} />}
-                {emailSent && <h2>Email wurde gesendet.</h2>}
+                {emailSent && <h2>E-Mail wurde gesendet.</h2>}
                 {!emailSent && <Button
                     onPress={() => authenticator.resetPassword(email.trim()).then(ev => { setEmailSent(ev.emailSent); setError(ev.error); })}
                     buttonText="E-Mail anfordern"
