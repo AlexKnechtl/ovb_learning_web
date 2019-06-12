@@ -9,7 +9,7 @@
   }
   
   ::-ms-input-placeholder { /* Microsoft Edge */
-    color: rgb(255, 255, 255, 0.8);
+    color: rgba(231, 224, 224, 0.6);
   }
 
   .rows .row {

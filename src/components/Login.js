@@ -4,41 +4,34 @@ import React, { Component } from 'react';
 import { } from 'react'
 import { Button, TextInput } from './common';
 import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import Loading from './Loading';
+import { Redirect } from 'react-router-dom';
+import { signInAction } from '../coreFork';
 
 //Images
 import icon from '../img/logo_ovb_white.png'
-import userIcon from '../img/ic_user.png'
+import userIcon from '../img/ic_email.png'
 import seekInnoIcon from '../img/seek_innovation_logo.png'
 import passwordIcon from '../img/ic_password.png'
 import background from '../img/bg_web_ovb.jpg'
-import { signInAction } from '../coreFork';
-import {connect} from "react-redux";
-import Loading from './Loading';
-import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
-
     state = {
         hovered: false,
         email: "",
         password: ""
     }
+    
     constructor(props) {
         super(props);
-//console.log(props.location.state);
     }
 
-    //setHover = () => this.setState({ hovered: true });
-    //cancelHover = () => this.setState({ hovered: false });
-    // handleSubmit = (event)=>{
-    //     event.preventDefault();
-    //     this.props.loginUser(this.state);
-    // };
     render() {
-        const from = ((this.props.location.state||{}).from||{}).pathname;
-        const redirect = !!((this.props.location.state||{}).canBeCalledDirectly);
+        const from = ((this.props.location.state || {}).from || {}).pathname;
+        const redirect = !!((this.props.location.state || {}).canBeCalledDirectly);
         const showLogin = !this.props.loading && !this.props.auth.user;
-        const showOther = this.props.auth.user ? <Redirect to={{pathname: redirect?from:"/"}} /> : <Loading/>;
+        const showOther = this.props.auth.user ? <Redirect to={{ pathname: redirect ? from : "/" }} /> : <Loading />;
         return !showLogin ? showOther : (
             <header style={appHeader}>
                 <div style={imageSection}>
@@ -52,10 +45,10 @@ class Login extends Component {
                 </div>
                 <div style={loginSection}>
                     <img src={icon} style={ovbIcon} alt="ovb_logo" />
-                    <p style={{ marginTop: '3vh', fontSize: '48px', minWidth: "10.5em" }}>Learning Suite</p>
+                    <p style={{ marginTop: '3vh', fontSize: '1.6em', minWidth: "10.5em" }}>Learning Suite</p>
                     <TextInput
                         type="email"
-                        onChange={(event)=> this.setState({email: event.target.value})}
+                        onChange={(event) => this.setState({ email: event.target.value })}
                         hint="E-Mail"
                         icon={userIcon}
                         name="email"
@@ -63,18 +56,18 @@ class Login extends Component {
 
                     <TextInput
                         type="password"
-                        onChange={(event)=> this.setState({password: event.target.value})}
+                        onChange={(event) => this.setState({ password: event.target.value })}
                         hint="Passwort"
                         icon={passwordIcon}
                         name="password" />
 
                     <Button
-                        onPress={()=> this.props.loginUser(this.state)}
+                        onPress={() => this.props.loginUser(this.state)}
                         buttonText="Anmelden">
                         Anmelden
                     </Button>
-                    <Link to="/login/reset" style={{color: "#fff"}}>
-                        <p>Passwort zurück setzen...</p>
+                    <Link to="/login/reset" style={{ color: "#fff", fontSize: '0.7em' }}>
+                        <p>Passwort zurücksetzen</p>
                     </Link>
                     {this.props.error !== "" && <p>{this.props.error}</p>}
                 </div>
@@ -114,6 +107,7 @@ const row = {
 const loginSection = {
     backgroundColor: "#003A65",
     width: 'max-content',
+    minWidth: '30%',
     textAlign: "center"
 }
 
@@ -148,4 +142,4 @@ const mapDispatchToProps = {
     loginUser: signInAction,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login); 
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
