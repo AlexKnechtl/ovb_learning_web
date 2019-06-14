@@ -1,22 +1,18 @@
 //@ts-check
-
 import React, { Component } from 'react';
 import { } from 'react'
 import { ImageButton, Options, Modules, InteractSection, DisplaySection, CategoryButton, Statistics, PDFPopup, AppHeader } from './common';
 import './styles.css';
-// @ts-ignore
+// Images
 import iconContinue from '../img/ic_continue.png'
-// @ts-ignore
 import iconBook from '../img/ic_look_through.png'
-// @ts-ignore
 import iconPdf from '../img/ic_pdf.png'
+import iconBereiche from '../img/icon_bereiche.png'
+import backButton from '../img/arrow.png'
 
 import { signOutAction, initExamAction, GotModulesAction, continueSectionLearningAction } from '../coreFork';
 import { connect } from 'react-redux';
 import { push } from 'connected-react-router';
-
-import iconBereiche from '../img/icon_bereiche.png'
-import backButton from '../img/arrow.png'
 
 class Home extends Component {
     state = {
@@ -32,7 +28,6 @@ class Home extends Component {
 
     constructor(props) {
         super(props);
-//console.log(this.state);
     }
 
     testButtonPress = () => {
@@ -40,10 +35,8 @@ class Home extends Component {
         if (!this.state.testMode) {
             this.setState({
                 testMode: !this.state.testMode,
-                // icon: icBack TODO: implement
             });
         } else {
-            // this.props.navigation.navigate('test');
             var mids = []
             Object.keys(this.state.categories).forEach(key => { if (this.state.categories[key].isPressed) mids.push(key); });
 
@@ -109,7 +102,6 @@ class Home extends Component {
                             onPress={() => this.props.dispatchContinueSectionLearning(this.state.currentModule)}
                             image={iconBook} />
                     </div>
-
                     <Statistics currentModuleInfo={this.props.modules[currMid]} />
                 </InteractSection>
 
