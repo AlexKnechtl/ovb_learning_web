@@ -41,20 +41,22 @@ class Home extends Component {
         .createUserWithEmailAndPassword(this.state.email, pw);
       this.setState({ password: pw });
     } catch (error) {
-      this.setState({ error: error });
+      console.log(error)
+      this.setState({ error: error.message });
     } finally {
       this.setState({ loading: false });
     }
   };
 
   render() {
-    const { email, password } = this.state;
+    const { email, password, loading, error } = this.state;
     return (
       <AppHeader>
         <DisplaySection title="Admin">
           <div className="container-admin">
             <h1>Benutzer hinzufügen</h1>
             <p>Einzelnen Benutzer hinzufügen</p>
+            <p>{loading&&"Arbeitet..."}</p>
             <div className="container-add-user">
               <p>Email: <input style={{height: "2em"}}
                   onChange={e =>
@@ -66,6 +68,8 @@ class Home extends Component {
               <p>Password: {password}</p>
               <button onClick={this.addUser}>User hinzufügen</button>
             </div>
+            <p>{error}</p>
+            
           </div>
         </DisplaySection>
       </AppHeader>
