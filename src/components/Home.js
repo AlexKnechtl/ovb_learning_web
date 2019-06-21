@@ -119,6 +119,8 @@ class Home extends Component {
                         onPressDatenschutz={() => window.open("https://www.seekinnovation.at/ovb-datenschutz")}
                         onPressImpressum={() => window.open("https://www.seekinnovation.at")}
                         onPressLogout={() => this.props.dispatchLogOut()}
+                        onPressAdmin={() => this.props.navigateAdmin()}
+                        canAccessAdmin={this.props.auth.user.isAdmin}
                     />
                 </footer>
                 <PDFPopup ref={'popupPDF'} modules={(this.props.modules[this.state.currentModule]||{}).modules}/>
@@ -128,17 +130,20 @@ class Home extends Component {
 }
 
 const setCurrentModuleAction = (catId) => push(`/category/${catId}`);
+const navigateAdmin = () => push(`/admin`);
 
 const mapDispatchToProps = {
     dispatchLogOut: signOutAction,
     dispatchSelectCategory: setCurrentModuleAction,
     dispatchContinueSectionLearning: continueSectionLearningAction,
     dispatchStartExam: initExamAction,
-    dispatchUpdateModules: GotModulesAction
+    dispatchUpdateModules: GotModulesAction,
+    navigateAdmin
 };
 
 const mapStateToProps = state => ({
     modules: state.modules.modules,
+    auth: state.auth
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home);

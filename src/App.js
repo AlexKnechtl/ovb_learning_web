@@ -22,6 +22,7 @@ import TestStatistics from './components/TestStatistics';
 import PDFScene from './components/PDFScene';
 import { pdfjs } from 'react-pdf';
 import PasswordResetScene from './components/PasswordResetScene';
+import Admin from './components/Admin';
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
 
 export const history = createBrowserHistory();
@@ -45,6 +46,7 @@ class App extends Component {
               <PrivateRoute path="/test" component={TestScene} />
               <PrivateRoute path="/testResult" component={TestResultScene} />
               <PrivateRoute path="/testStatistics" component={TestStatistics}/>
+              <Route path="/admin" component={Admin} />
               <Route path="/pdf" component={PDFScene} />
               <PrivateRoute path="/" component={Home} />
             </Switch>

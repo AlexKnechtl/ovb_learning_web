@@ -1,0 +1,12 @@
+.container-add-user{
+    display: flex;
+    flex-flow: column;
+    align-content: center;
+    width: max-content;
+}
+
+
+.container-admin {
+    margin: 5em;
+    color: #000;
+}
