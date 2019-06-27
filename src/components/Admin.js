@@ -18,6 +18,7 @@ import { connect } from "react-redux";
 import firebase from "@firebase/app";
 import "firebase/auth";
 import generatePassword from "password-generator";
+import { sendMail } from "../services/MailService";
 
 import "./Admin.css";
 
@@ -26,7 +27,9 @@ class Home extends Component {
     email: "",
     password: "password",
     error: "",
-    loading: false
+    loading: false,
+    /** @type {{email: string, password: string, error: string}[]} */
+    users: []
   };
   constructor(props) {
     super(props);
@@ -48,8 +51,33 @@ class Home extends Component {
     }
   };
 
+  addUsers = async () => {
+    var users = [];
+    this.setState({ error: "", loading: true });
+    for (const user of this.state.users) {
+    try {
+      await firebase
+        .auth()
+        .createUserWithEmailAndPassword(user.email, user.password);
+      await sendMail(user.email, user.password)
+      users.push({...user, error: "success, Email sent!"});
+    } catch (error) {
+      users.push({...user, error: error.message});
+    }
+    }
+    this.setState({loading: false, users});
+  };
+
+  checkUsers = (emails) => {
+    var users = emails.split('\n')
+    .map(s=> s.trim())
+    .filter(s=> s.length>0)
+    .map(s=> ({email: s, password: generatePassword(8, true, /[\w\W\d]/, "2xA"), error: ""}));
+    this.setState({users});
+  }
+
   render() {
-    const { email, password, loading, error } = this.state;
+    const { email, password, loading, error, users } = this.state;
     return (
       <AppHeader>
         <DisplaySection title="Admin">
@@ -65,11 +93,31 @@ class Home extends Component {
                   type="email"
                   placeholder="email"
                 /></p>
-              <p>Password: {password}</p>
+              {password!="password"&&<p>Password: {password}</p>}
               <button onClick={this.addUser}>User hinzufügen</button>
             </div>
             <p>{error}</p>
-            
+            <h2>Mehrere Benutzer hinzufügen</h2>
+            <p>{loading&&"Arbeitet..."}</p>
+            <div className="container-add-user">
+              <p>Emails: </p>
+              <textarea style={{height: "6em", marginBottom: "1em"}}
+                  onChange={e =>
+                    this.checkUsers(e.target.value.trim())
+                  }
+                  placeholder="email1\nemail2\nemail3"
+                />
+              <table style={{width: "100%"}}>
+                <tr>
+                  <th>Email</th>
+                  <th>Passwort</th>
+                  <th>Errors</th>
+                </tr>
+                {users.map(user=> <tr><td>{user.email}</td><td>{user.password}</td><td>{user.error}</td></tr>)}
+              </table>
+              {users.length>0&& <button onClick={this.addUsers}>User hinzufügen und Emails versenden</button>}
+            </div>
+            <p>{error}</p>
           </div>
         </DisplaySection>
       </AppHeader>
