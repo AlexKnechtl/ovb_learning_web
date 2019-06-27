@@ -1,0 +1,13 @@
+diff --git a/node_modules/gtoken/build/src/index.js b/node_modules/gtoken/build/src/index.js
+index 5f11c98..b11e535 100644
+--- a/node_modules/gtoken/build/src/index.js
++++ b/node_modules/gtoken/build/src/index.js
+@@ -19,7 +19,7 @@ const gaxios_1 = require("gaxios");
+ const jws = require("jws");
+ const mime = require("mime");
+ const pify = require("pify");
+-const readFile = pify(fs.readFile);
++const readFile = ()=>null;// pify(fs.readFile);
+ const GOOGLE_TOKEN_URL = 'https://www.googleapis.com/oauth2/v4/token';
+ const GOOGLE_REVOKE_TOKEN_URL = 'https://accounts.google.com/o/oauth2/revoke?token=';
+ class ErrorWithCode extends Error {
