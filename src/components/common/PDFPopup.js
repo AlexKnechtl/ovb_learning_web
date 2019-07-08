@@ -116,14 +116,12 @@ const backButtonStyle = {
     display: 'flex',
     border: "none",
     flexGrow: 2,
+    width: '100%',
     height: 56,
-    flexGrow: 3,
     backgroundColor: '#002F53',
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 6,
-    paddingRight: 6
 };
 
 const buttonText = {

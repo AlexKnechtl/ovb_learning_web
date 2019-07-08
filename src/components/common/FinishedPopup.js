@@ -61,7 +61,7 @@ class FinishedPopup extends Component {
                         Weiter
                     <img
                             src={require('../../img/arrow.png')}
-                            style={{ height: '1.5em', width: '1.8em', marginLeft: 18 }}
+                            style={{ height: '1.4em', width: '1.4em', marginLeft: 12 }}
                             alt="User Icon" />
                     </Center>
                 </button>
@@ -107,7 +107,6 @@ const lineColor = {
 };
 
 const buttonStyle = {
-    display: 'flex',
     width: '100%',
     border: "none",
     height: 56,
@@ -115,8 +114,6 @@ const buttonStyle = {
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 8,
-    paddingRight: 8
 };
 
 const buttonText = {

@@ -104,29 +104,23 @@ const lineColor = {
 };
 
 const buttonStyle = {
-    display: 'flex',
-    flexGrow: 4,
     border: "none",
     height: 56,
     backgroundColor: '#003A65',
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 6,
-    paddingRight: 6
+    width: '60%'
 };
 
 const backButtonStyle = {
-    display: 'flex',
     border: "none",
     height: 56,
-    flexGrow: 3,
     backgroundColor: '#002F53',
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',
-    paddingLeft: 6,
-    paddingRight: 6
+    width: '40%'
 };
 
 const buttonText = {
